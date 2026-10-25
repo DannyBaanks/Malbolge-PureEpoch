@@ -1,0 +1,13 @@
+{
+  "name": "ref_cat",
+  "command": [
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+    "1000000"
+  ],
+  "input_sha256": "edeaaff3f1774ad2888673770c6d64097e391bc362d7d6fb34982ddf0efd18cb",
+  "allocated_steps": 1000000,
+  "returncode": 0,
+  "timeout": false,
+  "seconds": 0.002058
+}

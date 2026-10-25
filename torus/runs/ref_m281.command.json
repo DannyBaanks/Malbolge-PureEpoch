@@ -1,0 +1,13 @@
+{
+  "name": "ref_m281",
+  "command": [
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+    "63000000"
+  ],
+  "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "allocated_steps": 63000000,
+  "returncode": 0,
+  "timeout": false,
+  "seconds": 0.142892
+}

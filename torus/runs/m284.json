@@ -1,0 +1,7 @@
+{
+"status":"HALTED","steps":62902924,"cells_source":53392,"event_sha256":"4aa866a3f1b90f4cd7be3dd59b47e625630fa9ea04b8d8b3f19e569b9c39f5da",
+"visited_c":24090,"visited_d":27082,"intersection":96,"union":51076,"complement":7973,"D_minus_C":26986,"read_unique":27055,"written_unique":27029,"encrypted_unique":24090,"read_written_not_C":26938,
+"read_events":29092037,"direct_write_events":1476376,"encryption_hits":62902923,"inputs":0,"output_len":54134,
+"delta_segments":26494430,"break4":21617925,"break40":4876504,"break_other":0,"diagonal_steps":36408494,"diagonal_fraction":0.578804476561,"max_segment_transitions":24,"distinct_deltas":32073,"delta_reentries":26462357,
+"increment_wrap_c":533920,"increment_wrap_d":3,"simultaneous_c_eq_d":1,"unique_projected_pairs":132179,"projected_pair_revisits":62770745,"C_min_cyclic_period":59049,"C_shift_symmetry_count_correct":0,
+"opcodes":{"4":21617925,"5":54134,"12":1483,"20":1483,"21":106784,"24":213568,"26":1483,"27":213568,"28":213568,"29":1483,"31":106784,"36":615499,"38":213568,"39":805222,"40":5997736,"41":213568,"43":266960,"44":1281415,"45":694096,"46":480528,"47":266960,"48":8899,"49":1441584,"50":1868720,"51":1174624,"52":1174624,"53":2349248,"54":2571715,"55":2135680,"56":2295860,"57":2518327,"58":1174624,"59":2135680,"60":961056,"61":1336287,"62":671154,"63":1468282,"64":293658,"65":80090,"66":547269,"67":627359,"68":315519,"69":293658,"70":547269,"71":333701,"73":213568,"75":213568,"76":106784,"81":1,"82":106784,"85":20022,"86":266960,"89":15575,"90":266960}}

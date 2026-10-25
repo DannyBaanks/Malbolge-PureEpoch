@@ -1,0 +1,106 @@
+cc -O2 -Wall -o mb_ref oracle/mb_ref.c
+python3 -m unittest discover -s tests -v
+test_64kib_binary_stream (test_cat_streaming.StreamingCatTests.test_64kib_binary_stream) ... ok
+test_all_256_bytes (test_cat_streaming.StreamingCatTests.test_all_256_bytes) ... ok
+test_empty_input_empty_output_halt (test_cat_streaming.StreamingCatTests.test_empty_input_empty_output_halt) ... ok
+test_strict_loader_accepts_cats (test_cat_streaming.StreamingCatTests.test_strict_loader_accepts_cats) ... ok
+test_artifact_is_smaller_than_the_published_cat (test_compact_cat.CompactCatTests.test_artifact_is_smaller_than_the_published_cat) ... ok
+test_deterministic_rebuild_matches (test_compact_cat.CompactCatTests.test_deterministic_rebuild_matches) ... ok
+test_exact_output_battery (test_compact_cat.CompactCatTests.test_exact_output_battery) ... ok
+test_handoff_state_matches_reference (test_compact_cat.CompactCatTests.test_handoff_state_matches_reference) ... ok
+test_long_binary_stream_matches_reference (test_compact_cat.CompactCatTests.test_long_binary_stream_matches_reference) ... ok
+test_empty_stdin_halts_with_exact_100_lines (test_fizzbuzz_reference.FizzBuzzReferenceTests.test_empty_stdin_halts_with_exact_100_lines) ... ok
+test_old_fizzbuzz_is_rejected_by_strict_loader (test_fizzbuzz_reference.FizzBuzzReferenceTests.test_old_fizzbuzz_is_rejected_by_strict_loader) ... ok
+test_strict_loader_accepts_reference (test_fizzbuzz_reference.FizzBuzzReferenceTests.test_strict_loader_accepts_reference) ... ok
+test_band_boundaries_are_exclusive (test_handoff_state.KeepHighModelTests.test_band_boundaries_are_exclusive) ... ok
+test_matching_state_passes (test_handoff_state.KeepHighModelTests.test_matching_state_passes) ... ok
+test_register_d_is_not_shifted (test_handoff_state.KeepHighModelTests.test_register_d_is_not_shifted) ... ok
+test_shifted_address_value_is_decremented (test_handoff_state.KeepHighModelTests.test_shifted_address_value_is_decremented) ... ok
+test_unknown_mode_is_rejected (test_handoff_state.KeepHighModelTests.test_unknown_mode_is_rejected) ... ok
+test_variable_stays_at_original_address (test_handoff_state.KeepHighModelTests.test_variable_stays_at_original_address) ... ok
+test_cat_compressed_fails_shift_all (test_handoff_state.PublishedArtifactControls.test_cat_compressed_fails_shift_all) ... ok
+test_cat_compressed_matches_keep_high (test_handoff_state.PublishedArtifactControls.test_cat_compressed_matches_keep_high) ... ok
+test_keep_high_requires_value_floor (test_handoff_state.PublishedArtifactControls.test_keep_high_requires_value_floor) ... INVALID: --memory-mode keep-high requires --value-floor (the handoff jump cell)
+ok
+test_matching_state_passes (test_handoff_state.ShiftAllModelTests.test_matching_state_passes) ... ok
+test_missing_variable_fails (test_handoff_state.ShiftAllModelTests.test_missing_variable_fails) ... ok
+test_register_d_mismatch_fails (test_handoff_state.ShiftAllModelTests.test_register_d_mismatch_fails) ... ok
+test_unshifted_variable_fails (test_handoff_state.ShiftAllModelTests.test_unshifted_variable_fails) ... ok
+test_value_floor_boundary (test_handoff_state.ShiftAllModelTests.test_value_floor_boundary) ... ok
+test_wrong_entry_cell_fails (test_handoff_state.ShiftAllModelTests.test_wrong_entry_cell_fails) ... ok
+test_budget_must_be_unsigned_integer (test_oracle.OracleTests.test_budget_must_be_unsigned_integer) ... ok
+test_excess_arguments_rejected (test_oracle.OracleTests.test_excess_arguments_rejected) ... ok
+test_experimental_programs_cannot_be_certified_as_classic (test_oracle.OracleTests.test_experimental_programs_cannot_be_certified_as_classic) ... ok
+test_halt_is_the_only_success (test_oracle.OracleTests.test_halt_is_the_only_success) ... ok
+test_invalid_bytes_and_oversize_rejected (test_oracle.OracleTests.test_invalid_bytes_and_oversize_rejected) ... ok
+test_invalid_initial_opcode_rejected (test_oracle.OracleTests.test_invalid_initial_opcode_rejected) ... ok
+test_runtime_nonprintable_is_never_skipped_or_indexed (test_oracle.OracleTests.test_runtime_nonprintable_is_never_skipped_or_indexed) ... ok
+test_too_short_rejected (test_oracle.OracleTests.test_too_short_rejected) ... ok
+test_whitespace_does_not_change_instruction_addresses (test_oracle.OracleTests.test_whitespace_does_not_change_instruction_addresses) ... ok
+test_invalid_generated_candidate_leaves_published_artifact_untouched (test_publication.PublicationTests.test_invalid_generated_candidate_leaves_published_artifact_untouched) ... ok
+test_invalid_loader_is_rejected (test_trace.TraceTests.test_invalid_loader_is_rejected) ... ok
+test_jump_encrypts_destination_and_never_indexes_invalid_word (test_trace.TraceTests.test_jump_encrypts_destination_and_never_indexes_invalid_word) ... ok
+test_nonprintable_pc_is_not_a_nop (test_trace.TraceTests.test_nonprintable_pc_is_not_a_nop) ... ok
+test_cycle_proof (test_truth_machine_strict.TruthMachineStrictTests.test_cycle_proof) ... ok
+test_old_truth_machine_is_rejected (test_truth_machine_strict.TruthMachineStrictTests.test_old_truth_machine_is_rejected) ... ok
+test_one_prefix_is_all_ones (test_truth_machine_strict.TruthMachineStrictTests.test_one_prefix_is_all_ones) ... ok
+test_strict_loader_accepts_artifact (test_truth_machine_strict.TruthMachineStrictTests.test_strict_loader_accepts_artifact) ... ok
+test_variant_cycle_proof (test_truth_machine_strict.TruthMachineStrictTests.test_variant_cycle_proof) ... ok
+test_variant_one_prefix_is_all_ones (test_truth_machine_strict.TruthMachineStrictTests.test_variant_one_prefix_is_all_ones) ... ok
+test_variant_strict_loader_accepts (test_truth_machine_strict.TruthMachineStrictTests.test_variant_strict_loader_accepts) ... ok
+test_variant_zero_prints_one_zero_and_halts (test_truth_machine_strict.TruthMachineStrictTests.test_variant_zero_prints_one_zero_and_halts) ... ok
+test_zero_prints_one_zero_and_halts (test_truth_machine_strict.TruthMachineStrictTests.test_zero_prints_one_zero_and_halts) ... ok
+test_first_broken_quine_cannot_be_masked_by_last_good_one (test_verifiers.VerifierTests.test_first_broken_quine_cannot_be_masked_by_last_good_one) ... ok
+test_missing_compressed_artifacts_fail (test_verifiers.VerifierTests.test_missing_compressed_artifacts_fail) ... ok
+test_unknown_rebuild_target_fails (test_verifiers.VerifierTests.test_unknown_rebuild_target_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 5.365s
+
+OK
+reference /home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/sources/BolgeForge/reference/malbolge_org/cat.mal: cell 9067 at step 8992, a=29524, d=58975
+candidate /home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/sources/BolgeForge/artifacts/cat_compressed.mal: cell 7939 at step 7811, a=29524, d=58975
+delta 1128; memory mode shift-all; expected candidate cell 7939
+variables installed: 0/124
+  register d: expected 57847 got 58975
+  cell 57716: expected 90 got 29443 (variable from cell 58844)
+  cell 57717: expected 70 got 81 (variable from cell 58845)
+  cell 57718: expected 70 got 29443 (variable from cell 58846)
+  cell 57719: expected 70 got 81 (variable from cell 58847)
+  cell 57720: expected 70 got 29443 (variable from cell 58848)
+  cell 57721: expected 70 got 81 (variable from cell 58849)
+  cell 57722: expected 92 got 29443 (variable from cell 58850)
+  cell 57723: expected 7960 got 81 (variable from cell 58851)
+  cell 57724: expected 7959 got 29443 (variable from cell 58852)
+  cell 57725: expected 57803 got 81 (variable from cell 58853)
+HANDOFF MISMATCH
+reference /home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/sources/BolgeForge/reference/malbolge_org/cat.mal: cell 9067 at step 8992, a=29524, d=58975
+candidate /home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/sources/BolgeForge/artifacts/cat_compressed.mal: cell 7939 at step 7811, a=29524, d=58975
+delta 1128; memory mode keep-high; expected candidate cell 7939
+variables installed: 124/124
+HANDOFF MATCH
+python3 test_corpus.py
+=== RUNNING MALBOLGE.ORG REFERENCE CORPUS VERIFICATION ===
+Testing cat.mal... PASS
+Testing digital_root.mal... PASS
+Testing adder.mal... PASS
+Testing quine.mal self-reproduction... PASS (0-byte diff bit-for-bit)
+Testing quine-2012.mal self-reproduction... PASS (0-byte diff bit-for-bit)
+Testing hello_world.mal... PASS
+Testing rot13.mal... PASS
+Testing 99_bottles.mal (full 99-verse execution)... PASS (11,459 bytes, 99 verses)
+=== ALL MALBOLGE.ORG CORPUS TESTS PASSED (0.46s) ===
+python3 tools/test_compressed.py
+PASS cat: 7 exact-output cases; strict HALT and reference parity
+PASS digital_root: 6 exact-output cases; strict HALT and reference parity
+PASS adder: 100 exact-output cases; strict HALT and reference parity
+PASS 99_bottles: 1 exact-output cases; strict HALT and reference parity
+python3 tools/test_quines.py
+PASS candidate_m281_53562b.mal: byte-exact self-reproduction and strict HALT
+PASS candidate_m284_54134b.mal: byte-exact self-reproduction and strict HALT
+PASS candidate_m287_54706b.mal: byte-exact self-reproduction and strict HALT
+PASS candidate_m293_55850b.mal: byte-exact self-reproduction and strict HALT
+PASS candidate_m308_58709b.mal: byte-exact self-reproduction and strict HALT
+python3 tools/test_independent.py
+PASS independent Olmstead mirror: 236 exact-output comparisons
+Mirror source SHA-256: 05abd38e78b266050c5a5e8cc5b36584daa5bbdeb404bfb351de7ea6fa26b510

@@ -1,0 +1,10 @@
+{
+  "status": "FAILED_INDEPENDENT_IMPLEMENTATION",
+  "allocated_steps": 30000,
+  "completed_transitions": 2082,
+  "error": "AssertionError: 33<=mem[c]<=126 at start of transition 2083",
+  "cause": "The initial independent Python crazy operation omitted table entry crazy(0,1)=1. Fixed before accepting any results.",
+  "preserved_source": "vendor/journal_replay_failed_v1.py",
+  "preserved_trace": "runs/journal_prefix_failed_v1.csv",
+  "resolution": "Exhaustive single-trit tests now cover all nine entries at all ten positions; corrected full 30000-transition SHA256 equals independent C prefix SHA256."
+}

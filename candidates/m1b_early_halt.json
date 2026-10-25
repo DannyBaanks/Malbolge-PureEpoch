@@ -1,0 +1,15 @@
+{
+  "kind": "CHECKPOINT_CONTROL",
+  "mode": "early_halt",
+  "labels": {
+    "initialize_journal": 110,
+    "read_initial": 111,
+    "initialize_target": 122,
+    "save": 134,
+    "read_clobber_operand": 135,
+    "clobber": 146,
+    "early_halt": 147
+  },
+  "target": 36,
+  "journal": 52
+}

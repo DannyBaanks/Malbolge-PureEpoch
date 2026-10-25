@@ -1,0 +1,25 @@
+{
+  "trace_equal": true,
+  "memory_equal": true,
+  "registers_equal": true,
+  "terminal_equal": true,
+  "outputs_equal": true,
+  "reference_returncode": 3,
+  "original_returncode": null,
+  "original_run": "not_run: historical VM has no instruction budget; negative non-HALT is checked by bounded strict C and Python",
+  "instrumented_returncode": 3,
+  "source_sha256": "c666670306b456663072ed0ef9832ac14d51667b394a56402747fb0e7dbb5e90",
+  "payload_hex": "0303",
+  "terminal": "STALL",
+  "steps_excluding_halt": 253,
+  "fetched_instructions": 254,
+  "registers": [
+    29521,
+    62,
+    131,
+    2
+  ],
+  "output_hex": "",
+  "memory_sha256": "6f4255d3ace1d87146800e3ff39af1b0df93b7fa211af05a33f123a7a77cee84",
+  "trace_sha256": "01b13196831231034fc93e7d56febc1bedff5b2c9f974c7b81e8a3d98b80b44f"
+}

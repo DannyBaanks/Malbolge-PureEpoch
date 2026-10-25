@@ -1,0 +1,14 @@
+{
+  "name": "observe_m281_prefix",
+  "command": [
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+    "30000",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/m281_prefix"
+  ],
+  "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "allocated_steps": 30000,
+  "returncode": 2,
+  "timeout": false,
+  "seconds": 0.129821
+}

@@ -1,0 +1,7 @@
+{
+"status":"MAX_STEPS","steps":30000,"cells_source":52828,"event_sha256":"329c54ba64fcca289b0d95e8e496072f2b6e82251ac561f69a44b0bfdcfd9baa",
+"visited_c":25510,"visited_d":386,"intersection":94,"union":25802,"complement":33247,"D_minus_C":292,"read_unique":364,"written_unique":337,"encrypted_unique":25510,"read_written_not_C":248,
+"read_events":13630,"direct_write_events":5413,"encryption_hits":30000,"inputs":0,"output_len":3,
+"delta_segments":8135,"break4":1556,"break40":6578,"break_other":0,"diagonal_steps":21866,"diagonal_fraction":0.728866666667,"max_segment_transitions":24,"distinct_deltas":6000,"delta_reentries":2135,
+"increment_wrap_c":40,"increment_wrap_d":3,"simultaneous_c_eq_d":1,"unique_projected_pairs":25704,"projected_pair_revisits":4296,"C_min_cyclic_period":59049,"C_shift_symmetry_count_correct":0,
+"opcodes":{"4":1556,"5":3,"21":8,"24":15,"27":16,"28":15,"31":8,"36":43,"38":15,"39":3045,"40":6661,"41":16,"43":20,"44":92,"45":51,"46":35,"47":20,"48":1,"49":106,"50":138,"51":87,"52":87,"53":172,"54":189,"55":157,"56":167,"57":183,"58":85,"59":157,"60":70,"61":95,"62":2368,"63":106,"64":21,"65":5,"66":41,"67":46,"68":13928,"69":21,"70":40,"71":24,"73":15,"75":15,"76":8,"82":8,"85":1,"86":20,"90":20}}

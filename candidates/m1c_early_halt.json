@@ -1,0 +1,59 @@
+{
+  "kind": "BOUNDED_CONDITIONAL_RECOVERY_RETRY",
+  "mode": "early_halt",
+  "labels": {
+    "zero_seed_to_ones": 106,
+    "initialize_zero": 114,
+    "initialize_journal": 123,
+    "initialize_recovery_portal": 128,
+    "read_initial": 129,
+    "initialize_target": 131,
+    "save": 138,
+    "load_zero": 146,
+    "clobber": 162,
+    "read_candidate": 163,
+    "transition": 173,
+    "dispatch": 177,
+    "failure_route": 29522,
+    "recovery_jump": 29523,
+    "commit": 29524,
+    "halt": 29525,
+    "early_halt": 19696,
+    "recovery_load_zero": 19706,
+    "recovery_reset_target": 19722,
+    "journal_read_rotation_1": 19729,
+    "journal_read_rotation_2": 19739,
+    "journal_read_rotation_3": 19749,
+    "journal_read_rotation_4": 19759,
+    "journal_read_rotation_5": 19769,
+    "journal_read_rotation_6": 19779,
+    "journal_read_rotation_7": 19789,
+    "journal_read_rotation_8": 19799,
+    "journal_read_rotation_9": 19809,
+    "journal_read_rotation_10": 19819,
+    "restore": 19826,
+    "construct_retry_operand_1": 19835,
+    "construct_retry_operand_2": 19839,
+    "construct_retry_operand_3": 19843,
+    "construct_retry_operand_4": 19847,
+    "retry": 19857,
+    "retry_dispatch": 19861
+  },
+  "target": 36,
+  "journal": 52,
+  "zero_cell": 75,
+  "operand_cell": 81,
+  "portal_cell": 62,
+  "domain": {
+    "initial": [
+      1,
+      3
+    ],
+    "candidate": [
+      1,
+      3
+    ]
+  },
+  "invariant": "mem[36] == 29523",
+  "max_attempts_on_domain": 2
+}

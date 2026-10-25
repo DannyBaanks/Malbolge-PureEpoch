@@ -1,0 +1,48 @@
+{
+  "m281": {
+    "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+    "local_source": "/home/danny/Development/ISyCo Git/BolgeForge/artifacts/candidate_m281_53562b.mal",
+    "sha256": "96b670b825372a0f41fa3b574d47457f92654b76411e5d5be4c438003087610e",
+    "remote_sha256": "96b670b825372a0f41fa3b574d47457f92654b76411e5d5be4c438003087610e"
+  },
+  "lutter": {
+    "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/lutter.mal",
+    "local_source": "/home/danny/Development/ISyCo Git/BolgeForge/reference/quine_lutter.malbolge",
+    "sha256": "dca8476f8b70c8462c32f661f63c5f8b1ad6c33946b3c7a9a35186c824117d98",
+    "remote_sha256": "dca8476f8b70c8462c32f661f63c5f8b1ad6c33946b3c7a9a35186c824117d98"
+  },
+  "m284": {
+    "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m284.mal",
+    "local_source": "/home/danny/Development/ISyCo Git/BolgeForge/artifacts/candidate_m284_54134b.mal",
+    "sha256": "1808fd4d862a274abc6b9f7b8965d1eee65fc11aa2424c23a8077040876b483c",
+    "remote_sha256": "1808fd4d862a274abc6b9f7b8965d1eee65fc11aa2424c23a8077040876b483c"
+  },
+  "cat": {
+    "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+    "local_source": "/home/danny/Development/ISyCo Git/BolgeForge/reference/malbolge_org/cat.mal",
+    "sha256": "ce04a6f27b7045b6e0010d6c97873ad8b34ba87c7be6e16d53be0b97a7224a52",
+    "remote_sha256": "ce04a6f27b7045b6e0010d6c97873ad8b34ba87c7be6e16d53be0b97a7224a52"
+  },
+  "short": {
+    "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/short.mal",
+    "sha256": "67d46702379bdb2fb7c228f2c63d639bbabce3d18f4c42915ee0ee09180a7d47",
+    "definition": "Two loader-valid cells: numeric op68 then op81; no input."
+  },
+  "journal_access_candidate": {
+    "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/journal_access_candidate.mal",
+    "sha256": "521e920d54dedc94b221a7a303e348abb1463aeac30abe61329c1f07a316866f",
+    "definition": "Four loader-valid cells: j,* ,p,v. Demonstrates read/modify access at D-only cells 41 and 42. Does not compare or recover."
+  },
+  "vendor/mb_ref.c": {
+    "sha256": "a8ce19c2dc93e36f8c9c24a271c4187d68f922b9455262c7199a009763fe3ad3"
+  },
+  "vendor/mb_fingerprint.py": {
+    "sha256": "de90cfcbba7986341b259e772d2385f4ab36d879f76f5dabc5102350d0749214"
+  },
+  "observe.c": {
+    "sha256": "0c53e91b3f82c83258e3890b5e2bd6c53888e6dd1c25cfda604483ed6269dc1a"
+  },
+  "run.py": {
+    "sha256": "9f1b471ce9f60e6b358eafd15804b9e54cfd414ec8fd954735b87d032ef28b45"
+  }
+}

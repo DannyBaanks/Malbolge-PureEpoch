@@ -1,0 +1,43 @@
+test_eof_semantic_difference_is_exposed (test_adapter.OfflineAdapter.test_eof_semantic_difference_is_exposed) ... FAIL
+test_real_autobolge_encoder_and_anchor_match_supported_strict_run (test_adapter.OfflineAdapter.test_real_autobolge_encoder_and_anchor_match_supported_strict_run) ... FAIL
+
+======================================================================
+FAIL: test_eof_semantic_difference_is_exposed (test_adapter.OfflineAdapter.test_eof_semantic_difference_is_exposed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_adapter.py", line 9, in api
+    from tools import autobolge_adapter
+ImportError: cannot import name 'autobolge_adapter' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_adapter.py", line 15, in test_eof_semantic_difference_is_exposed
+    result = self.api().eof_probe()
+             ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_adapter.py", line 11, in api
+    self.fail('offline Autobolge bridge missing')
+AssertionError: offline Autobolge bridge missing
+
+======================================================================
+FAIL: test_real_autobolge_encoder_and_anchor_match_supported_strict_run (test_adapter.OfflineAdapter.test_real_autobolge_encoder_and_anchor_match_supported_strict_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_adapter.py", line 9, in api
+    from tools import autobolge_adapter
+ImportError: cannot import name 'autobolge_adapter' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_adapter.py", line 22, in test_real_autobolge_encoder_and_anchor_match_supported_strict_run
+    result = self.api().bridge(b'\x03\x03')
+             ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_adapter.py", line 11, in api
+    self.fail('offline Autobolge bridge missing')
+AssertionError: offline Autobolge bridge missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

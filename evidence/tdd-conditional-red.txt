@@ -1,0 +1,65 @@
+test_disabled_recovery_and_broken_return_do_not_pass (test_conditional.ConditionalRecovery.test_disabled_recovery_and_broken_return_do_not_pass) ... FAIL
+test_forced_second_failure_is_not_silently_rescued (test_conditional.ConditionalRecovery.test_forced_second_failure_is_not_silently_rescued) ... FAIL
+test_positive_case_has_no_output_before_commit (test_conditional.ConditionalRecovery.test_positive_case_has_no_output_before_commit) ... FAIL
+test_same_artifact_commits_or_restores_then_retries (test_conditional.ConditionalRecovery.test_same_artifact_commits_or_restores_then_retries) ... FAIL
+test_wrong_saved_state_is_rejected_even_if_retry_commits (test_conditional.ConditionalRecovery.test_wrong_saved_state_is_rejected_even_if_retry_commits) ... FAIL
+
+======================================================================
+FAIL: test_disabled_recovery_and_broken_return_do_not_pass (test_conditional.ConditionalRecovery.test_disabled_recovery_and_broken_return_do_not_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 33, in test_disabled_recovery_and_broken_return_do_not_pass
+    build = self.api()
+            ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 7, in api
+    self.assertTrue(hasattr(build_candidates, 'build_conditional'), 'conditional Classic candidate missing')
+AssertionError: False is not true : conditional Classic candidate missing
+
+======================================================================
+FAIL: test_forced_second_failure_is_not_silently_rescued (test_conditional.ConditionalRecovery.test_forced_second_failure_is_not_silently_rescued)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 40, in test_forced_second_failure_is_not_silently_rescued
+    build = self.api()
+            ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 7, in api
+    self.assertTrue(hasattr(build_candidates, 'build_conditional'), 'conditional Classic candidate missing')
+AssertionError: False is not true : conditional Classic candidate missing
+
+======================================================================
+FAIL: test_positive_case_has_no_output_before_commit (test_conditional.ConditionalRecovery.test_positive_case_has_no_output_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 46, in test_positive_case_has_no_output_before_commit
+    build = self.api()
+            ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 7, in api
+    self.assertTrue(hasattr(build_candidates, 'build_conditional'), 'conditional Classic candidate missing')
+AssertionError: False is not true : conditional Classic candidate missing
+
+======================================================================
+FAIL: test_same_artifact_commits_or_restores_then_retries (test_conditional.ConditionalRecovery.test_same_artifact_commits_or_restores_then_retries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 11, in test_same_artifact_commits_or_restores_then_retries
+    build = self.api()
+            ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 7, in api
+    self.assertTrue(hasattr(build_candidates, 'build_conditional'), 'conditional Classic candidate missing')
+AssertionError: False is not true : conditional Classic candidate missing
+
+======================================================================
+FAIL: test_wrong_saved_state_is_rejected_even_if_retry_commits (test_conditional.ConditionalRecovery.test_wrong_saved_state_is_rejected_even_if_retry_commits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 26, in test_wrong_saved_state_is_rejected_even_if_retry_commits
+    build = self.api()
+            ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_conditional.py", line 7, in api
+    self.assertTrue(hasattr(build_candidates, 'build_conditional'), 'conditional Classic candidate missing')
+AssertionError: False is not true : conditional Classic candidate missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (failures=5)

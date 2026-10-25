@@ -1,0 +1,28 @@
+{
+  "kind": "CHECKPOINT",
+  "mode": "corrupt_journal",
+  "labels": {
+    "initialize_journal": 110,
+    "read_initial": 111,
+    "initialize_target": 122,
+    "save": 134,
+    "read_clobber_operand": 135,
+    "clobber": 146,
+    "damage_journal": 158,
+    "journal_read_rotation_1": 173,
+    "journal_read_rotation_2": 188,
+    "journal_read_rotation_3": 203,
+    "journal_read_rotation_4": 218,
+    "journal_read_rotation_5": 233,
+    "journal_read_rotation_6": 248,
+    "journal_read_rotation_7": 263,
+    "journal_read_rotation_8": 278,
+    "journal_read_rotation_9": 293,
+    "journal_read_rotation_10": 308,
+    "restore": 320,
+    "emit_committed_value": 321,
+    "halt": 322
+  },
+  "target": 36,
+  "journal": 52
+}

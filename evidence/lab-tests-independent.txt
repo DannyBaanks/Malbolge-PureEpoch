@@ -1,0 +1,19 @@
+test_budget_does_not_become_a_pass (test_candidates.Candidates.test_budget_does_not_become_a_pass) ... ok
+test_journal_restores_two_different_runtime_values (test_candidates.Candidates.test_journal_restores_two_different_runtime_values) ... ok
+test_missing_or_corrupted_journal_destroys_restore (test_candidates.Candidates.test_missing_or_corrupted_journal_destroys_restore) ... ok
+test_nine_rotations_are_not_a_restore (test_candidates.Candidates.test_nine_rotations_are_not_a_restore) ... ok
+test_output_only_impostor_is_rejected_by_memory_contract (test_candidates.Candidates.test_output_only_impostor_is_rejected_by_memory_contract) ... ok
+test_ten_rotations_restore_selected_cell_and_halt (test_candidates.Candidates.test_ten_rotations_restore_selected_cell_and_halt) ... ok
+test_all_four_cases_match_strict_c_and_original_olmstead (test_conditional.ConditionalRecovery.test_all_four_cases_match_strict_c_and_original_olmstead) ... ok
+test_disabled_recovery_and_broken_return_do_not_pass (test_conditional.ConditionalRecovery.test_disabled_recovery_and_broken_return_do_not_pass) ... ok
+test_forced_second_failure_is_not_silently_rescued (test_conditional.ConditionalRecovery.test_forced_second_failure_is_not_silently_rescued) ... ok
+test_positive_case_has_no_output_before_commit (test_conditional.ConditionalRecovery.test_positive_case_has_no_output_before_commit) ... ok
+test_same_artifact_commits_or_restores_then_retries (test_conditional.ConditionalRecovery.test_same_artifact_commits_or_restores_then_retries) ... ok
+test_wrong_saved_state_is_rejected_even_if_retry_commits (test_conditional.ConditionalRecovery.test_wrong_saved_state_is_rejected_even_if_retry_commits) ... ok
+test_independent_runs_agree_on_every_transition_and_full_memory (test_oracles.OracleParity.test_independent_runs_agree_on_every_transition_and_full_memory) ... ok
+test_strict_loader_rejection_is_not_certified (test_oracles.OracleParity.test_strict_loader_rejection_is_not_certified) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 8.590s
+
+OK

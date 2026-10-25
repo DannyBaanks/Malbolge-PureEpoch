@@ -1,0 +1,9 @@
+{
+  "kind": "REVERSIBLE",
+  "target": 96,
+  "initial": 37,
+  "rotations": 9,
+  "first_mutation_pc": 22,
+  "last_rotation_pc": 38,
+  "halt_pc": 40
+}

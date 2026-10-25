@@ -1,0 +1,18 @@
+{
+  "name": "build_ref",
+  "command": [
+    "gcc",
+    "-O3",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "vendor/mb_ref.c",
+    "-o",
+    "mb_ref"
+  ],
+  "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "allocated_steps": 0,
+  "returncode": 0,
+  "timeout": false,
+  "seconds": 0.283907
+}

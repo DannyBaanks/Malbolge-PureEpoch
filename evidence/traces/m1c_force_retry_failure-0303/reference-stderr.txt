@@ -1,0 +1,1 @@
+NONPRINTABLE_PC: cell 62 value 19695 step 253

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "independently_recomputed_intersections": {
+    "m281": 96,
+    "lutter": 96,
+    "m284": 96,
+    "cat": 15,
+    "cat_empty": 14,
+    "short": 2,
+    "journal_access_candidate": 1
+  },
+  "allocated_steps": 395230192,
+  "python_C_prefix_hash_match": true
+}

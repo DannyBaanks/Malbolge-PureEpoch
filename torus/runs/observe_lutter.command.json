@@ -1,0 +1,14 @@
+{
+  "name": "observe_lutter",
+  "command": [
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/lutter.mal",
+    "70000000",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/lutter"
+  ],
+  "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "allocated_steps": 70000000,
+  "returncode": 0,
+  "timeout": false,
+  "seconds": 2.384161
+}

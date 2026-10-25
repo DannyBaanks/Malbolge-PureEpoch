@@ -1,0 +1,1068 @@
+{
+  "zero_seed_to_ones": [
+    {
+      "step": 8,
+      "pre": [
+        0,
+        106,
+        75,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        107,
+        76,
+        0
+      ],
+      "changes": [
+        [
+          75,
+          81,
+          29524
+        ],
+        [
+          106,
+          50,
+          80
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_zero": [
+    {
+      "step": 16,
+      "pre": [
+        29524,
+        114,
+        75,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        0,
+        115,
+        76,
+        0
+      ],
+      "changes": [
+        [
+          75,
+          29524,
+          0
+        ],
+        [
+          114,
+          42,
+          114
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_journal": [
+    {
+      "step": 25,
+      "pre": [
+        0,
+        123,
+        52,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        124,
+        53,
+        0
+      ],
+      "changes": [
+        [
+          52,
+          81,
+          29524
+        ],
+        [
+          123,
+          33,
+          53
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_recovery_portal": [
+    {
+      "step": 30,
+      "pre": [
+        29524,
+        128,
+        62,
+        0
+      ],
+      "opcode": 39,
+      "post": [
+        19695,
+        129,
+        63,
+        0
+      ],
+      "changes": [
+        [
+          62,
+          37,
+          19695
+        ],
+        [
+          128,
+          99,
+          86
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "read_initial": [
+    {
+      "step": 31,
+      "pre": [
+        19695,
+        129,
+        63,
+        0
+      ],
+      "opcode": 23,
+      "post": [
+        3,
+        130,
+        64,
+        1
+      ],
+      "changes": [
+        [
+          129,
+          82,
+          118
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_target": [
+    {
+      "step": 33,
+      "pre": [
+        3,
+        131,
+        36,
+        1
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        132,
+        37,
+        1
+      ],
+      "changes": [
+        [
+          36,
+          81,
+          29521
+        ],
+        [
+          131,
+          119,
+          78
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "save": [
+    {
+      "step": 40,
+      "pre": [
+        29521,
+        138,
+        52,
+        1
+      ],
+      "opcode": 62,
+      "post": [
+        3,
+        139,
+        53,
+        1
+      ],
+      "changes": [
+        [
+          52,
+          29524,
+          3
+        ],
+        [
+          138,
+          112,
+          68
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "load_zero": [
+    {
+      "step": 48,
+      "pre": [
+        3,
+        146,
+        75,
+        1
+      ],
+      "opcode": 39,
+      "post": [
+        0,
+        147,
+        76,
+        1
+      ],
+      "changes": [
+        [
+          146,
+          81,
+          54
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "clobber": [
+    {
+      "step": 64,
+      "pre": [
+        0,
+        162,
+        36,
+        1
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        163,
+        37,
+        1
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29524
+        ],
+        [
+          162,
+          88,
+          47
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "read_candidate": [
+    {
+      "step": 65,
+      "pre": [
+        29524,
+        163,
+        37,
+        1
+      ],
+      "opcode": 23,
+      "post": [
+        3,
+        164,
+        38,
+        2
+      ],
+      "changes": [
+        [
+          163,
+          48,
+          123
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "transition": [
+    {
+      "step": 75,
+      "pre": [
+        3,
+        173,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        174,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29524,
+          29521
+        ],
+        [
+          173,
+          77,
+          65
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "dispatch": [
+    {
+      "step": 79,
+      "pre": [
+        29521,
+        177,
+        36,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29521,
+        29522,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          29521,
+          63,
+          43
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "failure_route": [
+    {
+      "step": 80,
+      "pre": [
+        29521,
+        29522,
+        37,
+        2
+      ],
+      "opcode": 40,
+      "post": [
+        29521,
+        29523,
+        62,
+        2
+      ],
+      "changes": [
+        [
+          29522,
+          34,
+          122
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "recovery_jump": [
+    {
+      "step": 81,
+      "pre": [
+        29521,
+        29523,
+        62,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29521,
+        19696,
+        63,
+        2
+      ],
+      "changes": [
+        [
+          19695,
+          113,
+          108
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "commit": [
+    {
+      "step": 247,
+      "pre": [
+        29523,
+        29524,
+        37,
+        2
+      ],
+      "opcode": 5,
+      "post": [
+        29523,
+        29525,
+        38,
+        2
+      ],
+      "changes": [
+        [
+          29524,
+          91,
+          106
+        ]
+      ],
+      "output": [
+        83
+      ],
+      "terminal": "RUNNING"
+    }
+  ],
+  "halt": [
+    {
+      "step": 248,
+      "pre": [
+        29523,
+        29525,
+        38,
+        2
+      ],
+      "opcode": 81,
+      "post": [
+        29523,
+        29525,
+        38,
+        2
+      ],
+      "changes": [],
+      "output": [],
+      "terminal": "HALT"
+    }
+  ],
+  "recovery_load_zero": [
+    {
+      "step": 91,
+      "pre": [
+        29521,
+        19705,
+        75,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        0,
+        19706,
+        76,
+        2
+      ],
+      "changes": [
+        [
+          19705,
+          74,
+          70
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "recovery_reset_target": [
+    {
+      "step": 107,
+      "pre": [
+        0,
+        19721,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        19722,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29524
+        ],
+        [
+          19721,
+          81,
+          54
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_1": [
+    {
+      "step": 114,
+      "pre": [
+        29524,
+        19728,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        1,
+        19729,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          3,
+          1
+        ],
+        [
+          19728,
+          51,
+          41
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_2": [
+    {
+      "step": 124,
+      "pre": [
+        1,
+        19738,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        19683,
+        19739,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          1,
+          19683
+        ],
+        [
+          19738,
+          41,
+          102
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_3": [
+    {
+      "step": 134,
+      "pre": [
+        19683,
+        19748,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        6561,
+        19749,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          19683,
+          6561
+        ],
+        [
+          19748,
+          125,
+          105
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_4": [
+    {
+      "step": 144,
+      "pre": [
+        6561,
+        19758,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        2187,
+        19759,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          6561,
+          2187
+        ],
+        [
+          19758,
+          115,
+          82
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_5": [
+    {
+      "step": 154,
+      "pre": [
+        2187,
+        19768,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        729,
+        19769,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          2187,
+          729
+        ],
+        [
+          19768,
+          105,
+          42
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_6": [
+    {
+      "step": 164,
+      "pre": [
+        729,
+        19778,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        243,
+        19779,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          729,
+          243
+        ],
+        [
+          19778,
+          95,
+          109
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_7": [
+    {
+      "step": 174,
+      "pre": [
+        243,
+        19788,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        81,
+        19789,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          243,
+          81
+        ],
+        [
+          19788,
+          85,
+          73
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_8": [
+    {
+      "step": 184,
+      "pre": [
+        81,
+        19798,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        27,
+        19799,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          81,
+          27
+        ],
+        [
+          19798,
+          75,
+          104
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_9": [
+    {
+      "step": 194,
+      "pre": [
+        27,
+        19808,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        9,
+        19809,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          27,
+          9
+        ],
+        [
+          19808,
+          65,
+          59
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "journal_read_rotation_10": [
+    {
+      "step": 204,
+      "pre": [
+        9,
+        19818,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        3,
+        19819,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          9,
+          3
+        ],
+        [
+          19818,
+          55,
+          110
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "restore": [
+    {
+      "step": 211,
+      "pre": [
+        3,
+        19825,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        19826,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29524,
+          29521
+        ],
+        [
+          19825,
+          71,
+          83
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "construct_retry_operand_1": [
+    {
+      "step": 220,
+      "pre": [
+        29521,
+        19834,
+        81,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        27,
+        19835,
+        82,
+        2
+      ],
+      "changes": [
+        [
+          81,
+          81,
+          27
+        ],
+        [
+          19834,
+          39,
+          116
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "construct_retry_operand_2": [
+    {
+      "step": 224,
+      "pre": [
+        27,
+        19838,
+        81,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        9,
+        19839,
+        82,
+        2
+      ],
+      "changes": [
+        [
+          81,
+          27,
+          9
+        ],
+        [
+          19838,
+          35,
+          93
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "construct_retry_operand_3": [
+    {
+      "step": 228,
+      "pre": [
+        9,
+        19842,
+        81,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        3,
+        19843,
+        82,
+        2
+      ],
+      "changes": [
+        [
+          81,
+          9,
+          3
+        ],
+        [
+          19842,
+          125,
+          105
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "construct_retry_operand_4": [
+    {
+      "step": 232,
+      "pre": [
+        3,
+        19846,
+        81,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        1,
+        19847,
+        82,
+        2
+      ],
+      "changes": [
+        [
+          81,
+          3,
+          1
+        ],
+        [
+          19846,
+          121,
+          35
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "retry": [
+    {
+      "step": 242,
+      "pre": [
+        1,
+        19856,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29523,
+        19857,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29523
+        ],
+        [
+          19856,
+          40,
+          121
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "retry_dispatch": [
+    {
+      "step": 246,
+      "pre": [
+        29523,
+        19860,
+        36,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29523,
+        29524,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          29523,
+          91,
+          106
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ]
+}

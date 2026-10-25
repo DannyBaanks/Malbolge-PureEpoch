@@ -32,7 +32,7 @@
 
 - [x] Read complete compose and all seven M0 files; reproduce M0 before lab creation.
 - [x] Record original git status and commits, compare remote heads, create an isolated laboratory.
-- [ ] Save baseline reproduction, source/binary hashes and raw upstream regression logs.
+- [x] Save baseline reproduction, source/binary hashes and raw upstream regression logs.
 
 ### 2. Strict constructive candidates and verification
 
@@ -40,14 +40,14 @@ Files: `tools/build_candidates.py`, `tools/observe.py`, `tests/test_candidates.p
 
 Interfaces: `build_reversible(rotations=10, initial=37) -> (bytes, metadata)`; `build_checkpoint(mode='normal') -> (bytes, metadata)`; `observe.run(source, payload, max_steps=5000) -> dict` including full final memory and per-step changes.
 
-- [ ] Write behavioral tests first: ten rotations restore cell 96 to 37, nine fail; a saved journal recovers target cell 36 for two inputs, corrupt/remove journal fails; output-only impostor fails state checks.
-- [ ] Observe RED, implement offline assembly and observational execution, observe GREEN.
-- [ ] Compile unchanged C and original Olmstead; add observational C trace/dump; compare traces, complete final memory, stdout and stop reasons.
-- [ ] Attempt a bounded conditional route/retry only after checkpoint evidence. Preserve candidate failures; do not weaken gates.
+- [x] Write behavioral tests first: ten rotations restore cell 96 to 37, nine fail; a saved journal recovers target cell 36 for two inputs, corrupt/remove journal fails; output-only impostor fails state checks.
+- [x] Observe RED, implement offline assembly and observational execution, observe GREEN.
+- [x] Compile unchanged C and original Olmstead; add observational C trace/dump; compare traces, complete final memory, stdout and stop reasons.
+- [x] Attempt a bounded conditional route/retry only after checkpoint evidence. Preserve candidate failures; do not weaken gates.
 
 ### 3. Evidence, addendum, review
 
-- [ ] Generate raw traces, hashes, manifests, measurements, exact reproduction commands, failures, results, verdict and next compose.
-- [ ] Integrate toroidal evidence separately; no rollback claims from access projections.
+- [x] Generate raw traces, hashes, manifests, measurements, exact reproduction commands, failures, results, verdict and next compose.
+- [x] Integrate toroidal evidence separately; no rollback claims from access projections.
 - [ ] Run complete lab suite, review through a fresh subagent, address substantive findings with regressions.
 - [ ] Commit the standalone lab and report achieved gates, exclusions and next experiment.

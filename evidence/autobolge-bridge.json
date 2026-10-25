@@ -1,0 +1,101 @@
+{
+  "eof_difference": {
+    "source_hex": "7550",
+    "payload_hex": "",
+    "strict": {
+      "a": 59048,
+      "c": 1,
+      "d": 1,
+      "terminal": "HALT",
+      "trace": [
+        {
+          "step": 0,
+          "pre": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "opcode": 23,
+          "post": [
+            59048,
+            1,
+            1,
+            0
+          ],
+          "changes": [
+            [
+              0,
+              117,
+              111
+            ]
+          ],
+          "output": [],
+          "terminal": "RUNNING"
+        },
+        {
+          "step": 1,
+          "pre": [
+            59048,
+            1,
+            1,
+            0
+          ],
+          "opcode": 81,
+          "post": [
+            59048,
+            1,
+            1,
+            0
+          ],
+          "changes": [],
+          "output": [],
+          "terminal": "HALT"
+        }
+      ]
+    },
+    "autobolge": {
+      "a": 0,
+      "c": 0,
+      "d": 0,
+      "reason": "StopReason.INPUT_UNDERFLOW",
+      "steps": 1
+    }
+  },
+  "cases": [
+    {
+      "same_source": true,
+      "source_sha256": "17ff6f326c3205fa92bae9eeeba4c8ecf0229a722c55491e2fa5e0cd4d7b7985",
+      "strict_state_parity": true,
+      "anchor_at_restore": {
+        "digest": "999f2350a101f91c1750fffed07f9852bcb6558074bd17283a8904f410166786",
+        "memory_root": "5c8f6993e79fd2c041f549be6d1c61a05341ef65e46c6de6714c99a35baab278",
+        "target_value": 29523,
+        "journal_value": 1,
+        "pc": 19826,
+        "a": 29523,
+        "d": 37,
+        "step": 212
+      },
+      "autobolge_steps_including_halt": 249,
+      "scope": "offline encoding and observational anchors only; no relational proposal search, JIT, or snapshot resume"
+    },
+    {
+      "same_source": true,
+      "source_sha256": "17ff6f326c3205fa92bae9eeeba4c8ecf0229a722c55491e2fa5e0cd4d7b7985",
+      "strict_state_parity": true,
+      "anchor_at_restore": {
+        "digest": "40c41b57c633201703d9a56bb29284d1e7e0a29fef44c5482f6fe9db47913767",
+        "memory_root": "ffe5e367ae4e7b051495cb372a0edeff4b4e36a0e687234ef1ac3cf2a955a687",
+        "target_value": 29521,
+        "journal_value": 3,
+        "pc": 19826,
+        "a": 29521,
+        "d": 37,
+        "step": 212
+      },
+      "autobolge_steps_including_halt": 249,
+      "scope": "offline encoding and observational anchors only; no relational proposal search, JIT, or snapshot resume"
+    }
+  ]
+}

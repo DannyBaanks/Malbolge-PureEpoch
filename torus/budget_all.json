@@ -1,0 +1,8 @@
+{
+  "allocated_steps": 395230192,
+  "actual_completed_VM_instructions": 388829050,
+  "runner_allocated_steps": 395170192,
+  "failed_replay_allocated_steps": 30000,
+  "corrected_replay_allocated_steps": 30000,
+  "per_child_timeout_seconds": 120
+}

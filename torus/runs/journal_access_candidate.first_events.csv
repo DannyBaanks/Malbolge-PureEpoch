@@ -1,0 +1,6 @@
+kind,step,a,c,d,opcode,before,after,previous_c,previous_d,previous_opcode
+read,1,0,0,0,40,40,40,65535,65535,65535
+read,2,0,1,41,39,78,78,0,0,40
+write,2,0,1,41,39,78,26,0,0,40
+read,3,26,2,42,62,29545,29545,1,41,39
+write,3,26,2,42,62,29545,29543,1,41,39

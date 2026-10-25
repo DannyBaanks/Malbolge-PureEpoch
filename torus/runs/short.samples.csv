@@ -1,0 +1,3 @@
+step,a,c,d,cell,opcode,operand,direct_new,enc_addr,enc_old,enc_new,next_c,next_d,delta
+1,0,0,0,68,68,68,65535,0,68,33,1,1,0
+2,0,1,1,80,81,80,65535,65535,65535,65535,1,1,0

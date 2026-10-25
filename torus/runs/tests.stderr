@@ -1,0 +1,11 @@
+test_complete_four_step_journal_fixture_hash (test_evidence.Evidence.test_complete_four_step_journal_fixture_hash) ... ok
+test_crazy_all_single_trits_and_lift (test_evidence.Evidence.test_crazy_all_single_trits_and_lift) ... ok
+test_halt_is_visited_without_encryption (test_evidence.Evidence.test_halt_is_visited_without_encryption) ... ok
+test_jump_encrypts_destination (test_evidence.Evidence.test_jump_encrypts_destination) ... ok
+test_original_symmetry_detector_has_false_zero (test_evidence.Evidence.test_original_symmetry_detector_has_false_zero) ... ok
+test_recomputed_96_sets_are_relocated_not_identical (test_evidence.Evidence.test_recomputed_96_sets_are_relocated_not_identical) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.008s
+
+OK

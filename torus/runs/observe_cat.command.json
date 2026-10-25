@@ -1,0 +1,14 @@
+{
+  "name": "observe_cat",
+  "command": [
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+    "1000000",
+    "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/cat"
+  ],
+  "input_sha256": "edeaaff3f1774ad2888673770c6d64097e391bc362d7d6fb34982ddf0efd18cb",
+  "allocated_steps": 1000000,
+  "returncode": 0,
+  "timeout": false,
+  "seconds": 0.078818
+}

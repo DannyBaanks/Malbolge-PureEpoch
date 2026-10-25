@@ -1,0 +1,119 @@
+test_budget_does_not_become_a_pass (test_candidates.Candidates.test_budget_does_not_become_a_pass) ... FAIL
+test_journal_restores_two_different_runtime_values (test_candidates.Candidates.test_journal_restores_two_different_runtime_values) ... FAIL
+test_missing_or_corrupted_journal_destroys_restore (test_candidates.Candidates.test_missing_or_corrupted_journal_destroys_restore) ... FAIL
+test_nine_rotations_are_not_a_restore (test_candidates.Candidates.test_nine_rotations_are_not_a_restore) ... FAIL
+test_output_only_impostor_is_rejected_by_memory_contract (test_candidates.Candidates.test_output_only_impostor_is_rejected_by_memory_contract) ... FAIL
+test_ten_rotations_restore_selected_cell_and_halt (test_candidates.Candidates.test_ten_rotations_restore_selected_cell_and_halt) ... FAIL
+
+======================================================================
+FAIL: test_budget_does_not_become_a_pass (test_candidates.Candidates.test_budget_does_not_become_a_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 8, in api
+    from tools import build_candidates, observe
+ImportError: cannot import name 'build_candidates' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 61, in test_budget_does_not_become_a_pass
+    build, observer = self.api()
+                      ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 10, in api
+    self.fail('offline assembler and observer not implemented')
+AssertionError: offline assembler and observer not implemented
+
+======================================================================
+FAIL: test_journal_restores_two_different_runtime_values (test_candidates.Candidates.test_journal_restores_two_different_runtime_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 8, in api
+    from tools import build_candidates, observe
+ImportError: cannot import name 'build_candidates' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 33, in test_journal_restores_two_different_runtime_values
+    build, observer = self.api()
+                      ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 10, in api
+    self.fail('offline assembler and observer not implemented')
+AssertionError: offline assembler and observer not implemented
+
+======================================================================
+FAIL: test_missing_or_corrupted_journal_destroys_restore (test_candidates.Candidates.test_missing_or_corrupted_journal_destroys_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 8, in api
+    from tools import build_candidates, observe
+ImportError: cannot import name 'build_candidates' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 46, in test_missing_or_corrupted_journal_destroys_restore
+    build, observer = self.api()
+                      ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 10, in api
+    self.fail('offline assembler and observer not implemented')
+AssertionError: offline assembler and observer not implemented
+
+======================================================================
+FAIL: test_nine_rotations_are_not_a_restore (test_candidates.Candidates.test_nine_rotations_are_not_a_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 8, in api
+    from tools import build_candidates, observe
+ImportError: cannot import name 'build_candidates' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 26, in test_nine_rotations_are_not_a_restore
+    build, observer = self.api()
+                      ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 10, in api
+    self.fail('offline assembler and observer not implemented')
+AssertionError: offline assembler and observer not implemented
+
+======================================================================
+FAIL: test_output_only_impostor_is_rejected_by_memory_contract (test_candidates.Candidates.test_output_only_impostor_is_rejected_by_memory_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 8, in api
+    from tools import build_candidates, observe
+ImportError: cannot import name 'build_candidates' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 53, in test_output_only_impostor_is_rejected_by_memory_contract
+    build, observer = self.api()
+                      ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 10, in api
+    self.fail('offline assembler and observer not implemented')
+AssertionError: offline assembler and observer not implemented
+
+======================================================================
+FAIL: test_ten_rotations_restore_selected_cell_and_halt (test_candidates.Candidates.test_ten_rotations_restore_selected_cell_and_halt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 8, in api
+    from tools import build_candidates, observe
+ImportError: cannot import name 'build_candidates' from 'tools' (unknown location)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 14, in test_ten_rotations_restore_selected_cell_and_halt
+    build, observer = self.api()
+                      ^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_candidates.py", line 10, in api
+    self.fail('offline assembler and observer not implemented')
+AssertionError: offline assembler and observer not implemented
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=6)

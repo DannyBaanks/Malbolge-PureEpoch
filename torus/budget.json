@@ -1,0 +1,290 @@
+{
+  "command_timeout_seconds": 120,
+  "allocated_steps": 395170192,
+  "commands": [
+    {
+      "name": "observe_journal_access_candidate",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/journal_access_candidate.mal",
+        "32",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/journal_access_candidate"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 32,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.04601
+    },
+    {
+      "name": "external_short",
+      "command": [
+        "python3",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/vendor/mb_fingerprint.py",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/short.mal",
+        "32"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 32,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.102156
+    },
+    {
+      "name": "external_cat",
+      "command": [
+        "python3",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/vendor/mb_fingerprint.py",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+        "100000"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 100000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 2.793887
+    },
+    {
+      "name": "observe_cat",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+        "1000000",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/cat"
+      ],
+      "input_sha256": "edeaaff3f1774ad2888673770c6d64097e391bc362d7d6fb34982ddf0efd18cb",
+      "allocated_steps": 1000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.078818
+    },
+    {
+      "name": "ref_cat_empty",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+        "20000"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 20000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.002218
+    },
+    {
+      "name": "build_ref",
+      "command": [
+        "gcc",
+        "-O3",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "vendor/mb_ref.c",
+        "-o",
+        "mb_ref"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 0,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.283907
+    },
+    {
+      "name": "ref_lutter",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/lutter.mal",
+        "70000000"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 70000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.158418
+    },
+    {
+      "name": "observe_m284",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m284.mal",
+        "64000000",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/m284"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 64000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 2.213263
+    },
+    {
+      "name": "observe_m281_prefix",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+        "30000",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/m281_prefix"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 30000,
+      "returncode": 2,
+      "timeout": false,
+      "seconds": 0.129821
+    },
+    {
+      "name": "observe_short",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/short.mal",
+        "32",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/short"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 32,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.049532
+    },
+    {
+      "name": "external_m281",
+      "command": [
+        "python3",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/vendor/mb_fingerprint.py",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+        "63000000"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 63000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 22.315086
+    },
+    {
+      "name": "ref_short",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/short.mal",
+        "32"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 32,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.002327
+    },
+    {
+      "name": "ref_journal_access_candidate",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/journal_access_candidate.mal",
+        "32"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 32,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.001994
+    },
+    {
+      "name": "ref_cat",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+        "1000000"
+      ],
+      "input_sha256": "edeaaff3f1774ad2888673770c6d64097e391bc362d7d6fb34982ddf0efd18cb",
+      "allocated_steps": 1000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.002058
+    },
+    {
+      "name": "build_observe",
+      "command": [
+        "gcc",
+        "-O3",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Wno-deprecated-declarations",
+        "observe.c",
+        "-lcrypto",
+        "-o",
+        "observe"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 0,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.251429
+    },
+    {
+      "name": "observe_cat_empty",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/cat.mal",
+        "20000",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/cat_empty"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 20000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.076419
+    },
+    {
+      "name": "observe_m281",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+        "63000000",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/m281"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 63000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 2.15813
+    },
+    {
+      "name": "ref_m281",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/mb_ref",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/m281.mal",
+        "63000000"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 63000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.142892
+    },
+    {
+      "name": "observe_lutter",
+      "command": [
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/observe",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/lutter.mal",
+        "70000000",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/lutter"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 70000000,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 2.384161
+    },
+    {
+      "name": "external_journal_access_candidate",
+      "command": [
+        "python3",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/vendor/mb_fingerprint.py",
+        "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/journal_access_candidate.mal",
+        "32"
+      ],
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "allocated_steps": 32,
+      "returncode": 0,
+      "timeout": false,
+      "seconds": 0.109099
+    }
+  ]
+}

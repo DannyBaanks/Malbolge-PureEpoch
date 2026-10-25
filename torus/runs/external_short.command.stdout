@@ -1,0 +1,27 @@
+{
+  "file": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/short.mal",
+  "cells_source": 2,
+  "status": "HALTED",
+  "steps": 2,
+  "seconds": 0.0,
+  "output_len": 0,
+  "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "opcodes": {
+    "68": 1,
+    "81": 1
+  },
+  "visited_c": 2,
+  "visited_d": 2,
+  "visited_union": 2,
+  "coverage_c": 0.0,
+  "encryption_hits": 1,
+  "delta_segments": 1,
+  "delta_breaks": {
+    "4": 0,
+    "40": 0,
+    "otro": 0
+  },
+  "diagonal_fraction": 0.5,
+  "shift_symmetries": [],
+  "shift_symmetry_count": 0
+}

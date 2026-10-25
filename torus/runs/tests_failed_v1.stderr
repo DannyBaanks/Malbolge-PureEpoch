@@ -1,0 +1,38 @@
+test_complete_four_step_journal_fixture_hash (test_evidence.Evidence.test_complete_four_step_journal_fixture_hash) ... /home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/test_evidence.py:18: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/journal_access_candidate.samples.csv' mode='r' encoding='UTF-8'>
+  rows=list(csv.DictReader((ROOT/'runs/journal_access_candidate.samples.csv').open()))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_crazy_all_single_trits_and_lift (test_evidence.Evidence.test_crazy_all_single_trits_and_lift) ... ok
+test_halt_is_visited_without_encryption (test_evidence.Evidence.test_halt_is_visited_without_encryption) ... ok
+test_jump_encrypts_destination (test_evidence.Evidence.test_jump_encrypts_destination) ... /home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/test_evidence.py:28: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/m281.samples.csv' mode='r' encoding='UTF-8'>
+  for r in csv.DictReader((ROOT/'runs'/f'{n}.samples.csv').open()):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/test_evidence.py:28: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/lutter.samples.csv' mode='r' encoding='UTF-8'>
+  for r in csv.DictReader((ROOT/'runs'/f'{n}.samples.csv').open()):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/test_evidence.py:28: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/runs/cat.samples.csv' mode='r' encoding='UTF-8'>
+  for r in csv.DictReader((ROOT/'runs'/f'{n}.samples.csv').open()):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_original_symmetry_detector_has_false_zero (test_evidence.Evidence.test_original_symmetry_detector_has_false_zero) ... ok
+test_recomputed_96_sets_are_relocated_not_identical (test_evidence.Evidence.test_recomputed_96_sets_are_relocated_not_identical) ... ERROR
+
+======================================================================
+ERROR: test_recomputed_96_sets_are_relocated_not_identical (test_evidence.Evidence.test_recomputed_96_sets_are_relocated_not_identical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/test_evidence.py", line 43, in test_recomputed_96_sets_are_relocated_not_identical
+    sets={n:set(map(int,(ROOT/'sets'/n/'intersection.txt').read_text().split())) for n in ['m281','lutter','m284']}
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/sets/lutter/intersection.txt'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+FAILED (errors=1)

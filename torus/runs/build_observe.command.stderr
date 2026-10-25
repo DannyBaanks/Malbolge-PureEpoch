@@ -1,0 +1,31 @@
+observe.c: In function ‘main’:
+observe.c:33:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   33 |  if(argc!=4)return 9;const char*base=argv[3];U max=strtoull(argv[2],0,10),step=0,opcount[94]={0};
+      |  ^~
+observe.c:33:22: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   33 |  if(argc!=4)return 9;const char*base=argv[3];U max=strtoull(argv[2],0,10),step=0,opcount[94]={0};
+      |                      ^~~~~
+observe.c:49:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   49 |   if(stat[c].C++==0)stat[c].firstC=step;if(stat[d].D++==0)stat[d].firstD=step;
+      |   ^~
+observe.c:49:41: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   49 |   if(stat[c].C++==0)stat[c].firstC=step;if(stat[d].D++==0)stat[d].firstD=step;
+      |                                         ^~
+observe.c:68:4: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   68 |    if(c==N-1)cwrap++;if(d==N-1)dwrap++;c=(c+1)%N;d=(d+1)%N;
+      |    ^~
+observe.c:68:22: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   68 |    if(c==N-1)cwrap++;if(d==N-1)dwrap++;c=(c+1)%N;d=(d+1)%N;
+      |                      ^~
+observe.c:71:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   71 |     if(seglen>maxseg)maxseg=seglen;hist[seglen<100000?seglen:99999]++;seglen=0;
+      |     ^~
+observe.c:71:36: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   71 |     if(seglen>maxseg)maxseg=seglen;hist[seglen<100000?seglen:99999]++;seglen=0;
+      |                                    ^~~~
+observe.c:79:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   79 |  if(seglen>maxseg)maxseg=seglen;hist[seglen<100000?seglen:99999]++;SHA256_Update(&sha,buffer,bp);SHA256_Final(digest,&sha);char shahex[65];hashhex(digest,shahex);
+      |  ^~
+observe.c:79:33: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   79 |  if(seglen>maxseg)maxseg=seglen;hist[seglen<100000?seglen:99999]++;SHA256_Update(&sha,buffer,bp);SHA256_Final(digest,&sha);char shahex[65];hashhex(digest,shahex);
+      |                                 ^~~~

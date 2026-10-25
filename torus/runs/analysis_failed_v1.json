@@ -1,0 +1,8 @@
+{
+  "status": "FAILED_HYPOTHESIS",
+  "allocated_steps": 0,
+  "cause": "Initial assertion assumed both final c and final d were first visited on HALT. counts.csv falsified the latter. HALT accounts for only C+1 and union+1, not D+1.",
+  "preserved_source": "vendor/analyze_failed_v1.py",
+  "downstream_failure": "One test errored because analysis had stopped before producing the Lutter exported set file; raw output retained in runs/tests_failed_v1.stderr.",
+  "resolution": "Removed the false assumption; explicitly leave the D and remaining union discrepancy in the received screenshot unexplained."
+}
