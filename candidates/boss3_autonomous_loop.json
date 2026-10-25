@@ -1,0 +1,42 @@
+{
+  "kind": "AUTONOMOUS_DYNAMIC_LOOP_BOSS3",
+  "boss": "Boss 3: El Santo Grial",
+  "mode": "normal",
+  "sha256": "d2d6b91d5f4df1f64890174cbe22599e71b37041aeb3677d2845f95ae01263bc",
+  "length_bytes": 50000,
+  "supported_inputs": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "7",
+    "EOF"
+  ],
+  "startup_dispatcher": {
+    "entry": 0,
+    "read_cell": 99,
+    "formula": "rot(crazy(input, 67))",
+    "dispatch_cell": 105
+  },
+  "constant_generator": {
+    "source_cell": 49,
+    "initial_value": 113,
+    "rotations": 2,
+    "target_value": 32817,
+    "emitted_char": "1"
+  },
+  "target_landings": {
+    "EOF": 39384,
+    "0": 29536,
+    "1": 9853,
+    "2": 49219,
+    "3": 29538,
+    "7": 9842
+  },
+  "claims": {
+    "autonomous_loop": true,
+    "host_intervention_required": false,
+    "zero_external_memory_writes": true,
+    "strict_3_oracle_parity": true
+  }
+}

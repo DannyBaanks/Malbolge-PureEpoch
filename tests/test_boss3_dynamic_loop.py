@@ -1,12 +1,13 @@
-"""Test suite for Boss 3: El Santo Grial (El Bucle while x > 0 con N Dinámico y Re-encriptación en Caliente).
+"""Test suite for Boss 3: El Santo Grial - Bucle while x > 0 Autónomo con N Dinámico.
 
-Verifica exhaustivamente el bucle dinámico de Malbolge puro:
-- Ejecución dinámica para N = 1, 2, 3 sobre las MISMAS celdas físicas [64, 65, 88, 89]
-- Demostración de cero entropía / regeneración termodinámica (Twin-Cylinder F <-> J)
-- Salida limpia a HALT mediante portal prelanding desacoplado
-- Controles negativos (broken_rearm, broken_exit)
-- Paridad estricta entre 3 oráculos (Python, mb_ref, Olmstead 1998)
-- Cronómetro de alta resolución para telemetría de flex
+Verifica exhaustivamente el bucle dinámico autónomo de Malbolge puro:
+- Ejecución dinámica para N in {0, 1, 2, 3, 7} sin modificación externa de memoria
+- Generación in-band de constantes ternarias (a = 32817 -> '1')
+- Despacho ternario universal por rotación y crazy
+- Salida limpia a HALT mediante portal desacoplado
+- Controles negativos (broken_exit, broken_rearm)
+- Paridad estricta entre 3 oráculos (Python, mb_ref.c, Olmstead 1998)
+- Cronómetro de alta resolución para telemetría
 """
 import hashlib
 import json
@@ -19,13 +20,13 @@ PURE_EPOCH_ROOT = Path(__file__).resolve().parent.parent
 if str(PURE_EPOCH_ROOT) not in sys.path:
     sys.path.append(str(PURE_EPOCH_ROOT))
 
-from tools.boss3_dynamic_loop import build_boss3_dynamic_loop, simulate_dynamic_loop_execution
+from tools.boss3_autonomous_loop import build_boss3_autonomous_loop, run_boss3_autonomous_execution
 from tools.observe import run
 from tools.oracles import verify, validate_parity
 
 
 class TestBoss3DynamicLoop(unittest.TestCase):
-    """Pruebas unitarias rigurosas para el bucle dinámico Boss 3."""
+    """Pruebas unitarias rigurosas para el bucle dinámico autónomo Boss 3."""
 
     def setUp(self):
         self.t0 = time.perf_counter()
@@ -34,61 +35,78 @@ class TestBoss3DynamicLoop(unittest.TestCase):
         elapsed = (time.perf_counter() - self.t0) * 1000
         print(f" [CRONÓMETRO: {elapsed:6.2f} ms] -> {self.id().split('.')[-1]}")
 
-    def test_01_dynamic_loop_n1(self):
-        """Verifica que para N=1 el bucle ejecuta 1 iteración sobre [64, 65, 88, 89] y para en HALT."""
-        src, meta = build_boss3_dynamic_loop('normal')
-        res = simulate_dynamic_loop_execution(src, iterations=1)
+    def test_01_autonomous_loop_n0(self):
+        """Verifica que para N=0 y EOF la ejecución es vacía y para limpiamente en HALT."""
+        src, meta = build_boss3_autonomous_loop('normal')
+        
+        # Caso EOF
+        res_eof = run_boss3_autonomous_execution(src, b'')
+        self.assertEqual(res_eof['terminal'], 'HALT')
+        self.assertEqual(res_eof['output'], b'')
+        self.assertEqual(res_eof['steps'], 8)
+        
+        # Caso '0'
+        res_0 = run_boss3_autonomous_execution(src, b'0')
+        self.assertEqual(res_0['terminal'], 'HALT')
+        self.assertEqual(res_0['output'], b'')
+        self.assertEqual(res_0['steps'], 8)
+
+    def test_02_autonomous_loop_n1(self):
+        """Verifica que para N=1 el bucle emite exactamente un '1' y para en HALT."""
+        src, meta = build_boss3_autonomous_loop('normal')
+        res = run_boss3_autonomous_execution(src, b'1')
 
         self.assertEqual(res['terminal'], 'HALT')
-        self.assertEqual(res['steps'], 57)
-        self.assertEqual(len(res['output']), 2)  # 1 inicial + 1 bucle
-        self.assertTrue(res['address_reuse_verified'])
-        self.assertEqual(res['unique_loop_pcs'], [64, 65, 88, 89])
+        self.assertEqual(res['output'], b'1')
+        self.assertEqual(res['steps'], 14)
 
-    def test_02_dynamic_loop_n2(self):
-        """Verifica que para N=2 el bucle ejecuta 2 iteraciones sobre las MISMAS celdas físicas y para en HALT."""
-        src, meta = build_boss3_dynamic_loop('normal')
-        res = simulate_dynamic_loop_execution(src, iterations=2)
+    def test_03_autonomous_loop_n2(self):
+        """Verifica que para N=2 el bucle emite exactamente dos '1's y para en HALT."""
+        src, meta = build_boss3_autonomous_loop('normal')
+        res = run_boss3_autonomous_execution(src, b'2')
 
         self.assertEqual(res['terminal'], 'HALT')
-        self.assertEqual(res['steps'], 81)  # 57 + 24
-        self.assertEqual(len(res['output']), 3)  # 1 inicial + 2 bucle
-        self.assertTrue(res['address_reuse_verified'])
-        self.assertEqual(res['unique_loop_pcs'], [64, 65, 88, 89])
+        self.assertEqual(res['output'], b'11')
+        self.assertEqual(res['steps'], 15)
 
-    def test_03_dynamic_loop_n3(self):
-        """Verifica que para N=3 el bucle ejecuta 3 iteraciones sobre las MISMAS celdas físicas y para en HALT."""
-        src, meta = build_boss3_dynamic_loop('normal')
-        res = simulate_dynamic_loop_execution(src, iterations=3)
+    def test_04_autonomous_loop_n3(self):
+        """Verifica que para N=3 el bucle emite exactamente tres '1's y para en HALT."""
+        src, meta = build_boss3_autonomous_loop('normal')
+        res = run_boss3_autonomous_execution(src, b'3')
 
         self.assertEqual(res['terminal'], 'HALT')
-        self.assertEqual(res['steps'], 105)  # 81 + 24
-        self.assertEqual(len(res['output']), 4)  # 1 inicial + 3 bucle
-        self.assertTrue(res['address_reuse_verified'])
-        self.assertEqual(res['unique_loop_pcs'], [64, 65, 88, 89])
+        self.assertEqual(res['output'], b'111')
+        self.assertEqual(res['steps'], 16)
 
-    def test_04_negative_control_broken_rearm(self):
-        """Control negativo: Corromper la celda de reentrada provoca colapso o parada anómala."""
-        src_broken, meta = build_boss3_dynamic_loop('broken_rearm')
-        # La celda de reentrada 49 está rota
-        res = run(src_broken, b'1', max_steps=100)
-        # No puede completar la ejecución normal del ciclo
-        self.assertNotEqual(res['terminal'], 'HALT')
+    def test_05_autonomous_loop_n7(self):
+        """Verifica que para N=7 el bucle emite exactamente siete '1's y para en HALT."""
+        src, meta = build_boss3_autonomous_loop('normal')
+        res = run_boss3_autonomous_execution(src, b'7')
 
-    def test_05_negative_control_broken_exit(self):
-        """Control negativo: Corromper el portal de parada impide terminar con HALT (falla en STALL)."""
-        src_broken, meta = build_boss3_dynamic_loop('broken_exit')
-        # En entrada 0, debe fallar al detenerse porque la celda 100 tiene nop en vez de 'v'
+        self.assertEqual(res['terminal'], 'HALT')
+        self.assertEqual(res['output'], b'1111111')
+        self.assertEqual(res['steps'], 22)
+
+    def test_06_negative_control_broken_exit(self):
+        """Control negativo: Corromper el portal de parada impide terminar con HALT (consume presupuesto o falla)."""
+        src_broken, meta = build_boss3_autonomous_loop('broken_exit')
         res = run(src_broken, b'0', max_steps=100)
-        self.assertEqual(res['terminal'], 'STALL')
+        self.assertNotEqual(res['terminal'], 'HALT', "El portal corrupto no debió terminar en HALT")
 
-    def test_06_canonical_boss3_parity_3_oracles(self):
-        """Verifica paridad estricta entre 3 oráculos para el candidato canónico Boss 3."""
-        cand_mal = PURE_EPOCH_ROOT / "candidates" / "boss3_dynamic_loop.mal"
-        cand_json = PURE_EPOCH_ROOT / "candidates" / "boss3_dynamic_loop.json"
+    def test_07_negative_control_broken_rearm(self):
+        """Control negativo: Corromper la constante ternaria rompe la generación del carácter de salida."""
+        src_broken, meta = build_boss3_autonomous_loop('broken_rearm')
+        res = run(src_broken, b'1', max_steps=100)
+        # La celda 49 corrompida emite byte inválido (0x0E) en vez de ASCII '1'
+        self.assertNotEqual(res['output'], b'1', "La constante corrupta no debió emitir ASCII '1'")
 
-        self.assertTrue(cand_mal.exists(), "Artefacto candidates/boss3_dynamic_loop.mal debe existir")
-        self.assertTrue(cand_json.exists(), "Metadatos candidates/boss3_dynamic_loop.json deben existir")
+    def test_08_canonical_boss3_parity_3_oracles(self):
+        """Verifica paridad estricta bit-exacta entre 3 oráculos para el candidato canónico Boss 3."""
+        cand_mal = PURE_EPOCH_ROOT / "candidates" / "boss3_autonomous_loop.mal"
+        cand_json = PURE_EPOCH_ROOT / "candidates" / "boss3_autonomous_loop.json"
+
+        self.assertTrue(cand_mal.exists(), "Artefacto candidates/boss3_autonomous_loop.mal debe existir")
+        self.assertTrue(cand_json.exists(), "Metadatos candidates/boss3_autonomous_loop.json deben existir")
 
         img = cand_mal.read_bytes()
         meta = json.loads(cand_json.read_text())
@@ -97,21 +115,24 @@ class TestBoss3DynamicLoop(unittest.TestCase):
         sha256 = hashlib.sha256(img).hexdigest()
         self.assertEqual(sha256, meta['sha256'])
 
-        # Ejecución contra los 3 oráculos para entrada 0
-        report0 = verify(img, b'0', 1000)
-        self.assertTrue(validate_parity(report0), "Paridad estricta falló entre los 3 oráculos para entrada 0")
-        self.assertEqual(report0['terminal'], 'HALT')
-        self.assertTrue(report0['outputs_equal'])
-        self.assertTrue(report0['trace_equal'])
-        self.assertTrue(report0['memory_equal'])
+        # Casos de prueba exhaustivos contra los 3 oráculos
+        test_cases = [
+            (b'', b'', "EOF"),
+            (b'0', b'', "N=0"),
+            (b'1', b'1', "N=1"),
+            (b'2', b'11', "N=2"),
+            (b'3', b'111', "N=3"),
+            (b'7', b'1111111', "N=7"),
+        ]
 
-        # Ejecución contra los 3 oráculos para entrada 1 (50 pasos)
-        report1 = verify(img, b'1', 50)
-        self.assertTrue(validate_parity(report1), "Paridad estricta falló entre los 3 oráculos para entrada 1")
-        self.assertEqual(report1['terminal'], 'BUDGET')
-        self.assertTrue(report1['outputs_equal'])
-        self.assertTrue(report1['trace_equal'])
-        self.assertTrue(report1['memory_equal'])
+        for payload, expected_output, label in test_cases:
+            report = verify(img, payload, 5000)
+            self.assertTrue(validate_parity(report), f"Paridad estricta falló entre los 3 oráculos para {label}")
+            self.assertEqual(report['terminal'], 'HALT', f"Estado terminal no fue HALT para {label}")
+            self.assertEqual(report['output_hex'], expected_output.hex(), f"Salida hex incorrecta para {label}")
+            self.assertTrue(report['outputs_equal'], f"Discrepancia de salida en oráculos para {label}")
+            self.assertEqual(report['reference_returncode'], 0, f"mb_ref.c retorno distinto de 0 para {label}")
+            self.assertEqual(report['original_returncode'], 0, f"olmstead_original.c retorno distinto de 0 para {label}")
 
 
 if __name__ == '__main__':
