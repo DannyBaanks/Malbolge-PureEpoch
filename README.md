@@ -204,11 +204,11 @@ Para someter a PureEpoch a las condiciones más adversariales concebibles —esc
 flowchart LR
   B1["<b>Boss 1: Falla Bizantina</b><br/>Rollback Anidado J1 → J2<br/><i>Safe-Mode Fallback (29.5 KB)</i>"]
   B2["<b>Boss 2: Cinta de Turing</b><br/>Motor Brainfuck Bidireccional<br/><i>Memoria Baja [65..69] (1.3 KB)</i>"]
-  B3["<b>Boss 3: El Santo Grial</b><br/>Bucle While x > 0 Dinámico<br/><i>Twin-Cylinder F↔J / Hot Re-arm (102 B)</i>"]
+  B3["<b>Boss 3: El Santo Grial</b><br/>Bucle While x > 0 Autónomo<br/><i>[NOT_DEMONSTRATED] / Host-Assisted (102 B)</i>"]
 
   B1 -->|Superado ✅| B2
   B2 -->|Superado ✅| B3
-  B3 -->|Superado ✅| TRIUNFO["<b>TRILOGÍA BOSS CONQUISTADA 🏆</b>"]
+  B3 -.->|Frontera Abierta 🔬| OBJETIVO["<b>Contrato Autónomo In-Band</b>"]
 ```
 
 ### Boss 1: Falla Bizantina en Cascada (Rollback del Rollback)
@@ -231,16 +231,14 @@ flowchart LR
 * **Artefacto:** [`candidates/boss2_brainfuck.mal`](candidates/boss2_brainfuck.mal) (1,303 bytes) · [`tools/boss2_brainfuck.py`](tools/boss2_brainfuck.py)
 * **Validación:** 5/5 pruebas unitarias con cronómetro de alta resolución y paridad estricta en [`tests/test_boss2_brainfuck.py`](tests/test_boss2_brainfuck.py).
 
-### Boss 3: El Santo Grial (El Bucle `while x > 0` Dinámico y Regeneración en Caliente)
-* **El Desafío:** En Classic Malbolge todo bucle repetido colapsa porque `XLAT2` automuta destructivamente cada celda ejecutada. En M3 los autores desenrollaron Epoch 1, 2, 3 en direcciones distintas (19696, 39398, 32816). El Santo Grial consistía en ejecutar un bucle `while x > 0` con $N$ dinámico sobre **las MISMAS celdas físicas de memoria** sin desenrollar, decrementar un contador, re-armar/regenerar en caliente y evaluar $X == 0$ para saltar a `v` (HALT).
-* **La Solución Algebraica:**
-  1. **Reutilización Física Estricta:** El bucle opera sobre las direcciones compartidas `[64, 65, 88, 89]`.
-  2. **Motor Termodinámico Regenerativo (Twin-Cylinder $F \leftrightarrow J$):** La celda 64 oscila en un 2-ciclo de `XLAT2` entre $F$ (70) y $J$ (74). En Stroke 1 ejecuta $j$ y muta a 74; en Stroke 2 ejecuta nop y regresa exactamente a 70. Entropía neta: CERO.
-  3. **Invarianza de Salto `i`:** Las celdas 65 y 89 ejecutan `i` ($c = \text{mem}[d]$), que desvía la encriptación a la celda de prelanding antes de la fase `XLAT2`, manteniendo el código de salto inmutable sin degradación.
-  4. **Hot Re-encryption In-Flight:** Solución algebraica exacta $\text{crazy}(29508, \text{enc}) = \text{opcode}$, permitiendo rearmar celdas en caliente en 1 paso sin degradación.
-  5. **Despacho Condicional a HALT:** Al evaluarse $X == 0$, $c$ salta al portal prelanding 99, aterrizando en el portal inmaculado 100 (`v` HALT).
-* **Artefacto:** [`candidates/boss3_dynamic_loop.mal`](candidates/boss3_dynamic_loop.mal) (102 bytes) · [`tools/boss3_dynamic_loop.py`](tools/boss3_dynamic_loop.py) · [`tools/boss3_dynamic_loop_cli.py`](tools/boss3_dynamic_loop_cli.py)
-* **Validación:** 6/6 pruebas unitarias con telemetría de cronómetro y paridad estricta entre 3 oráculos en [`tests/test_boss3_dynamic_loop.py`](tests/test_boss3_dynamic_loop.py).
+### Boss 3: El Santo Grial (El Bucle `while x > 0` con $N$ Dinámico) — `[NOT_DEMONSTRATED]`
+* **El Desafío:** En Classic Malbolge todo bucle repetido colapsa porque `XLAT2` automuta destructivamente cada celda ejecutada. En M3 los autores desenrollaron Epoch 1, 2, 3 en direcciones distintas (19696, 39398, 32816). El reto de Boss 3 es ejecutar un bucle `while x > 0` con $N$ dinámico sobre **las MISMAS celdas físicas de memoria**, decrementar un contador internamente y evaluar $X == 0$ para saltar a `v` (HALT) sin intervención del host.
+* **Estado Científico Actual (`NOT_DEMONSTRATED` para autonomía in-band):**
+  - **Demostrado:** Reutilización estricta de direcciones físicas `[64, 65, 88, 89]` mediante el oscilador termodinámico de 2 tiempos $F(70) \leftrightarrow J(74)$ e invarianza de salto `i` ($c = \text{mem}[d]$).
+  - **Demostrado:** Paridad estricta entre 3 oráculos para entradas canónicas `0` (HALT, 38 pasos) y `1` acotada a presupuesto.
+  - **Límite y No Demostrado:** En el artefacto de 102 bytes (basado en la Truth Machine de Weird Glyphs bajo CC BY-SA 4.0), la interrupción de las $N$ iteraciones en `simulate_dynamic_loop_execution` requiere inyección externa del host (`vm.mem[47] = 99`). Un bucle puramente autónomo donde $N$ desde `stdin` decremente internamente y desvíe a `HALT` sin tocar la memoria desde Python permanece como **la frontera abierta de la investigación**.
+* **Artefacto de Prueba Asistida:** [`candidates/boss3_dynamic_loop.mal`](candidates/boss3_dynamic_loop.mal) (102 bytes) · [`tools/boss3_dynamic_loop.py`](tools/boss3_dynamic_loop.py) · [`tools/boss3_dynamic_loop_cli.py`](tools/boss3_dynamic_loop_cli.py)
+* **Validación de la Sonda:** 6/6 pruebas unitarias con telemetría de cronómetro en [`tests/test_boss3_dynamic_loop.py`](tests/test_boss3_dynamic_loop.py).
 
 ```bash
 # Ejecutar código Brainfuck sobre Malbolge con telemetría de flex

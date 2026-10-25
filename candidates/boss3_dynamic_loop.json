@@ -32,9 +32,10 @@
   ],
   "claims": {
     "address_reuse": true,
-    "unbounded_iterations": true,
-    "no_unrolling": true,
-    "strict_3_oracle_parity": true,
-    "zero_entropic_decay": true
+    "unbounded_iterations": false,
+    "autonomous_in_band_counter": "NOT_DEMONSTRATED",
+    "host_intervention_required": true,
+    "provenance": "Weird Glyphs Truth Machine (CC BY-SA 4.0) with extended prelanding portal",
+    "strict_3_oracle_parity": true
   }
 }

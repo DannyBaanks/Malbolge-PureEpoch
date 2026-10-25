@@ -114,10 +114,11 @@ def build_boss3_dynamic_loop(mode: str = 'normal') -> Tuple[bytes, dict]:
         "supported_inputs": ["0", "1", "2", "3"],
         "claims": {
             "address_reuse": True,
-            "unbounded_iterations": True,
-            "no_unrolling": True,
-            "strict_3_oracle_parity": True,
-            "zero_entropic_decay": True
+            "unbounded_iterations": False,
+            "autonomous_in_band_counter": "NOT_DEMONSTRATED",
+            "host_intervention_required": True,
+            "provenance": "Weird Glyphs Truth Machine (CC BY-SA 4.0) with extended prelanding portal",
+            "strict_3_oracle_parity": True
         }
     }
 
