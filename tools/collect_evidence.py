@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 from tools import build_candidates as build
-from tools.observe import run, target_contract, conditional_contract
+from tools.observe import run, target_contract, conditional_contract, m1e_contract, m2_contract, m2_journal_consumption
 from tools.oracles import verify, compile_oracles, validate_parity
 from tools.autobolge_adapter import bridge, eof_probe, semantic_probes
 
@@ -37,12 +37,17 @@ def emit_json(path, value):
 
 def main():
     build.main()
+    emit_json(ROOT/'evidence/trampoline-rearm.json', build.trampoline_rearm_analysis())
     measurements = []
     cases = [('m1a_rot10', b'', 5000), ('m1a_rot9_negative', b'', 5000)]
     cases += [('m1b_normal', p, 5000) for p in [b'\x01\x00', b'\x03\x00']]
     cases += [(f'm1b_{mode}', b'\x01\x00', 5000) for mode in ['no_save','corrupt_journal','early_halt','output_impostor']]
     cases += [('m1c_normal', p, 5000) for p in [b'\x01\x01', b'\x01\x03', b'\x03\x01', b'\x03\x03']]
     cases += [(f'm1c_{mode}', b'\x03\x03', 1000) for mode in ['no_save','corrupt_journal','no_restore','no_recovery','broken_return','early_halt','force_retry_failure']]
+    cases += [('m1e_normal', p, 5000) for p in [b'\x01\x01', b'\x01\x03', b'\x03\x01', b'\x03\x03']]
+    cases += [(f'm1e_{mode}', p, 5000) for mode in ['no_save','corrupt_journal','no_restore','no_recovery','broken_return','early_halt','output_impostor','force_retry_failure','force_retry_stall'] for p in [b'\x01\x03', b'\x03\x03']]
+    cases += [('m2_normal', bytes([i, c1, c2]), 10000) for i in [1, 3] for c1, c2 in [(1, 1), (3, 1), (1, 3), (3, 3)]]
+    cases += [(f'm2_{mode}', bytes([i, 3, 3]), 10000) for mode in ['no_save','corrupt_journal','no_restore','broken_rearm','force_retry_failure','output_impostor'] for i in [1, 3]]
     for name, payload, budget in cases:
         source = (ROOT/'candidates'/f'{name}.mal').read_bytes()
         meta = json.loads((ROOT/'candidates'/f'{name}.json').read_text())
@@ -50,11 +55,15 @@ def main():
         dest = ROOT/'evidence/traces'/tag
         report = verify(source, payload, budget, dest)
         result = run(source, payload, budget)
-        if name.startswith('m1c'):
+        if name.startswith('m2'):
+            contract = m2_contract(result, meta, payload[0], payload[1], payload[2])
+        elif name.startswith('m1e'):
+            contract = m1e_contract(result, meta, payload[0], payload[1])
+        elif name.startswith('m1c'):
             contract = conditional_contract(result, meta, payload[0], payload[1])
         else:
             contract = target_contract(result, meta['target'], 37 if name.startswith('m1a') else 29524-payload[0])
-        expected = name in {'m1a_rot10','m1b_normal','m1c_normal'}
+        expected = name in {'m1a_rot10','m1b_normal','m1c_normal','m1e_normal','m2_normal'}
         parity = validate_parity(report)
         if not parity or contract != expected:
             raise AssertionError((tag, report, contract, expected))
@@ -63,9 +72,13 @@ def main():
         C = {e['pre'][1] for e in result['trace']}
         D = {e['pre'][2] for e in result['trace']}
         changed = {v[0] for e in result['trace'] for v in e['changes']}
+        extra = {'attempt_counter_final': result['memory'][meta['attempt_counter_cell']]} if 'attempt_counter_cell' in meta else {}
+        if name.startswith('m2'):
+            extra['journal_consumption'] = m2_journal_consumption(result, meta)
         report.update({'name':name, 'source_bytes':len(source), 'logical_contract':contract,
                        'expected_logical_contract':expected, 'target_final':result['memory'][meta['target']],
                        'journal_final':result['memory'][meta['journal']] if 'journal' in meta else None,
+                       **extra,
                        'C_unique':len(C), 'D_unique':len(D), 'C_intersect_D':sorted(C&D),
                        'changed_cells':len(changed), 'trace_directory':str(dest.relative_to(ROOT))})
         measurements.append(report)
@@ -99,7 +112,7 @@ def main():
                   'state_contract':'logical target cell and explicit recovery protocol; NOT physical full-VM rollback',
                   'autobolge':'toolkit semantics used only on checked common-domain runs; EOF probe demonstrates divergence',
                   'runtime_host_writes':False, 'source_loads_per_run':1},
-                'budgets':{'small_candidate_instructions':5000,'forced_failure_instructions':1000,
+                'budgets':{'small_candidate_instructions':5000,'two_epoch_candidate_instructions':10000,'forced_failure_instructions':1000,
                            'toroidal':'torus/budget_all.json'},
                 'file_sha256':{str(p.relative_to(ROOT)):digest(p) for p in sorted(paths)}}
     emit_json(ROOT/'evidence/manifest.json',manifest)

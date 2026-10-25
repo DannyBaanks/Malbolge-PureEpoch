@@ -1,0 +1,2766 @@
+{
+  "zero_seed_to_ones": [
+    {
+      "step": 8,
+      "pre": [
+        0,
+        106,
+        75,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        107,
+        76,
+        0
+      ],
+      "changes": [
+        [
+          75,
+          81,
+          29524
+        ],
+        [
+          106,
+          50,
+          80
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_zero": [
+    {
+      "step": 16,
+      "pre": [
+        29524,
+        114,
+        75,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        0,
+        115,
+        76,
+        0
+      ],
+      "changes": [
+        [
+          75,
+          29524,
+          0
+        ],
+        [
+          114,
+          42,
+          114
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_tramp_ptr": [
+    {
+      "step": 131,
+      "pre": [
+        3,
+        229,
+        54,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        230,
+        55,
+        0
+      ],
+      "changes": [
+        [
+          54,
+          29524,
+          29521
+        ],
+        [
+          229,
+          115,
+          82
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_ones": [
+    {
+      "step": 143,
+      "pre": [
+        0,
+        241,
+        81,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        242,
+        82,
+        0
+      ],
+      "changes": [
+        [
+          81,
+          3,
+          29524
+        ],
+        [
+          241,
+          103,
+          117
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_journal": [
+    {
+      "step": 154,
+      "pre": [
+        0,
+        252,
+        52,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        253,
+        53,
+        0
+      ],
+      "changes": [
+        [
+          52,
+          81,
+          29524
+        ],
+        [
+          252,
+          92,
+          115
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_attempt_counter": [
+    {
+      "step": 181,
+      "pre": [
+        0,
+        279,
+        64,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        280,
+        65,
+        0
+      ],
+      "changes": [
+        [
+          64,
+          111,
+          29524
+        ],
+        [
+          279,
+          65,
+          59
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_c29525": [
+    {
+      "step": 291,
+      "pre": [
+        2,
+        389,
+        80,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29525,
+        390,
+        81,
+        0
+      ],
+      "changes": [
+        [
+          80,
+          29524,
+          29525
+        ],
+        [
+          389,
+          49,
+          87
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_recovery_portal": [
+    {
+      "step": 316,
+      "pre": [
+        8,
+        414,
+        62,
+        0
+      ],
+      "opcode": 39,
+      "post": [
+        19695,
+        415,
+        63,
+        0
+      ],
+      "changes": [
+        [
+          62,
+          37,
+          19695
+        ],
+        [
+          414,
+          95,
+          109
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "initialize_epoch2_portal": [
+    {
+      "step": 320,
+      "pre": [
+        19695,
+        418,
+        38,
+        0
+      ],
+      "opcode": 39,
+      "post": [
+        39397,
+        419,
+        39,
+        0
+      ],
+      "changes": [
+        [
+          38,
+          95,
+          39397
+        ],
+        [
+          418,
+          91,
+          106
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_preclear_target": [
+    {
+      "step": 361,
+      "pre": [
+        0,
+        459,
+        36,
+        0
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        460,
+        37,
+        0
+      ],
+      "changes": [
+        [
+          36,
+          81,
+          29524
+        ],
+        [
+          459,
+          73,
+          50
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "read_initial": [
+    {
+      "step": 362,
+      "pre": [
+        29524,
+        460,
+        37,
+        0
+      ],
+      "opcode": 23,
+      "post": [
+        3,
+        461,
+        38,
+        1
+      ],
+      "changes": [
+        [
+          460,
+          33,
+          53
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_initialize_target": [
+    {
+      "step": 372,
+      "pre": [
+        3,
+        470,
+        36,
+        1
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        471,
+        37,
+        1
+      ],
+      "changes": [
+        [
+          36,
+          29524,
+          29521
+        ],
+        [
+          470,
+          62,
+          76
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_save": [
+    {
+      "step": 379,
+      "pre": [
+        29521,
+        477,
+        52,
+        1
+      ],
+      "opcode": 62,
+      "post": [
+        3,
+        478,
+        53,
+        1
+      ],
+      "changes": [
+        [
+          52,
+          29524,
+          3
+        ],
+        [
+          477,
+          55,
+          110
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_count_attempt_1": [
+    {
+      "step": 485,
+      "pre": [
+        8,
+        583,
+        64,
+        1
+      ],
+      "opcode": 62,
+      "post": [
+        29528,
+        584,
+        65,
+        1
+      ],
+      "changes": [
+        [
+          64,
+          29524,
+          29528
+        ],
+        [
+          583,
+          43,
+          36
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "read_candidate_1": [
+    {
+      "step": 585,
+      "pre": [
+        29524,
+        683,
+        54,
+        1
+      ],
+      "opcode": 23,
+      "post": [
+        3,
+        684,
+        55,
+        2
+      ],
+      "changes": [
+        [
+          683,
+          92,
+          115
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_attempt1_cand_complement": [
+    {
+      "step": 597,
+      "pre": [
+        3,
+        695,
+        53,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        696,
+        54,
+        2
+      ],
+      "changes": [
+        [
+          53,
+          29524,
+          29521
+        ],
+        [
+          695,
+          119,
+          78
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_attempt1_eval_op": [
+    {
+      "step": 1253,
+      "pre": [
+        29524,
+        1351,
+        53,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        0,
+        1352,
+        54,
+        2
+      ],
+      "changes": [
+        [
+          53,
+          29524,
+          0
+        ],
+        [
+          1351,
+          121,
+          35
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_transition": [
+    {
+      "step": 1264,
+      "pre": [
+        0,
+        1362,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        1363,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29524
+        ],
+        [
+          1362,
+          110,
+          126
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_dispatch": [
+    {
+      "step": 1268,
+      "pre": [
+        29524,
+        1366,
+        36,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29524,
+        29525,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          29524,
+          90,
+          124
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "no_save_reject": [],
+  "commit_3": [
+    {
+      "step": 2056,
+      "pre": [
+        29522,
+        29523,
+        37,
+        2
+      ],
+      "opcode": 5,
+      "post": [
+        29522,
+        29524,
+        38,
+        2
+      ],
+      "changes": [
+        [
+          29523,
+          92,
+          115
+        ]
+      ],
+      "output": [
+        82
+      ],
+      "terminal": "RUNNING"
+    },
+    {
+      "step": 3993,
+      "pre": [
+        29522,
+        29523,
+        37,
+        3
+      ],
+      "opcode": 28,
+      "post": [
+        29522,
+        29524,
+        38,
+        3
+      ],
+      "changes": [
+        [
+          29523,
+          115,
+          82
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "continue_or_halt_3": [
+    {
+      "step": 2057,
+      "pre": [
+        29522,
+        29524,
+        38,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29522,
+        39398,
+        39,
+        2
+      ],
+      "changes": [
+        [
+          39397,
+          57,
+          91
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    },
+    {
+      "step": 3994,
+      "pre": [
+        29522,
+        29524,
+        38,
+        3
+      ],
+      "opcode": 81,
+      "post": [
+        29522,
+        29524,
+        38,
+        3
+      ],
+      "changes": [],
+      "output": [],
+      "terminal": "HALT"
+    }
+  ],
+  "failure_route": [
+    {
+      "step": 1269,
+      "pre": [
+        29524,
+        29525,
+        37,
+        2
+      ],
+      "opcode": 40,
+      "post": [
+        29524,
+        29526,
+        62,
+        2
+      ],
+      "changes": [
+        [
+          29525,
+          125,
+          105
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    },
+    {
+      "step": 3243,
+      "pre": [
+        29524,
+        29525,
+        37,
+        3
+      ],
+      "opcode": 40,
+      "post": [
+        29524,
+        29526,
+        62,
+        3
+      ],
+      "changes": [
+        [
+          29525,
+          125,
+          105
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "recovery_jump": [
+    {
+      "step": 1270,
+      "pre": [
+        29524,
+        29526,
+        62,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29524,
+        19696,
+        63,
+        2
+      ],
+      "changes": [
+        [
+          19695,
+          113,
+          108
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    },
+    {
+      "step": 3244,
+      "pre": [
+        29524,
+        29526,
+        62,
+        3
+      ],
+      "opcode": 4,
+      "post": [
+        29524,
+        49209,
+        63,
+        3
+      ],
+      "changes": [
+        [
+          49208,
+          116,
+          69
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "commit_1": [],
+  "continue_or_halt_1": [],
+  "no_restore_reject": [],
+  "epoch1_reject_halt": [],
+  "epoch2_reject_halt": [],
+  "epoch1_recovery_entry": [
+    {
+      "step": 1271,
+      "pre": [
+        29524,
+        19696,
+        63,
+        2
+      ],
+      "opcode": 68,
+      "post": [
+        29524,
+        19697,
+        64,
+        2
+      ],
+      "changes": [
+        [
+          19696,
+          112,
+          68
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_entry": [
+    {
+      "step": 2058,
+      "pre": [
+        29522,
+        39398,
+        39,
+        2
+      ],
+      "opcode": 68,
+      "post": [
+        29522,
+        39399,
+        40,
+        2
+      ],
+      "changes": [
+        [
+          39398,
+          56,
+          44
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_entry": [
+    {
+      "step": 3245,
+      "pre": [
+        29524,
+        49209,
+        63,
+        3
+      ],
+      "opcode": 68,
+      "post": [
+        29524,
+        49210,
+        64,
+        3
+      ],
+      "changes": [
+        [
+          49209,
+          115,
+          82
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_count_attempt_2": [
+    {
+      "step": 1359,
+      "pre": [
+        29525,
+        19784,
+        64,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        7,
+        19785,
+        65,
+        2
+      ],
+      "changes": [
+        [
+          64,
+          29528,
+          7
+        ],
+        [
+          19784,
+          112,
+          68
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_arm_reject_portal": [
+    {
+      "step": 1365,
+      "pre": [
+        7,
+        19790,
+        62,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        6565,
+        19791,
+        63,
+        2
+      ],
+      "changes": [
+        [
+          62,
+          19695,
+          6565
+        ],
+        [
+          19790,
+          83,
+          94
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_continue3_reset_s1": [
+    {
+      "step": 1381,
+      "pre": [
+        29524,
+        19806,
+        29524,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        6,
+        19807,
+        29525,
+        2
+      ],
+      "changes": [
+        [
+          19806,
+          90,
+          124
+        ],
+        [
+          29524,
+          124,
+          6
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_continue3_reset_s2": [
+    {
+      "step": 1463,
+      "pre": [
+        80,
+        19888,
+        29524,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29487,
+        19889,
+        29525,
+        2
+      ],
+      "changes": [
+        [
+          19888,
+          102,
+          96
+        ],
+        [
+          29524,
+          6,
+          29487
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_continue3_reset_s3": [
+    {
+      "step": 1492,
+      "pre": [
+        0,
+        19917,
+        29524,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        19918,
+        29525,
+        2
+      ],
+      "changes": [
+        [
+          19917,
+          73,
+          50
+        ],
+        [
+          29524,
+          29487,
+          29524
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_continue3_write_byte": [
+    {
+      "step": 1589,
+      "pre": [
+        29434,
+        20014,
+        29524,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        90,
+        20015,
+        29525,
+        2
+      ],
+      "changes": [
+        [
+          20014,
+          70,
+          74
+        ],
+        [
+          29524,
+          29524,
+          90
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_failure_route_reset_s1": [
+    {
+      "step": 1627,
+      "pre": [
+        29524,
+        20052,
+        29525,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        24,
+        20053,
+        29526,
+        2
+      ],
+      "changes": [
+        [
+          20052,
+          126,
+          64
+        ],
+        [
+          29525,
+          105,
+          24
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_failure_route_reset_s2": [
+    {
+      "step": 1709,
+      "pre": [
+        80,
+        20134,
+        29525,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29496,
+        20135,
+        29526,
+        2
+      ],
+      "changes": [
+        [
+          20134,
+          44,
+          40
+        ],
+        [
+          29525,
+          24,
+          29496
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_failure_route_reset_s3": [
+    {
+      "step": 1738,
+      "pre": [
+        0,
+        20163,
+        29525,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        20164,
+        29526,
+        2
+      ],
+      "changes": [
+        [
+          20163,
+          109,
+          88
+        ],
+        [
+          29525,
+          29496,
+          29524
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_rearm_failure_route_write_byte": [
+    {
+      "step": 1861,
+      "pre": [
+        29411,
+        20286,
+        29525,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        125,
+        20287,
+        29526,
+        2
+      ],
+      "changes": [
+        [
+          20286,
+          80,
+          66
+        ],
+        [
+          29525,
+          29524,
+          125
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_recovery_load_zero": [
+    {
+      "step": 1891,
+      "pre": [
+        29524,
+        20316,
+        75,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        0,
+        20317,
+        76,
+        2
+      ],
+      "changes": [
+        [
+          20316,
+          121,
+          35
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_recovery_reset_target": [
+    {
+      "step": 1905,
+      "pre": [
+        0,
+        20330,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        20331,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          20330,
+          36,
+          38
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_1": [
+    {
+      "step": 1912,
+      "pre": [
+        29524,
+        20337,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        1,
+        20338,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          3,
+          1
+        ],
+        [
+          20337,
+          100,
+          97
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_2": [
+    {
+      "step": 1920,
+      "pre": [
+        1,
+        20345,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        19683,
+        20346,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          1,
+          19683
+        ],
+        [
+          20345,
+          92,
+          115
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_3": [
+    {
+      "step": 1928,
+      "pre": [
+        19683,
+        20353,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        6561,
+        20354,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          19683,
+          6561
+        ],
+        [
+          20353,
+          84,
+          61
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_4": [
+    {
+      "step": 1936,
+      "pre": [
+        6561,
+        20361,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        2187,
+        20362,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          6561,
+          2187
+        ],
+        [
+          20361,
+          76,
+          79
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_5": [
+    {
+      "step": 1944,
+      "pre": [
+        2187,
+        20369,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        729,
+        20370,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          2187,
+          729
+        ],
+        [
+          20369,
+          68,
+          33
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_6": [
+    {
+      "step": 1952,
+      "pre": [
+        729,
+        20377,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        243,
+        20378,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          729,
+          243
+        ],
+        [
+          20377,
+          60,
+          51
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_7": [
+    {
+      "step": 1960,
+      "pre": [
+        243,
+        20385,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        81,
+        20386,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          243,
+          81
+        ],
+        [
+          20385,
+          52,
+          72
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_8": [
+    {
+      "step": 1968,
+      "pre": [
+        81,
+        20393,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        27,
+        20394,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          81,
+          27
+        ],
+        [
+          20393,
+          44,
+          40
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_9": [
+    {
+      "step": 1976,
+      "pre": [
+        27,
+        20401,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        9,
+        20402,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          27,
+          9
+        ],
+        [
+          20401,
+          36,
+          38
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_journal_read_rotation_10": [
+    {
+      "step": 1984,
+      "pre": [
+        9,
+        20409,
+        52,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        3,
+        20410,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          9,
+          3
+        ],
+        [
+          20409,
+          122,
+          63
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_restore": [
+    {
+      "step": 1991,
+      "pre": [
+        3,
+        20416,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        20417,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29524,
+          29521
+        ],
+        [
+          20416,
+          44,
+          40
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_retry": [
+    {
+      "step": 2051,
+      "pre": [
+        8,
+        20476,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29522,
+        20477,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29522
+        ],
+        [
+          20476,
+          78,
+          49
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch1_retry_dispatch": [
+    {
+      "step": 2055,
+      "pre": [
+        29522,
+        20480,
+        36,
+        2
+      ],
+      "opcode": 4,
+      "post": [
+        29522,
+        29523,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          29522,
+          62,
+          76
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_reset_portal": [
+    {
+      "step": 2168,
+      "pre": [
+        0,
+        39508,
+        62,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        39509,
+        63,
+        2
+      ],
+      "changes": [
+        [
+          62,
+          6565,
+          29524
+        ],
+        [
+          39508,
+          34,
+          122
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_initialize_recovery_portal": [
+    {
+      "step": 2228,
+      "pre": [
+        29528,
+        39568,
+        62,
+        2
+      ],
+      "opcode": 39,
+      "post": [
+        49208,
+        39569,
+        63,
+        2
+      ],
+      "changes": [
+        [
+          62,
+          29528,
+          49208
+        ],
+        [
+          39568,
+          45,
+          119
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_prepare_target": [
+    {
+      "step": 2375,
+      "pre": [
+        8,
+        39715,
+        36,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        39716,
+        37,
+        2
+      ],
+      "changes": [
+        [
+          36,
+          29522,
+          29521
+        ],
+        [
+          39715,
+          109,
+          88
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_save": [
+    {
+      "step": 2382,
+      "pre": [
+        29521,
+        39722,
+        52,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        3,
+        39723,
+        53,
+        2
+      ],
+      "changes": [
+        [
+          52,
+          29524,
+          3
+        ],
+        [
+          39722,
+          102,
+          96
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_count_attempt_1": [
+    {
+      "step": 2549,
+      "pre": [
+        8,
+        39889,
+        64,
+        2
+      ],
+      "opcode": 62,
+      "post": [
+        29528,
+        39890,
+        65,
+        2
+      ],
+      "changes": [
+        [
+          64,
+          29524,
+          29528
+        ],
+        [
+          39889,
+          123,
+          71
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "read_candidate_2": [
+    {
+      "step": 2641,
+      "pre": [
+        29524,
+        39981,
+        54,
+        2
+      ],
+      "opcode": 23,
+      "post": [
+        3,
+        39982,
+        55,
+        3
+      ],
+      "changes": [
+        [
+          39981,
+          86,
+          95
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_attempt1_cand_complement": [
+    {
+      "step": 2648,
+      "pre": [
+        3,
+        39988,
+        53,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        39989,
+        54,
+        3
+      ],
+      "changes": [
+        [
+          53,
+          29524,
+          29521
+        ],
+        [
+          39988,
+          118,
+          107
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_attempt1_eval_op": [
+    {
+      "step": 3232,
+      "pre": [
+        29524,
+        40572,
+        53,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        0,
+        40573,
+        54,
+        3
+      ],
+      "changes": [
+        [
+          53,
+          29524,
+          0
+        ],
+        [
+          40572,
+          98,
+          84
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_transition": [
+    {
+      "step": 3238,
+      "pre": [
+        0,
+        40578,
+        36,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        40579,
+        37,
+        3
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29524
+        ],
+        [
+          40578,
+          92,
+          115
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_dispatch": [
+    {
+      "step": 3242,
+      "pre": [
+        29524,
+        40582,
+        36,
+        3
+      ],
+      "opcode": 4,
+      "post": [
+        29524,
+        29525,
+        37,
+        3
+      ],
+      "changes": [
+        [
+          29524,
+          90,
+          124
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_count_attempt_2": [
+    {
+      "step": 3330,
+      "pre": [
+        29525,
+        49294,
+        64,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        7,
+        49295,
+        65,
+        3
+      ],
+      "changes": [
+        [
+          64,
+          29528,
+          7
+        ],
+        [
+          49294,
+          118,
+          107
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_arm_reject_portal": [
+    {
+      "step": 3336,
+      "pre": [
+        7,
+        49300,
+        62,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        55768,
+        49301,
+        63,
+        3
+      ],
+      "changes": [
+        [
+          62,
+          49208,
+          55768
+        ],
+        [
+          49300,
+          89,
+          56
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_halt3_reset_s1": [
+    {
+      "step": 3352,
+      "pre": [
+        29524,
+        49316,
+        29524,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        6,
+        49317,
+        29525,
+        3
+      ],
+      "changes": [
+        [
+          29524,
+          124,
+          6
+        ],
+        [
+          49316,
+          96,
+          60
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_halt3_reset_s2": [
+    {
+      "step": 3431,
+      "pre": [
+        80,
+        49395,
+        29524,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29487,
+        49396,
+        29525,
+        3
+      ],
+      "changes": [
+        [
+          29524,
+          6,
+          29487
+        ],
+        [
+          49395,
+          111,
+          120
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_halt3_reset_s3": [
+    {
+      "step": 3458,
+      "pre": [
+        0,
+        49422,
+        29524,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        49423,
+        29525,
+        3
+      ],
+      "changes": [
+        [
+          29524,
+          29487,
+          29524
+        ],
+        [
+          49422,
+          84,
+          61
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_halt3_write_byte": [
+    {
+      "step": 3603,
+      "pre": [
+        29559,
+        49567,
+        29524,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        73,
+        49568,
+        29525,
+        3
+      ],
+      "changes": [
+        [
+          29524,
+          29524,
+          73
+        ],
+        [
+          49567,
+          33,
+          53
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_failure_route_reset_s1": [
+    {
+      "step": 3641,
+      "pre": [
+        29524,
+        49605,
+        29525,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        24,
+        49606,
+        29526,
+        3
+      ],
+      "changes": [
+        [
+          29525,
+          105,
+          24
+        ],
+        [
+          49605,
+          89,
+          56
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_failure_route_reset_s2": [
+    {
+      "step": 3720,
+      "pre": [
+        80,
+        49684,
+        29525,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29496,
+        49685,
+        29526,
+        3
+      ],
+      "changes": [
+        [
+          29525,
+          24,
+          29496
+        ],
+        [
+          49684,
+          104,
+          89
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_failure_route_reset_s3": [
+    {
+      "step": 3747,
+      "pre": [
+        0,
+        49711,
+        29525,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        49712,
+        29526,
+        3
+      ],
+      "changes": [
+        [
+          29525,
+          29496,
+          29524
+        ],
+        [
+          49711,
+          77,
+          65
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_rearm_failure_route_write_byte": [
+    {
+      "step": 3798,
+      "pre": [
+        29411,
+        49762,
+        29525,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        125,
+        49763,
+        29526,
+        3
+      ],
+      "changes": [
+        [
+          29525,
+          29524,
+          125
+        ],
+        [
+          49762,
+          120,
+          58
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_load_zero": [
+    {
+      "step": 3828,
+      "pre": [
+        29524,
+        49792,
+        75,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        0,
+        49793,
+        76,
+        3
+      ],
+      "changes": [
+        [
+          49792,
+          67,
+          85
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_recovery_reset_target": [
+    {
+      "step": 3842,
+      "pre": [
+        0,
+        49806,
+        36,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29524,
+        49807,
+        37,
+        3
+      ],
+      "changes": [
+        [
+          49806,
+          76,
+          79
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_1": [
+    {
+      "step": 3849,
+      "pre": [
+        29524,
+        49813,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        1,
+        49814,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          3,
+          1
+        ],
+        [
+          49813,
+          46,
+          101
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_2": [
+    {
+      "step": 3857,
+      "pre": [
+        1,
+        49821,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        19683,
+        49822,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          1,
+          19683
+        ],
+        [
+          49821,
+          38,
+          113
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_3": [
+    {
+      "step": 3865,
+      "pre": [
+        19683,
+        49829,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        6561,
+        49830,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          19683,
+          6561
+        ],
+        [
+          49829,
+          124,
+          34
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_4": [
+    {
+      "step": 3873,
+      "pre": [
+        6561,
+        49837,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        2187,
+        49838,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          6561,
+          2187
+        ],
+        [
+          49837,
+          116,
+          69
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_5": [
+    {
+      "step": 3881,
+      "pre": [
+        2187,
+        49845,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        729,
+        49846,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          2187,
+          729
+        ],
+        [
+          49845,
+          108,
+          39
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_6": [
+    {
+      "step": 3889,
+      "pre": [
+        729,
+        49853,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        243,
+        49854,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          729,
+          243
+        ],
+        [
+          49853,
+          100,
+          97
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_7": [
+    {
+      "step": 3897,
+      "pre": [
+        243,
+        49861,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        81,
+        49862,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          243,
+          81
+        ],
+        [
+          49861,
+          92,
+          115
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_8": [
+    {
+      "step": 3905,
+      "pre": [
+        81,
+        49869,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        27,
+        49870,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          81,
+          27
+        ],
+        [
+          49869,
+          84,
+          61
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_9": [
+    {
+      "step": 3913,
+      "pre": [
+        27,
+        49877,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        9,
+        49878,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          27,
+          9
+        ],
+        [
+          49877,
+          76,
+          79
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_journal_read_rotation_10": [
+    {
+      "step": 3921,
+      "pre": [
+        9,
+        49885,
+        52,
+        3
+      ],
+      "opcode": 39,
+      "post": [
+        3,
+        49886,
+        53,
+        3
+      ],
+      "changes": [
+        [
+          52,
+          9,
+          3
+        ],
+        [
+          49885,
+          68,
+          33
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_restore": [
+    {
+      "step": 3928,
+      "pre": [
+        3,
+        49892,
+        36,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29521,
+        49893,
+        37,
+        3
+      ],
+      "changes": [
+        [
+          36,
+          29524,
+          29521
+        ],
+        [
+          49892,
+          84,
+          61
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_retry": [
+    {
+      "step": 3988,
+      "pre": [
+        8,
+        49952,
+        36,
+        3
+      ],
+      "opcode": 62,
+      "post": [
+        29522,
+        49953,
+        37,
+        3
+      ],
+      "changes": [
+        [
+          36,
+          29521,
+          29522
+        ],
+        [
+          49952,
+          118,
+          107
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ],
+  "epoch2_retry_dispatch": [
+    {
+      "step": 3992,
+      "pre": [
+        29522,
+        49956,
+        36,
+        3
+      ],
+      "opcode": 4,
+      "post": [
+        29522,
+        29523,
+        37,
+        3
+      ],
+      "changes": [
+        [
+          29522,
+          76,
+          79
+        ]
+      ],
+      "output": [],
+      "terminal": "RUNNING"
+    }
+  ]
+}

@@ -1,0 +1,653 @@
+{
+  "schema": "pure-epoch-trampoline-rearm/v1",
+  "universal_ascii_reset_identity": "crazy(0, crazy(80, crazy(29524, y))) == 29524 for all y in 0..161",
+  "post_write_scratch_reset_identity": "crazy(0, crazy(B, crazy(B, 29524))) == 29524 for all B in 0..59048",
+  "entries": [
+    {
+      "name": "m1c_failure_prelanding",
+      "pos": 29521,
+      "op": "o",
+      "role": "encrypted by dispatch(i) when mem[36]=29521",
+      "pre_byte": 63,
+      "pre_char": "?",
+      "post_xlat2_byte": 43,
+      "post_xlat2_char": "+",
+      "post_xlat2_decoded_op": "C",
+      "rearm_constant_x": 29542,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 43,
+          "mem_after": 6
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 6,
+          "mem_after": 29487
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29487,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29542,
+          "mem_before": 29524,
+          "mem_after": 63
+        }
+      ]
+    },
+    {
+      "name": "m1c_failure_route",
+      "pos": 29522,
+      "op": "j",
+      "role": "encrypted when executing j at 29522",
+      "pre_byte": 34,
+      "pre_char": "\"",
+      "post_xlat2_byte": 122,
+      "post_xlat2_char": "z",
+      "post_xlat2_decoded_op": "b",
+      "rearm_constant_x": 29499,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 122,
+          "mem_after": 2
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 2,
+          "mem_after": 29485
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29485,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29499,
+          "mem_before": 29524,
+          "mem_after": 34
+        }
+      ]
+    },
+    {
+      "name": "m1c_recovery_jump",
+      "pos": 29523,
+      "op": "i",
+      "role": "jump instruction i; encrypts portal pre-landing mem[19695]",
+      "pre_byte": 91,
+      "pre_char": "[",
+      "post_xlat2_byte": 106,
+      "post_xlat2_char": "j",
+      "post_xlat2_decoded_op": "$",
+      "rearm_constant_x": 29433,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 106,
+          "mem_after": 24
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 24,
+          "mem_after": 29496
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29496,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29433,
+          "mem_before": 29524,
+          "mem_after": 91
+        }
+      ]
+    },
+    {
+      "name": "m1c_portal_prelanding",
+      "pos": 19695,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=19695",
+      "pre_byte": 113,
+      "pre_char": "q",
+      "post_xlat2_byte": 108,
+      "post_xlat2_char": "l",
+      "post_xlat2_decoded_op": "0",
+      "rearm_constant_x": 29414,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 108,
+          "mem_after": 0
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 0,
+          "mem_after": 29484
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29484,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29414,
+          "mem_before": 29524,
+          "mem_after": 113
+        }
+      ]
+    },
+    {
+      "name": "commit_3",
+      "pos": 29523,
+      "op": "<",
+      "role": "encrypted when executing < for init=3 commit",
+      "pre_byte": 92,
+      "pre_char": "\\",
+      "post_xlat2_byte": 115,
+      "post_xlat2_char": "s",
+      "post_xlat2_decoded_op": "n",
+      "rearm_constant_x": 29435,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 115,
+          "mem_after": 6
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 6,
+          "mem_after": 29487
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29487,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29435,
+          "mem_before": 29524,
+          "mem_after": 92
+        }
+      ]
+    },
+    {
+      "name": "halt_3",
+      "pos": 29524,
+      "op": "v",
+      "role": "encrypted by dispatch(i) when mem[36]=29524 (failure)",
+      "pre_byte": 73,
+      "pre_char": "I",
+      "post_xlat2_byte": 50,
+      "post_xlat2_char": "2",
+      "post_xlat2_decoded_op": "q",
+      "rearm_constant_x": 29559,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 50,
+          "mem_after": 20
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 20,
+          "mem_after": 29494
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29494,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29559,
+          "mem_before": 29524,
+          "mem_after": 73
+        }
+      ]
+    },
+    {
+      "name": "continue_3",
+      "pos": 29524,
+      "op": "i",
+      "role": "epoch1 continuation jump for init=3; encrypted by dispatch(i) on failure",
+      "pre_byte": 90,
+      "pre_char": "Z",
+      "post_xlat2_byte": 124,
+      "post_xlat2_char": "|",
+      "post_xlat2_decoded_op": "e",
+      "rearm_constant_x": 29434,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 124,
+          "mem_after": 6
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 6,
+          "mem_after": 29487
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29487,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29434,
+          "mem_before": 29524,
+          "mem_after": 90
+        }
+      ]
+    },
+    {
+      "name": "failure_route",
+      "pos": 29525,
+      "op": "j",
+      "role": "encrypted when executing j at 29525",
+      "pre_byte": 125,
+      "pre_char": "}",
+      "post_xlat2_byte": 105,
+      "post_xlat2_char": "i",
+      "post_xlat2_decoded_op": "!",
+      "rearm_constant_x": 29411,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 105,
+          "mem_after": 24
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 24,
+          "mem_after": 29496
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29496,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29411,
+          "mem_before": 29524,
+          "mem_after": 125
+        }
+      ]
+    },
+    {
+      "name": "recovery_jump",
+      "pos": 29526,
+      "op": "i",
+      "role": "encrypted by dispatch(i) when mem[36]=29526 (init=1 commit)",
+      "pre_byte": 88,
+      "pre_char": "X",
+      "post_xlat2_byte": 47,
+      "post_xlat2_char": "/",
+      "post_xlat2_decoded_op": ">",
+      "rearm_constant_x": 29445,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 47,
+          "mem_after": 20
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 20,
+          "mem_after": 29494
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29494,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29445,
+          "mem_before": 29524,
+          "mem_after": 88
+        }
+      ]
+    },
+    {
+      "name": "commit_1",
+      "pos": 29527,
+      "op": "<",
+      "role": "encrypted when executing < for init=1 commit",
+      "pre_byte": 88,
+      "pre_char": "X",
+      "post_xlat2_byte": 47,
+      "post_xlat2_char": "/",
+      "post_xlat2_decoded_op": "q",
+      "rearm_constant_x": 29445,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 47,
+          "mem_after": 20
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 20,
+          "mem_after": 29494
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29494,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29445,
+          "mem_before": 29524,
+          "mem_after": 88
+        }
+      ]
+    },
+    {
+      "name": "halt_1",
+      "pos": 29528,
+      "op": "v",
+      "role": "halt for init=1 commit",
+      "pre_byte": 69,
+      "pre_char": "E",
+      "post_xlat2_byte": 112,
+      "post_xlat2_char": "p",
+      "post_xlat2_decoded_op": "^",
+      "rearm_constant_x": 29545,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 112,
+          "mem_after": 0
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 0,
+          "mem_after": 29484
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29484,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29545,
+          "mem_before": 29524,
+          "mem_after": 69
+        }
+      ]
+    },
+    {
+      "name": "continue_1",
+      "pos": 29528,
+      "op": "i",
+      "role": "epoch1 continuation jump for init=1",
+      "pre_byte": 86,
+      "pre_char": "V",
+      "post_xlat2_byte": 95,
+      "post_xlat2_char": "_",
+      "post_xlat2_decoded_op": "u",
+      "rearm_constant_x": 29441,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 95,
+          "mem_after": 2
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 2,
+          "mem_after": 29485
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29485,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29441,
+          "mem_before": 29524,
+          "mem_after": 86
+        }
+      ]
+    },
+    {
+      "name": "epoch1_portal_prelanding",
+      "pos": 19695,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=19695",
+      "pre_byte": 113,
+      "pre_char": "q",
+      "post_xlat2_byte": 108,
+      "post_xlat2_char": "l",
+      "post_xlat2_decoded_op": "0",
+      "rearm_constant_x": 29414,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 108,
+          "mem_after": 0
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 0,
+          "mem_after": 29484
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29484,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29414,
+          "mem_before": 29524,
+          "mem_after": 113
+        }
+      ]
+    },
+    {
+      "name": "epoch1_reject_prelanding",
+      "pos": 6565,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=6565",
+      "pre_byte": 83,
+      "pre_char": "S",
+      "post_xlat2_byte": 94,
+      "post_xlat2_char": "^",
+      "post_xlat2_decoded_op": "I",
+      "rearm_constant_x": 29444,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 94,
+          "mem_after": 0
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 0,
+          "mem_after": 29484
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29484,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29444,
+          "mem_before": 29524,
+          "mem_after": 83
+        }
+      ]
+    },
+    {
+      "name": "epoch2_entry_prelanding",
+      "pos": 39397,
+      "op": "o",
+      "role": "encrypted by continue_1/continue_3(i) when mem[38]=39397",
+      "pre_byte": 57,
+      "pre_char": "9",
+      "post_xlat2_byte": 91,
+      "post_xlat2_char": "[",
+      "post_xlat2_decoded_op": "'",
+      "rearm_constant_x": 29548,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 91,
+          "mem_after": 0
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 0,
+          "mem_after": 29484
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29484,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29548,
+          "mem_before": 29524,
+          "mem_after": 57
+        }
+      ]
+    },
+    {
+      "name": "epoch2_portal_prelanding",
+      "pos": 49208,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=49208",
+      "pre_byte": 116,
+      "pre_char": "t",
+      "post_xlat2_byte": 69,
+      "post_xlat2_char": "E",
+      "post_xlat2_decoded_op": "B",
+      "rearm_constant_x": 29420,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 69,
+          "mem_after": 60
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 60,
+          "mem_after": 29514
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29514,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29420,
+          "mem_before": 29524,
+          "mem_after": 116
+        }
+      ]
+    },
+    {
+      "name": "epoch2_reject_prelanding",
+      "pos": 55768,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=55768",
+      "pre_byte": 42,
+      "pre_char": "*",
+      "post_xlat2_byte": 114,
+      "post_xlat2_char": "r",
+      "post_xlat2_decoded_op": "L",
+      "rearm_constant_x": 29491,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 114,
+          "mem_after": 6
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 6,
+          "mem_after": 29487
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29487,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29491,
+          "mem_before": 29524,
+          "mem_after": 42
+        }
+      ]
+    }
+  ]
+}

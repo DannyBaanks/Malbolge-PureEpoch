@@ -1,8 +1,9 @@
 # Pure Epoch — 2026-10-25
 
-**Resultado construido:** `candidates/m1c_normal.mal`, 29,526 bytes, ejecuta un checkpoint de una celda lógica, selecciona commit o recuperación mediante un salto Classic sobre el valor calculado, restaura desde el journal y realiza un intento corregido. El mismo archivo cubre cuatro entradas binarias. No restaura el estado físico completo ni implementa dos épocas reutilizables.
-
-SHA-256: `17ff6f326c3205fa92bae9eeeba4c8ecf0229a722c55491e2fa5e0cd4d7b7985`.
+**Resultado construido:**
+- `candidates/m1c_normal.mal` (29,526 bytes, SHA-256 `17ff6f326c3205fa92bae9eeeba4c8ecf0229a722c55491e2fa5e0cd4d7b7985`): baseline M1 preservado intacto.
+- `candidates/m1e_normal.mal` (29,531 bytes, SHA-256 `dc9ed4d81ef7200d5b5e1dc2c3f161bd4b01be39b58ca43bc87db410461e9f53`): M1e con commit dependiente del dato recuperado (`initial=1` → `mem[36]=29526, stdout=V`; `initial=3` → `mem[36]=29522, stdout=R`), rearme in-VM de trampolines, contador interno de intentos (`mem[64]`) y rechazo/HALT explícito ante fallo repetido (`m1e_force_retry_failure.mal`), conservando `STALL` como control negativo separado (`m1e_force_retry_stall.mal`).
+- `candidates/m2_normal.mal` (55,770 bytes, SHA-256 `3ec16fd60b5298a83f30dddf340bdc962a6fe981c4a05379c446bcb92a8748d6`): composición M2 de **dos épocas completas en un único proceso Classic Malbolge** (`stdin = [initial, cand_1, cand_2]`), verificada en las 8 combinaciones (`válido/válido`, `inválido/válido`, `válido/inválido`, `inválido/inválido` para `initial ∈ {1, 3}`) y sus controles negativos.
 
 Ver [RESULTS.md](RESULTS.md), [VERDICT.md](VERDICT.md), [NEXT_COMPOSE.md](NEXT_COMPOSE.md) y, por separado, [torus/TORUS_RESULTS.md](torus/TORUS_RESULTS.md).
 

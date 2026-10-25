@@ -1,0 +1,25 @@
+{
+  "trace_equal": true,
+  "memory_equal": true,
+  "registers_equal": true,
+  "terminal_equal": true,
+  "outputs_equal": true,
+  "reference_returncode": 0,
+  "original_returncode": 0,
+  "original_run": "completed",
+  "instrumented_returncode": 0,
+  "source_sha256": "b082be3f8c115167d6de28482e74cfc11d5294313d6abd599396bd6bb9782506",
+  "payload_hex": "010303",
+  "terminal": "HALT",
+  "steps_excluding_halt": 3247,
+  "fetched_instructions": 3248,
+  "registers": [
+    29524,
+    29529,
+    65,
+    3
+  ],
+  "output_hex": "56",
+  "memory_sha256": "5f705ada0271855b75bc17973caec6b6fcc1274b5a92a7a3e5530bb5ce99f136",
+  "trace_sha256": "ac6fd887a41a99a9a2f87aca2e325b9b316307b82fe8d5822b70218f6b2540f7"
+}

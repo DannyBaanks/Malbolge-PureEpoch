@@ -1,0 +1,85 @@
+{
+  "kind": "PRIOR_DEPENDENT_RECOVERY_M1E",
+  "mode": "corrupt_journal",
+  "labels": {
+    "zero_seed_to_ones": 106,
+    "initialize_zero": 114,
+    "initialize_tramp_ptr": 229,
+    "initialize_ones": 241,
+    "initialize_journal": 252,
+    "initialize_attempt_counter": 279,
+    "initialize_c29525": 389,
+    "initialize_recovery_portal": 414,
+    "preclear_target": 443,
+    "read_initial": 444,
+    "initialize_target": 454,
+    "save": 461,
+    "count_attempt_1": 567,
+    "read_candidate": 667,
+    "attempt1_cand_complement": 679,
+    "attempt1_eval_op": 1332,
+    "transition": 1343,
+    "dispatch": 1347,
+    "no_save_reject": 29521,
+    "commit_3": 29523,
+    "halt_3": 29524,
+    "failure_route": 29525,
+    "recovery_jump": 29526,
+    "commit_1": 29527,
+    "halt_1": 29528,
+    "no_restore_reject": 29529,
+    "reject_halt": 6566,
+    "count_attempt_2": 19784,
+    "arm_reject_portal": 19790,
+    "rearm_halt3_reset_s1": 19806,
+    "rearm_halt3_reset_s2": 19888,
+    "rearm_halt3_reset_s3": 19917,
+    "rearm_halt3_write_byte": 20017,
+    "rearm_failure_route_reset_s1": 20055,
+    "rearm_failure_route_reset_s2": 20137,
+    "rearm_failure_route_reset_s3": 20166,
+    "rearm_failure_route_write_byte": 20289,
+    "recovery_load_zero": 20319,
+    "recovery_reset_target": 20333,
+    "damage_journal": 20340,
+    "journal_read_rotation_1": 20348,
+    "journal_read_rotation_2": 20356,
+    "journal_read_rotation_3": 20364,
+    "journal_read_rotation_4": 20372,
+    "journal_read_rotation_5": 20380,
+    "journal_read_rotation_6": 20388,
+    "journal_read_rotation_7": 20396,
+    "journal_read_rotation_8": 20404,
+    "journal_read_rotation_9": 20412,
+    "journal_read_rotation_10": 20420,
+    "restore": 20427,
+    "retry": 20487,
+    "retry_dispatch": 20491
+  },
+  "target": 36,
+  "journal": 52,
+  "zero_cell": 75,
+  "portal_cell": 62,
+  "attempt_counter_cell": 64,
+  "domain": {
+    "initial": [
+      1,
+      3
+    ],
+    "candidate": [
+      1,
+      3
+    ]
+  },
+  "committed_state_by_initial": {
+    "1": {
+      "mem36": 29526,
+      "output": "V"
+    },
+    "3": {
+      "mem36": 29522,
+      "output": "R"
+    }
+  },
+  "max_attempts_on_domain": 2
+}

@@ -92,3 +92,63 @@ La comprobación final detectó progreso concurrente del Autobolge original hast
 `torus/` confirma C∩D=96 en m281/Lutter/m284. Las intersecciones se descomponen en 49 direcciones fijas y 47 reubicadas, consistente con la procedencia Lutter. No son tres diseños independientes. El script externo actual coincide con la medición C para m281; algunas cuentas de la captura anterior no se reprodujeron. Se conserva la discrepancia y la falsación del detector original de simetría.
 
 La celda 53 es accesible y modificable, pero ya contiene estado vivo del loop: usarla como reserva intacta queda refutado. G-T3 del quine permanece NOT_DEMONSTRATED. El éxito M1 del programa pequeño no se transfiere a los quines.
+
+## M1e y M2 — Rearme in-VM de trampolines, commit dependiente del dato recuperado, contador de intentos y dos épocas (NEXT_COMPOSE puntos 1–4)
+
+Siguiendo `NEXT_COMPOSE.md` y preservando `candidates/m1c_normal.mal` (`17ff6f326c3205fa92bae9eeeba4c8ecf0229a722c55491e2fa5e0cd4d7b7985`) intacto:
+
+### 1. Bytes reales post-cifrado de trampolines/portales y rearme in-VM (`evidence/trampoline-rearm.json`)
+
+- En Classic Malbolge, el salto indirecto `i` cambia `c = mem[d]` **antes** de aplicar `XLAT2` sobre `mem[c]`, por lo que `i` no se cifra a sí mismo sino que cifra la celda de pre-aterrizaje `mem[mem[d]]`; en cambio, `j` y `<` sí cifran su propia celda `mem[c]` al ejecutarse.
+- Para cualquier byte imprimible ASCII `y ∈ [33, 126]` (tanto el byte original como el byte post-`XLAT2`), como `y < 162 = 2·3⁴`, sus trits `2` sólo pueden aparecer en las posiciones `0..3`. Con `80 = 0000002222₃` se cumple la identidad universal:
+  `crazy(0, crazy(80, crazy(29524, y))) = 29524` para todo `y ∈ [0, 161]`,
+  y `crazy(crazy(B, 29524), 29524) = B` reescribe el byte objetivo `B` dentro de la propia VM, restableciendo además la celda auxiliar `53` mediante `crazy(0, crazy(B, crazy(B, 29524))) = 29524`.
+
+### 2. Candidato M1e (`candidates/m1e_normal.mal`, 29,531 bytes, SHA256 `dc9ed4d81ef7200d5b5e1dc2c3f161bd4b01be39b58ca43bc87db410461e9f53`)
+
+- Mientras la submatriz `{0,1} × {0,1}` de `TRITS` colapsa el estado previo (`crazy(0, y) = 29524`), la columna `x_trit = 2` (`(0, 2, 1)`) es una involución que separa los tres valores de trit.
+- Evaluando el candidato `cand ∈ {1, 3}` a `op = 8` (`0000000022₃`, válido) o `op = 0` (inválido) y aplicando `crazy(op, mem[36])`:
+  - Si `cand = 3` (`op = 0`): tanto `initial = 1` (`29523`) como `initial = 3` (`29521`) colapsan a `mem[36] = 29524` (borrando el dato previo en `mem[36]`) y saltan a `failure_route` (`29525`).
+  - Si `cand = 1` (o tras recovery + retry con `op = 8`):
+    - `initial = 1` (`29523`) → `mem[36] = 29526`, salta a `commit_1` (`29527: <`), emite `V` (`0x56`) y `HALT` (`29528: v`).
+    - `initial = 3` (`29521`) → `mem[36] = 29522`, salta a `commit_3` (`29523: <`), emite `R` (`0x52`) y `HALT` (`29524: v`).
+- **Control `no_restore` (`m1e_no_restore.mal`):** al omitir `restore`, `mem[36]` permanece en `29524` y el retry produce `crazy(8, 29524) = 29528`, que salta a `no_restore_reject` (`29529: v`) con **stdout vacío (`b""`) y `mem[36] = 29528`**, fallando tanto el resultado final observable como el estado lógico final, además de la fase intermedia.
+
+### 3. Contador interno finito de intentos y rechazo/HALT explícito
+
+- La celda `mem[64]` (`attempt_counter_cell`) inicia en `29524` (`0` intentos), pasa a `29528` (`crazy(8, 29524)`, 1 intento) en el primer intento y a `7` (`crazy(29525, 29528)`, 2 intentos) al entrar en recovery.
+- Durante recovery, el portal `mem[62]` rota una segunda vez (`19695 → 6565`, destino `c = 6566` con `v`) y el programa rearma in-VM `29524..29525`.
+- En `m1e_force_retry_failure.mal`, el segundo fallo salta por el trampolín rearmado hacia `reject_halt` (`c = 6566`) y termina en **`HALT` explícito** (`stdout = b""`, `mem[36] = 29524`, `mem[64] = 7`, `2,005` fetches).
+- El comportamiento `STALL` anterior se conserva por separado en `m1e_force_retry_stall.mal` (`STALL` en `1,741` fetches).
+
+| Candidato M1e | stdin hex | Terminal | Instrucciones incl. HALT | `mem[36]` final | `mem[52]` final | `mem[64]` final | stdout | Contrato |
+|---|---|---|---:|---:|---:|---:|---|---|
+| `m1e_normal` | `0101` | `HALT` | 1,252 | 29526 | 1 | 29528 | `56` (`V`) | `True` |
+| `m1e_normal` | `0103` | `HALT` | 2,042 | 29526 | 1 | 7 | `56` (`V`) | `True` |
+| `m1e_normal` | `0301` | `HALT` | 1,252 | 29522 | 3 | 29528 | `52` (`R`) | `True` |
+| `m1e_normal` | `0303` | `HALT` | 2,042 | 29522 | 3 | 7 | `52` (`R`) | `True` |
+| `m1e_no_restore` | `0103` / `0303` | `HALT` | 2,041 | 29528 | 1 / 3 | 7 | `""` | `False` |
+| `m1e_force_retry_failure` | `0103` / `0303` | `HALT` | 2,005 | 29524 | 1 / 3 | 7 | `""` | `False` |
+| `m1e_force_retry_stall` | `0103` / `0303` | `STALL` | 1,741 | 29524 | 1 / 3 | 7 | `""` | `False` |
+
+### 4. Composición M2 de dos épocas en un único proceso (`candidates/m2_normal.mal`, 55,770 bytes, SHA256 `3ec16fd60b5298a83f30dddf340bdc962a6fe981c4a05379c446bcb92a8748d6`)
+
+- En la Época 1, tras emitir el primer byte en `29523: <` o `29527: <`, el puntero `d` avanza de `37` a `38`, por lo que `29524: i` y `29528: i` convergen al mismo portal de continuación `mem[38] = 39397` (`c = 39398, d = 39`).
+- Al iniciar la Época 2 en `c = 39398`, el propio programa:
+  1. Rearma in-VM la tabla `29523..29528` (instalando `v` en `29524` y `29528` para el cierre de la Época 2).
+  2. Rearma el portal `mem[62]` hacia la recuperación de la Época 2 (`49208 → c = 49209`, con rechazo explícito en `55768 → c = 55769`).
+  3. Des-compromete `mem[36]` desde el estado comprometido de la Época 1 (`crazy(8, 29526) = 29523` o `crazy(8, 29522) = 29521`) y guarda el journal `mem[52]` de la Época 2 sin releer el selector inicial desde `stdin`.
+  4. Ejecuta la Época 2 completa con `cand_2 ∈ {1, 3}`.
+
+| Trayectoria M2 (`m2_normal`) | stdin hex | Rotaciones de journal (E1 + E2) | Instrucciones incl. HALT | `mem[36]` final | `mem[52]` final | `mem[64]` final (E2) | stdout | Contrato |
+|---|---|---|---:|---:|---:|---:|---|---|
+| válido / válido (`init=1`) | `010101` | `0 + 0 = 0` | 3,916 | 29526 | 1 | 29528 | `5656` (`VV`) | `True` |
+| inválido / válido (`init=1`) | `010301` | `10 + 0 = 10` | 4,703 | 29526 | 1 | 29528 | `5656` (`VV`) | `True` |
+| válido / inválido (`init=1`) | `010103` | `0 + 10 = 10` | 4,663 | 29526 | 1 | 7 | `5656` (`VV`) | `True` |
+| inválido / inválido (`init=1`) | `010303` | `10 + 10 = 20` | 5,450 | 29526 | 1 | 7 | `5656` (`VV`) | `True` |
+| válido / válido (`init=3`) | `030101` | `0 + 0 = 0` | 3,916 | 29522 | 3 | 29528 | `5252` (`RR`) | `True` |
+| inválido / válido (`init=3`) | `030301` | `10 + 0 = 10` | 4,703 | 29522 | 3 | 29528 | `5252` (`RR`) | `True` |
+| válido / inválido (`init=3`) | `030103` | `0 + 10 = 10` | 4,663 | 29522 | 3 | 7 | `5252` (`RR`) | `True` |
+| inválido / inválido (`init=3`) | `030303` | `10 + 10 = 20` | 5,450 | 29522 | 3 | 7 | `5252` (`RR`) | `True` |
+
+Las 61 ejecuciones de la campaña ampliada (`19` de M1a/b/c + `22` de M1e + `20` de M2) tienen paridad exacta entre Python, `trace_ref`, `mb_ref` y `olmstead` (en todos los casos `HALT`).
