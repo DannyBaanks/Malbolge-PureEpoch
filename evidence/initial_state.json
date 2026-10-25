@@ -1,0 +1,22 @@
+{
+  "Autobolge": {
+    "commit": "96733704fd54504e6864d1ad733bb1497d53da1f\n",
+    "status": "?? experiments/evidence/indep_frontier_v1/\n?? experiments/indep_frontier_v1.py\n?? tools/indep_scan/\n",
+    "remote": "origin\thttps://github.com/DannyBaanks/Autobolge.git (fetch)\norigin\thttps://github.com/DannyBaanks/Autobolge.git (push)\n"
+  },
+  "BolgeForge": {
+    "commit": "454ab61e61ef94745b2e7178205cf0e56f41010c\n",
+    "status": "?? docs/evidence/2026-10-24-truth-machine-independent/solver.py\n",
+    "remote": "origin\thttps://github.com/DannyBaanks/BolgeForge.git (fetch)\norigin\thttps://github.com/DannyBaanks/BolgeForge.git (push)\n"
+  },
+  "baseline_files": {
+    "test_epoch_probe.py": "2e658adaf8b26d962feea624ba41f3499b98b50a6141274ce39006f5ac188036",
+    "README.md": "e06525f04181b67141d52263117a4f18b1b7bcb30584859aca097c92766d1f59",
+    "epoch_probe.py": "a7b6837aa4433136d1ab6d133ef5f8bf54b7c319873871596cf152249620dbf8",
+    "report.json": "f974d5921cade6963f9379e4bc8e2dd55b10b6d48a7370269b1d6eaf05454093",
+    "ATTRIBUTION.md": "aac85dc90e207d834b97c06e4e9d9bc4ad1eca675b92f232f5bea9b0b0321175",
+    "truth_machine_classic_90b.mal": "1e34e2afd1fc645dadac1f1aac0fe2348ff469878cc3da396a6a1e7bad2a4417",
+    "COMPOSE_M1.md": "58273b7f50f19be59dd0c74c35b089930984f6963be1f3402140190a8b9e9f9b"
+  },
+  "zip_availability": "No original ZIP found in supplied attachment, Images, or Downloads; supplied extracted directory used verbatim."
+}

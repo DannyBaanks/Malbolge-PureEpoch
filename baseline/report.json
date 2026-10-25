@@ -1,0 +1,35 @@
+{
+  "claim_boundary": "External observer only. Does not synthesize, checkpoint or rollback at runtime.",
+  "cycle": {
+    "end_step": 1408,
+    "modified_cell_count": 4,
+    "modified_cells_returned_to_anchor": 4,
+    "output_during_cycle": "3131313131313131313131313131313131",
+    "output_growth": 17,
+    "period": 408,
+    "same_registers_memory_input": true,
+    "start_step": 1000
+  },
+  "max_steps": 5000,
+  "memory_cells": 59049,
+  "negative_control": {
+    "cell_restored_by_malbolge": false,
+    "full_anchor_state_restored": false,
+    "injected_value": 107,
+    "mutated_cell": 29569,
+    "previous_value": 106
+  },
+  "observed_steps": 1408,
+  "payload_hex": "31",
+  "schema": "malbolge-pure-epoch-probe/v0",
+  "source_bytes": 90,
+  "source_sha256": "1e34e2afd1fc645dadac1f1aac0fe2348ff469878cc3da396a6a1e7bad2a4417",
+  "status": "RUNNING",
+  "touched_cell_count": 59,
+  "untouched_run": {
+    "length": 58960,
+    "start": 89
+  },
+  "verdict": "DEMONSTRATED_CYCLE",
+  "warmup": 1000
+}
