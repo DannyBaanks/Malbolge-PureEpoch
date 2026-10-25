@@ -13,10 +13,11 @@ Un laboratorio reproducible de checkpoint, restauración lógica, bifurcación, 
 ![Classic](https://img.shields.io/badge/VM-Malbolge_Classic-32d8bc?style=flat-square)
 ![Offline](https://img.shields.io/badge/Reproducción-offline-76a5ff?style=flat-square)
 ![M3](https://img.shields.io/badge/Épocas-3-d68ffc?style=flat-square)
+![Ouroboros](https://img.shields.io/badge/Ouroboros-BolgePiton_VM-ff5470?style=flat-square)
 ![Evidence](https://img.shields.io/badge/Disciplina-evidencia_%2B_controles-f5bd70?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-8399c3?style=flat-square)
 
-[**Resultados**](RESULTS.md) · [**Veredictos**](VERDICT.md) · [**Experimentos toroidales**](torus/TORUS_RESULTS.md) · [**Galería visual**](https://github.com/DannyBaanks/MalbolgArt)
+[**Resultados**](RESULTS.md) · [**Veredictos**](VERDICT.md) · [**Experimentos toroidales**](torus/TORUS_RESULTS.md) · [**BolgePiton**](bolge_piton/README.md) · [**Galería visual**](https://github.com/DannyBaanks/MalbolgArt)
 
 </div>
 
@@ -56,6 +57,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **M3 · Composición** | `candidates/m3_normal.mal` | **3 épocas**, roundtrip y rollback; propuestas offline verificadas | Protocolo construido, no motor universal |
 | **94 · Control reutilizable** | `evidence/quine-94-analysis.json` | Identidad de roundtrip y núcleo `0..93` reutilizable | **No** es una quine autónoma de 94 bytes |
 | **G-T2 / G-T3 · Préstamo** | `torus/programs/` | Journal prestado/restaurado y consumidor posterior verificado | Campaña toroidal independiente y acotada |
+| **BolgePiton · Ouroboros** | `bolge_piton/` | **VM en Malbolge** interpretando Micro-Pitón; paridad C ↔ Pibolge | Dominio acotado de ISA |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -150,7 +152,51 @@ En **G-T3**, las cuatro combinaciones de entrada y cuatro controles negativos ti
 
 **[Ver el estudio toroidal completo →](torus/TORUS_RESULTS.md)**
 
-## 06 / Reproducirlo sin red
+## 06 / BolgePiton: La Inversa de Pibolge y el Ciclo Ouroboros
+
+En el ecosistema ISyCo, **[Pibolge](https://github.com/DannyBaanks/Pibolge)** es un intérprete de Malbolge Classic escrito en **[Pitón](https://github.com/DannyBaanks/PITON)** (el lenguaje de Danny con sintaxis en español).
+
+**BolgePiton** demuestra la propiedad simétrica inversa utilizando el sustrato de PureEpoch: **una Máquina Virtual en Malbolge puro (`.mal`) capaz de interpretar y ejecutar programas en Micro-Pitón**.
+
+```mermaid
+flowchart TD
+  L0["Nivel 0: CPython 3.12 (Host)"] --> L1["Nivel 1: Pibolge (pibolge.piton)<br/><i>Intérprete canónico de Malbolge en Pitón</i>"]
+  L1 --> L2["Nivel 2: BolgePiton (bolge_piton_vm.mal)<br/><i>VM en Malbolge sintetizada con PureEpoch (184 bytes)</i>"]
+  L2 --> L3["Nivel 3: Micro-Pitón (script en español)<br/><i>imprimir_texto, cargar, locura, parar</i>"]
+  L3 --> OUT["Salida stdout: Paridad byte-exacta en C y Pitón ✅"]
+```
+
+### ¿Cómo opera dentro de Malbolge?
+
+1. **Identidad de Cero en Carga:** Inicializa el acumulador virtual en `mem[75]` mediante la secuencia algebraica $\text{crazy}(0, 81) = 29524$ y $\text{crazy}(29524, 29524) = 0$, sorteando la restricción del loader ASCII `[33, 126]`.
+2. **Ciclo de Instrucciones sin Agotar Steering:** Un mecanismo automático de saltos `j` hacia celdas bajas `[35..55]` resetea el puntero de datos $d$ cada vez que avanza hacia el código alto, permitiendo secuencias arbitrarias de instrucciones sin exceder el presupuesto de memoria baja.
+3. **Cálculo Ternario de Pitón en Memoria:** La instrucción `locura` evalúa $\text{crazy}(\text{operando}, \text{acc})$ directamente en la memoria de Malbolge.
+
+### Telemetría y Flex Benchmark
+
+```text
+┌──────────────────────────────────────────────────────────────────┐
+│                     🏁 TELEMETRÍA Y BENCHMARK                    │
+├──────────────────────────────────────────────────────────────────┤
+│  • Compilador Micro-Pitón   : 26.70 µs                           │
+│  • Síntesis VM Malbolge     : 237.83 µs                          │
+│  • Ejecución Oráculo C      : 2.20 ms                            │
+│  • Ejecución Ouroboros      : 228.82 ms                          │
+│  • Ratio Ouroboros / C      : 104.2x (CPython + Pibolge VM)      │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+```bash
+# Probar la VM interactiva con cronómetro de alta resolución
+python3 bolge_piton/bolge_piton_cli.py --texto 'imprimir_texto "Hola Ouroboros!"'
+
+# Correr la suite unitaria reflexiva (4/4 PASS)
+python3 bolge_piton/ouroboros_test.py -v
+```
+
+**[Documentación técnica de BolgePiton →](bolge_piton/README.md)** · **[Guía humana de operación →](bolge_piton/GUIA.md)**
+
+## 07 / Reproducirlo sin red
 
 **Requisitos:** Linux, Python **3.10+** y GCC. El código upstream requerido está preservado en `vendor/`. No se necesita una VM Malbolge modificada ni paquetes Python de terceros para la campaña básica.
 
@@ -161,6 +207,9 @@ cd Malbolge-PureEpoch
 # Baselines preservados y pruebas del laboratorio
 python3 -B -m unittest discover -s baseline -v
 python3 -B -m unittest discover -s tests -v
+
+# Pruebas del ciclo Ouroboros (BolgePiton)
+python3 bolge_piton/ouroboros_test.py -v
 
 # Reconstruir candidatos de este laboratorio y actualizar evidencia local
 python3 -B -m tools.collect_evidence
@@ -185,13 +234,14 @@ Salida esperada: **`S`**, seguida de HALT, para ese caso del protocolo M1c. La e
 | Fuente | Función |
 |---|---|
 | [`tests/`](tests/) | Contratos positivos y mutantes negativos |
+| [`bolge_piton/`](bolge_piton/) | VM de Pitón en Malbolge y suite Ouroboros |
 | [`evidence/measurements.json`](evidence/measurements.json) | Mediciones de la campaña base |
 | [`evidence/traces/`](evidence/traces/) | Trazas, estados finales, fases y paridad |
 | [`evidence/m3-proposals.json`](evidence/m3-proposals.json) | Presupuesto, propuestas aceptadas/rechazadas y discrepancias |
 | [`evidence/initial_state.json`](evidence/initial_state.json) | Procedencia inicial de los checkouts |
 | [`torus/`](torus/) | Campaña aparte, informes, programas y conjuntos de acceso |
 
-## 07 / Qué **no** está demostrado
+## 08 / Qué **no** está demostrado
 
 PureEpoch está diseñado para que los controles negativos tengan el mismo protagonismo que los resultados positivos.
 
@@ -205,12 +255,13 @@ Los mutantes `no_save`, `no_restore`, `corrupt_journal`, `broken_return`, `outpu
 
 **[Veredicto por afirmación](VERDICT.md)** · **[Fallos conservados](evidence/failures.md)**
 
-## 08 / Estructura del laboratorio
+## 09 / Estructura del laboratorio
 
 ```text
 Malbolge-PureEpoch/
 ├── assets/           # Portada editorial del laboratorio
 ├── baseline/         # Control M0 y su procedencia
+├── bolge_piton/      # VM de Pitón en Malbolge (ciclo Ouroboros)
 ├── candidates/       # Programas Classic M1a → M3, probes y mutantes
 ├── evidence/         # Manifiestos, trazas, hashes, campañas y controles
 ├── tests/            # Contratos reproducibles
@@ -222,13 +273,14 @@ Malbolge-PureEpoch/
 └── NEXT_COMPOSE.md   # Continuación experimental documentada
 ```
 
-## 09 / Procedencia y créditos
+## 10 / Procedencia y créditos
 
 PureEpoch construye nuevos experimentos a partir de trabajo previo identificado. **No atribuye el código ajeno como propio.**
 
 - **[Autobolge](https://github.com/DannyBaanks/Autobolge)** — generación/expansión de propuestas, trazas y contratos de anchors. Su integración aquí es **offline**, sin restauración de la VM desde snapshots del host.
 - **[BolgeForge](https://github.com/DannyBaanks/BolgeForge)** — programas Classic, referencias y validación de fuentes mediante intérpretes/oráculos.
 - **[MalbolgArt](https://github.com/DannyBaanks/MalbolgArt)** — imágenes y animaciones científicas enlazadas más arriba; visualizar no reemplaza verificar.
+- **[Pibolge](https://github.com/DannyBaanks/Pibolge)** y **[PITON](https://github.com/DannyBaanks/PITON)** — base del lenguaje en español y del intérprete canónico de Malbolge, complementados por la VM inversa BolgePiton.
 - **Truth Machine de Weird Glyphs** — control M0 de tercero, preservado y atribuido bajo **CC BY-SA 4.0**.
 - **Intérprete de Olmstead y demás código vendor** — conservan autoría, términos y avisos de sus fuentes. Ver `vendor/`.
 
@@ -241,6 +293,10 @@ Los commits de upstream inspeccionados, las diferencias de EOF entre motores, la
 ### **State is not a screenshot. Recovery is not a replay.**
 
 <sub>PureEpoch · ISyCo · Classic Malbolge · 2026</sub>
+
+[**Explorar la evidencia**](evidence/) · [**Leer la investigación**](RESULTS.md) · [**Abrir MalbolgArt**](https://github.com/DannyBaanks/MalbolgArt)
+
+</div>
 
 [**Explorar la evidencia**](evidence/) · [**Leer la investigación**](RESULTS.md) · [**Abrir MalbolgArt**](https://github.com/DannyBaanks/MalbolgArt)
 
