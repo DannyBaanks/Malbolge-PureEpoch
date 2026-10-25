@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title desc">
+<title id="title">PureEpoch — Stateful recovery in Classic Malbolge</title>
+<desc id="desc">Conceptual architecture illustration of three epochs with a shared control core, commit, recovery and retry. Not a measured VM trace.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#07111e"/><stop offset=".58" stop-color="#071827"/><stop offset="1" stop-color="#120e26"/></linearGradient>
+  <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#42eac9"/><stop offset=".52" stop-color="#65b9ff"/><stop offset="1" stop-color="#dd85ff"/></linearGradient>
+  <linearGradient id="line" x2="1" y2="0"><stop stop-color="#41e3d1"/><stop offset=".5" stop-color="#f5c66c"/><stop offset="1" stop-color="#e477eb"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="5"/></filter>
+  <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#a8daeb" stroke-opacity=".055"/></pattern>
+  <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#91c6d6" opacity=".16"/></pattern>
+</defs>
+<rect width="1200" height="440" rx="24" fill="url(#bg)"/>
+<rect width="1200" height="440" rx="24" fill="url(#grid)"/>
+<rect x="1" y="1" width="1198" height="438" rx="23" fill="none" stroke="#7797b0" stroke-opacity=".23"/>
+<path d="M 0 5 H 1200" stroke="url(#edge)" stroke-width="5"/>
+<path d="M 0 435 H 1200" stroke="url(#edge)" stroke-width="2" opacity=".6"/>
+<g fill="none" stroke="#46dec8" stroke-opacity=".10">
+ <ellipse cx="925" cy="231" rx="264" ry="125" transform="rotate(-24 925 231)" stroke-width="1.2"/>
+ <ellipse cx="935" cy="232" rx="199" ry="94" transform="rotate(23 935 232)" stroke-width="1.2"/>
+</g>
+<g>
+ <rect x="52" y="42" width="210" height="28" rx="14" fill="#143342" stroke="#387d7f" stroke-opacity=".6"/>
+ <circle cx="69" cy="56" r="4" fill="#38e8c6"/>
+ <text x="82" y="61" font-size="12" font-family="DejaVu Sans,Arial,sans-serif" letter-spacing="2" font-weight="700" fill="#ade5df">ISYCO / RESEARCH LAB</text>
+ <text x="52" y="160" font-family="DejaVu Sans,Arial,sans-serif" font-size="73" font-weight="800" letter-spacing="-3" fill="#edf7ff">PURE<tspan fill="#48dcc5">EPOCH</tspan></text>
+ <path d="M 53 185 H 550" stroke="url(#line)" stroke-width="3" stroke-linecap="round" />
+ <text x="53" y="220" font-family="DejaVu Sans,Arial,sans-serif" font-size="23" font-weight="500" fill="#c5d7e9">Stateful recovery inside the VM.</text>
+ <text x="53" y="248" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" fill="#829ab2">Checkpoint  /  Restore  /  Retry  /  Commit</text>
+ <text x="53" y="301" font-family="DejaVu Sans Mono,monospace" font-size="15" fill="#9baec3">CLASSIC MALBOLGE   &#8226;   59,049 CELLS</text>
+ <rect x="53" y="324" width="148" height="34" rx="9" fill="#16364a" stroke="#2c7b8b"/>
+ <text x="127" y="346" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="14" fill="#7befdb">3 EPOCHS</text>
+ <rect x="212" y="324" width="170" height="34" rx="9" fill="#2d2942" stroke="#74619a"/>
+ <text x="297" y="346" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="14" fill="#d7c3fd">94-CELL CORE</text>
+ <rect x="393" y="324" width="170" height="34" rx="9" fill="#382c2d" stroke="#876245"/>
+ <text x="478" y="346" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="14" fill="#fbd99e">FAIL-CLOSED</text>
+ <text x="53" y="400" font-family="DejaVu Sans Mono,monospace" font-size="11.5" fill="#647e95" letter-spacing=".35">CONCEPTUAL SCHEMATIC  /  NOT AN EXECUTION TRACE</text>
+</g>
+<g>
+ <path d="M 678 196 C 738 112, 886 110, 941 185" fill="none" stroke="#41e4d0" stroke-width="17" opacity=".10" filter="url(#glow)"/>
+ <path d="M 678 196 C 738 112, 886 110, 941 185" fill="none" stroke="#41e4d0" stroke-width="3" stroke-linecap="round"/>
+ <path d="M 946 195 C 1043 126, 1155 237, 1050 297" fill="none" stroke="#f4c468" stroke-width="17" opacity=".12" filter="url(#glow)"/>
+ <path d="M 946 195 C 1043 126, 1155 237, 1050 297" fill="none" stroke="#f4c468" stroke-width="3" stroke-linecap="round"/>
+ <path d="M 1040 306 C 943 381, 747 363, 680 266" fill="none" stroke="#d986f3" stroke-width="17" opacity=".12" filter="url(#glow)"/>
+ <path d="M 1040 306 C 943 381, 747 363, 680 266" fill="none" stroke="#d986f3" stroke-width="3" stroke-linecap="round"/>
+ <path d="M 678 266 C 700 242, 701 220, 678 196" fill="none" stroke="#5cb8f8" stroke-width="2" stroke-dasharray="4 7"/>
+ <circle cx="676" cy="195" r="12" fill="#0b1b27" stroke="#41e4d0" stroke-width="4"/>
+ <circle cx="946" cy="194" r="12" fill="#0b1b27" stroke="#f4c468" stroke-width="4"/>
+ <circle cx="1044" cy="306" r="12" fill="#0b1b27" stroke="#d986f3" stroke-width="4"/>
+ <circle cx="677" cy="266" r="7" fill="#9ed4ff"/>
+ <g font-family="DejaVu Sans Mono,monospace" font-size="14" fill="#e7eef5" font-weight="700">
+  <text x="648" y="167">E1</text>
+  <text x="934" y="164">E2</text>
+  <text x="1056" y="333">E3</text>
+  <text x="707" y="276" font-size="12" fill="#9cc5e5">RESTORE / RETRY</text>
+ </g>
+ <circle cx="885" cy="257" r="67" fill="#0b2131" stroke="#4c83a0" stroke-width="1.5"/>
+ <circle cx="885" cy="257" r="55" fill="url(#dots)" stroke="#273e52" />
+ <text x="885" y="246" text-anchor="middle" font-family="DejaVu Sans Mono,monospace" font-size="29" font-weight="800" fill="#dff8ff">0..93</text>
+ <text x="885" y="273" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" fill="#8eb9ca">SHARED CORE</text>
+ <path d="M 744 82 H 1115" stroke="#465e76" stroke-opacity=".5"/>
+ <text x="744" y="69" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#6da5b4" letter-spacing="1.5">ONE VM PROCESS · REARMED IN PLACE</text>
+</g>
+</svg>
