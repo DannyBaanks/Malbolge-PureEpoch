@@ -196,7 +196,50 @@ python3 bolge_piton/ouroboros_test.py -v
 
 **[Documentación técnica de BolgePiton →](bolge_piton/README.md)** · **[Guía humana de operación →](bolge_piton/GUIA.md)**
 
-## 07 / Reproducirlo sin red
+## 07 / Adversarial Boss Fights: La Frontera Extrema
+
+Para someter a PureEpoch a las condiciones más adversariales concebibles —escenarios donde cualquier investigador en computación esotérica asumiría que Malbolge colapsaría irremisiblemente por automutación `XLAT2`— se diseñó y superó la serie **Boss Battles**:
+
+```mermaid
+flowchart LR
+  B1["<b>Boss 1: Falla Bizantina</b><br/>Rollback Anidado J1 → J2<br/><i>Safe-Mode Fallback (29.5 KB)</i>"]
+  B2["<b>Boss 2: Cinta de Turing</b><br/>Motor Brainfuck Bidireccional<br/><i>Memoria Baja [65..69] (1.3 KB)</i>"]
+  B3["<b>Boss 3: Bucle Dinámico</b><br/>While x > 0 Desenrollado/En Caliente<br/><i>(En investigación)</i>"]
+
+  B1 -->|Superado ✅| B2
+  B2 -->|Superado ✅| B3
+```
+
+### Boss 1: Falla Bizantina en Cascada (Rollback del Rollback)
+* **El Desafío:** PureEpoch M3 demostró recuperarse de 1 falla aislada. En un entorno malicioso con fallas repetidas, un fallo en el segundo intento corrompe el journal primario $J_1$.
+* **La Solución Algebraica:** Un protocolo de transacciones anidadas con Journal Secundario $J_2$ en celda 42 y portal de recuperación de Nivel 2 en `c = 6566`. Si el Intento 1 falla, revierte con $J_1$; si el Intento 2 vuelve a fallar, el portal 6566 intercepta el colapso, restaura el estado original desde $J_2$ mediante 10 rotaciones y transiciona a un modo a prueba de fallos (*Safe-Mode*) con salida diagnóstica `'F'` (70).
+* **Artefacto:** [`candidates/boss1_byzantine.mal`](candidates/boss1_byzantine.mal) (29,531 bytes) · [`tools/boss1_byzantine.py`](tools/boss1_byzantine.py)
+* **Validación:** 5/5 pruebas unitarias passing con paridad estricta entre 3 oráculos en [`tests/test_boss1_byzantine.py`](tests/test_boss1_byzantine.py).
+
+### Boss 2: La Cinta Bidireccional de Turing (Motor Brainfuck en Malbolge)
+* **El Desafío:** En `BolgePiton` el puntero de datos sólo avanzaba. Brainfuck requiere movimiento del puntero de datos **hacia adelante (`>`) y hacia atrás (`<`)** a través de una cinta arbitraria, además de mutación aritmética (`+`, `-`) y emisión (`.`), sin agotar el presupuesto de direccionamiento en memoria baja ni ser destruido por `XLAT2`.
+* **La Solución Algebraica:**
+  1. **Cinta Virtual en Memoria Baja:** Asignada en las celdas `[65..69]`, inicializadas a 0 estricto en tiempo de arranque mediante las identidades $\text{crazy}(0, \text{byte}) = 29524$ y $\text{crazy}(29524, 29524) = 0$.
+  2. **Aritmética Ternaria Cerrada:** Transiciones exactas en 1 paso:
+     - Incremento $0 \to 1$: $\text{crazy}(29523, 0) = 1$
+     - Incremento $1 \to 2$: $\text{crazy}(29525, 1) = 2$
+     - Decremento $2 \to 1$: $\text{crazy}(29525, 2) = 1$
+     - Decremento $1 \to 0$: $\text{crazy}(29524, 1) = 0$
+  3. **Lectura No Destructiva de 360°:** Para emitir con `.`, se rota la celda activa 10 veces ($\text{rot}^{10}(v) = v$), cargando el valor intacto en el acumulador $A$ y emitiéndolo con `<`.
+  4. **Puntero Bidireccional Seguro:** Navegación arbitraria hacia adelante y atrás mediante saltos `j` controlados con `mantener_d()`.
+* **Artefacto:** [`candidates/boss2_brainfuck.mal`](candidates/boss2_brainfuck.mal) (1,303 bytes) · [`tools/boss2_brainfuck.py`](tools/boss2_brainfuck.py)
+* **Validación:** 5/5 pruebas unitarias con cronómetro de alta resolución y paridad estricta en [`tests/test_boss2_brainfuck.py`](tests/test_boss2_brainfuck.py).
+
+```bash
+# Ejecutar código Brainfuck sobre Malbolge con telemetría de flex
+python3 tools/boss2_brainfuck_cli.py "++>+>++<<-.>.>.>+.<.!" --oracles
+
+# Ejecutar la suite completa de Boss 1 y Boss 2
+python3 -B -m unittest tests/test_boss1_byzantine.py -v
+python3 -B -m unittest tests/test_boss2_brainfuck.py -v
+```
+
+## 08 / Reproducirlo sin red
 
 **Requisitos:** Linux, Python **3.10+** y GCC. El código upstream requerido está preservado en `vendor/`. No se necesita una VM Malbolge modificada ni paquetes Python de terceros para la campaña básica.
 
@@ -241,7 +284,7 @@ Salida esperada: **`S`**, seguida de HALT, para ese caso del protocolo M1c. La e
 | [`evidence/initial_state.json`](evidence/initial_state.json) | Procedencia inicial de los checkouts |
 | [`torus/`](torus/) | Campaña aparte, informes, programas y conjuntos de acceso |
 
-## 08 / Qué **no** está demostrado
+## 09 / Qué **no** está demostrado
 
 PureEpoch está diseñado para que los controles negativos tengan el mismo protagonismo que los resultados positivos.
 
@@ -255,17 +298,17 @@ Los mutantes `no_save`, `no_restore`, `corrupt_journal`, `broken_return`, `outpu
 
 **[Veredicto por afirmación](VERDICT.md)** · **[Fallos conservados](evidence/failures.md)**
 
-## 09 / Estructura del laboratorio
+## 10 / Estructura del laboratorio
 
 ```text
 Malbolge-PureEpoch/
 ├── assets/           # Portada editorial del laboratorio
 ├── baseline/         # Control M0 y su procedencia
 ├── bolge_piton/      # VM de Pitón en Malbolge (ciclo Ouroboros)
-├── candidates/       # Programas Classic M1a → M3, probes y mutantes
+├── candidates/       # Programas Classic M1a → M3, probes, mutantes y Boss Battles
 ├── evidence/         # Manifiestos, trazas, hashes, campañas y controles
-├── tests/            # Contratos reproducibles
-├── tools/            # Construcción OFFLINE, observación y oráculos
+├── tests/            # Contratos reproducibles (Boss 1 y Boss 2 incluidos)
+├── tools/            # Construcción OFFLINE, observación, oráculos y CLIs
 ├── torus/            # Investigación separada G-T1/G-T2/G-T3
 ├── vendor/           # Fuentes de referencia y avisos upstream
 ├── RESULTS.md        # Procedimiento y resultados extensos
@@ -273,7 +316,7 @@ Malbolge-PureEpoch/
 └── NEXT_COMPOSE.md   # Continuación experimental documentada
 ```
 
-## 10 / Procedencia y créditos
+## 11 / Procedencia y créditos
 
 PureEpoch construye nuevos experimentos a partir de trabajo previo identificado. **No atribuye el código ajeno como propio.**
 
