@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "state_cell": 40,
+    "journal_cell": 42,
+    "pre_loan_byte": 120,
+    "ledger_cell": 44,
+    "cell_53_policy": "untouched_r0_w0_c0_e0",
+    "programs": {
+      "normal": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_e_t3_normal.mal",
+        "sha256": "14347b8d35f5bea86616099010a4d074420bf9d0fe0eaf9d4a419543aa286ac3",
+        "len": 29842
+      },
+      "no_loan_return": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_e_t3_no_loan_return.mal",
+        "sha256": "de8ca264e33c357283da2b3b9dad992084cfedffba837111cd6a776729264b61",
+        "len": 29718
+      },
+      "no_restore": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_e_t3_no_restore.mal",
+        "sha256": "8cc778351b66f3dc48845c9cdebfc4cffba300fdb0af09570bac1c926db81bff",
+        "len": 29842
+      },
+      "corrupt_journal": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_e_t3_corrupt_journal.mal",
+        "sha256": "2522af329218153c5487a2ac32f061a779c863076ccb9de08240dc492e8874b6",
+        "len": 29842
+      },
+      "force_retry_failure": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_e_t3_force_retry_failure.mal",
+        "sha256": "8fb21f9c33a911df7e2bcf4d7c510bb1a9385119b2da3749663e73d9e9285505",
+        "len": 29842
+      }
+    }
+  },
+  "positive_cases": {
+    "initial_1_cand_1": {
+      "path_type": "clean_path",
+      "terminal": "HALT",
+      "steps": 707,
+      "mem40_committed": 29526,
+      "mem42_returned": true,
+      "output": "V",
+      "oracle_parity": true,
+      "cell_53_untouched": true,
+      "cells_in_D_minus_C_minus_E": true
+    },
+    "initial_1_cand_3": {
+      "path_type": "rollback_recovery_retry_path",
+      "terminal": "HALT",
+      "steps": 769,
+      "mem40_committed": 29526,
+      "mem42_returned": true,
+      "output": "V",
+      "oracle_parity": true,
+      "cell_53_untouched": true,
+      "cells_in_D_minus_C_minus_E": true
+    },
+    "initial_3_cand_1": {
+      "path_type": "clean_path",
+      "terminal": "HALT",
+      "steps": 707,
+      "mem40_committed": 29522,
+      "mem42_returned": true,
+      "output": "R",
+      "oracle_parity": true,
+      "cell_53_untouched": true,
+      "cells_in_D_minus_C_minus_E": true
+    },
+    "initial_3_cand_3": {
+      "path_type": "rollback_recovery_retry_path",
+      "terminal": "HALT",
+      "steps": 769,
+      "mem40_committed": 29522,
+      "mem42_returned": true,
+      "output": "R",
+      "oracle_parity": true,
+      "cell_53_untouched": true,
+      "cells_in_D_minus_C_minus_E": true
+    }
+  },
+  "negative_controls": {
+    "no_loan_return_init_1": {
+      "terminal": "STALL",
+      "mem42_unreturned": 1,
+      "mb_ref_exit": 3,
+      "falsified_as_expected": true
+    },
+    "no_loan_return_init_3": {
+      "terminal": "STALL",
+      "mem42_unreturned": 3,
+      "mb_ref_exit": 3,
+      "falsified_as_expected": true
+    },
+    "no_restore_init_1": {
+      "terminal": "HALT",
+      "mem40": 29528,
+      "falsified_as_expected": true
+    },
+    "no_restore_init_3": {
+      "terminal": "HALT",
+      "mem40": 29528,
+      "falsified_as_expected": true
+    },
+    "corrupt_journal_init_1": {
+      "terminal": "HALT",
+      "mem40": 29528,
+      "falsified_as_expected": true
+    },
+    "corrupt_journal_init_3": {
+      "terminal": "HALT",
+      "mem40": 29526,
+      "falsified_as_expected": true
+    },
+    "force_retry_failure_init_1": {
+      "terminal": "HALT",
+      "mem40": 26248,
+      "falsified_as_expected": true
+    },
+    "force_retry_failure_init_3": {
+      "terminal": "HALT",
+      "mem40": 26248,
+      "falsified_as_expected": true
+    }
+  }
+}

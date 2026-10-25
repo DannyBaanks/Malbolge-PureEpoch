@@ -1,0 +1,7 @@
+{
+"status":"INVALID_ENCRYPTION","steps":416,"cells_source":533,"event_sha256":"7969b45f398af94f4ef4ab5387e9cd3b63d56b161d3c213cedd1e2c7d2f096df",
+"visited_c":416,"visited_d":39,"intersection":1,"union":454,"complement":58595,"D_minus_C":38,"read_unique":6,"written_unique":2,"encrypted_unique":415,"read_written_not_C":2,
+"read_events":49,"direct_write_events":23,"encryption_hits":415,"inputs":1,"output_len":0,
+"delta_segments":26,"break4":2,"break40":23,"break_other":0,"diagonal_steps":390,"diagonal_fraction":0.937500000000,"max_segment_transitions":18,"distinct_deltas":26,"delta_reentries":0,
+"increment_wrap_c":0,"increment_wrap_d":0,"simultaneous_c_eq_d":1,"unique_projected_pairs":416,"projected_pair_revisits":0,"C_min_cyclic_period":59049,"C_shift_symmetry_count_correct":0,
+"opcodes":{"4":3,"23":1,"39":20,"40":23,"62":3,"68":366}}

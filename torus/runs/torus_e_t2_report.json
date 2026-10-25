@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "borrowed_cell": 41,
+    "pre_loan_byte": 121,
+    "ledger_cell": 43,
+    "cell_53_policy": "untouched_r0_w0_c0_e0",
+    "programs": {
+      "normal": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_borrow_e_t2.mal",
+        "sha256": "c60a9b5bfd93512e7a68d2464d9701d94baaae4259c09baed85f4b7d55121a0e",
+        "len": 677
+      },
+      "no_return": {
+        "path": "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/torus/programs/torus_borrow_e_t2_no_return.mal",
+        "sha256": "c91c22da44f3040bec6ed49abe0eb04d7d9ba42cb8ff7cb322e2453deadc9f57",
+        "len": 533
+      }
+    }
+  },
+  "positive_cases": {
+    "input_1": {
+      "stdin_hex": "0x01",
+      "terminal": "HALT",
+      "steps": 561,
+      "mem41_restored": true,
+      "mem41_value": 121,
+      "mb_ref_exit": 0,
+      "mb_ref_stdout": "y",
+      "cell_53_untouched": true,
+      "cells_in_D_minus_C_minus_E": true
+    },
+    "input_3": {
+      "stdin_hex": "0x03",
+      "terminal": "HALT",
+      "steps": 561,
+      "mem41_restored": true,
+      "mem41_value": 121,
+      "mb_ref_exit": 0,
+      "mb_ref_stdout": "y",
+      "cell_53_untouched": true,
+      "cells_in_D_minus_C_minus_E": true
+    }
+  },
+  "negative_controls": {
+    "no_return_input_1": {
+      "stdin_hex": "0x01",
+      "terminal": "STALL",
+      "mem41_unreturned": 29523,
+      "mb_ref_exit": 3,
+      "falsified_as_expected": true
+    },
+    "no_return_input_3": {
+      "stdin_hex": "0x03",
+      "terminal": "STALL",
+      "mem41_unreturned": 29521,
+      "mb_ref_exit": 3,
+      "falsified_as_expected": true
+    }
+  }
+}

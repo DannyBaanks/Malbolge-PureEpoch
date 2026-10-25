@@ -18,9 +18,13 @@ M1 actual: una celda lógica T36, journal52, dominio de selectores1/3, bifurcaci
 4. Sólo con los tres puntos anteriores, componer M2 de exactamente dos épocas en un único proceso. Probar válido/válido, inválido/válido, válido/inválido e inválido/inválido; registrar todas las fases y consumo exacto del journal.
 5. Para M3, hacer que un adaptador de `TraceExpander`/proposals de Autobolge proponga únicamente transformaciones de una familia acotada y que BolgeForge valide cada fuente estrictamente. Conservar propuestas rechazadas y discrepancias. La campaña es offline; ningún proceso de observación reescribe la VM.
 
-## Línea toroidal separada
+## Línea toroidal separada [DEMONSTRATED]
 
-No usar celda53 del quine como reserva: está viva. Aprovechar el grafo observado para localizar una fase donde una región D\C\E pueda adquirir un contrato temporal de préstamo y devolución. Primero demostrar escritura/lectura controlada de dos valores; después checkpoint y bifurcación. La descomposición49+47 y las regiones sin visitas no prueban disponibilidad ni autonomía.
+Completada y verificada en `torus/`:
+1. Celda 53 excluida estrictamente por estar viva (`W=3, R=1143` en `m281`).
+2. Ventanas de préstamo y restitución localizadas en `runs/dce_borrow_windows.json` (banda compartida `39..44 ∈ D \ C \ E`).
+3. G-T2 (`E-T2`): Demostración constructiva de préstamo/devolución con escritura/lectura controlada de dos valores en celda 41, devuelta exactamente a 121 y verificada por salto aguas abajo del consumidor (`runs/torus_e_t2_report.json`). Control negativo `no_return` falsado.
+4. G-T3 (`E-T3`): Checkpoint, bifurcación in-band, corrupción controlada, restore desde journal prestado 42, retry y devolución exacta a 120 antes del salto del consumidor (`runs/torus_e_t3_report.json`). Paridad en 5 oráculos y 4 controles negativos falsados.
 
 ## Presupuesto y gates
 

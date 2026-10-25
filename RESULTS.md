@@ -189,3 +189,25 @@ Siguiendo `NEXT_COMPOSE.md` y preservando `candidates/m1c_normal.mal` (`17ff6f32
   - Gracias a este punto fijo sintético de periodo 1, `M3` mantiene todo su núcleo de despacho y estado (`17` trampolines en `2..77` + celdas lógicas, portales, journal, contador y constantes en `36..84`) dentro del **primer bloque `1 = 94` (`0..93`)**, reutilizándolo a lo largo de 3 épocas completas sin duplicar anillos de `188` o `376` celdas.
 
 Las **89 ejecuciones** de la campaña completa (`19` de M1a/b/c + `22` de M1e + `20` de M2 + `28` de M3) tienen paridad exacta entre Python, `trace_ref`, `mb_ref` y `olmstead` (en todos los casos `HALT`).
+
+### 7. Demostración constructiva de la línea toroidal separada (`NEXT_COMPOSE.md` líneas 21-24, `torus/`)
+
+- **Localización de ventanas de préstamo seguras (`torus/runs/dce_borrow_windows.json`):**
+  Identificación rigurosa de la banda baja `39..44` como conjunto compartido en `D \ C \ E` a través de `m281`, `lutter` y `m284`. Se ratifica la regla de exclusión estricta de la celda 53 por ser un puntero activo del bucle (`W=3` en pasos 18, 20575, 20605 y `R=1143` redirecciones hacia `26319`).
+- **Milestone M2 — G-T2 (`E-T2`): Escritura/lectura controlada de dos valores con Borrow & Return (`torus/runs/torus_e_t2_report.json`):**
+  - Artefactos: `torus/programs/torus_borrow_e_t2.mal` (677 bytes) y `torus/programs/torus_borrow_e_t2_no_return.mal` (533 bytes).
+  - Celda prestada `41 ∈ D \ C \ E` (pre-préstamo 121); ledger de resguardo `43 ∈ D \ C \ E`. Celda 53 intacta (`C=0, R=0, W=0, E=0`).
+  - Casos positivos (`stdin = 0x01` y `0x03`): escribe y lee de vuelta los valores temporales `29523` y `29521`, restituye exactamente el byte pre-préstamo `mem[41] == 121` vía involución `crazy(29403, mem[41])`, y ejecuta el salto consumidor aguas abajo a través de `mem[41] = 121` para emitir `'y'` y hacer `HALT` (561 pasos, paridad C/Python, exit 0).
+  - Control negativo `no_return`: omite la restitución del préstamo; el salto aguas abajo falla catastróficamente sobre `29523`/`29521` (`INVALID_ENCRYPTION`, exit 3, 0 bytes de salida).
+- **Milestone M3 — G-T3 (`E-T3`): Checkpoint, Bifurcación In-Band, Corrupción, Restore, Retry y Devolución (`torus/runs/torus_e_t3_report.json`):**
+  - Artefactos: `torus/programs/torus_e_t3_{normal,no_loan_return,no_restore,corrupt_journal,force_retry_failure}.mal` (29,842 bytes cada uno).
+  - Celda journal prestada `J = 42 ∈ D \ C \ E` (pre-préstamo 120); ledger de resguardo `L = 44 ∈ D \ C \ E` (inicial 118); estado `S = 40 ∈ D \ C \ E` (inicial 93); celda de bifurcación `38 ∈ D \ C \ E` (inicial 118). Celda 53 estrictamente intacta (`C=0, R=0, W=0, E=0`).
+  - Casos positivos para `(initial, cand) ∈ {1, 3}²`:
+    - Camino limpio (`cand = 1`, 707 instrucciones): transición directa a estado comprometido `mem[40] = 29526` ('V') o `29522` ('R'), devolución del préstamo `mem[42] == 120` desde `L = 44`, salto aguas abajo a través de `mem[42] = 120` al commit y `HALT`.
+    - Camino con rollback (`cand = 3`, 769 instrucciones): bifurcación in-band a recuperación, corrupción controlada `mem[40] = 29524`, restore de `S` desde `J = 42`, reintento de transición a commit (`mem[40] = 29526` / `'V'` para initial=1, `29522` / `'R'` para initial=3), devolución exacta de `mem[42] == 120`, salto aguas abajo por `mem[42]` y commit exitoso.
+    - Paridad de oráculos: 100% de coincidencia exacta entre Python, `mb_ref`, `observe`, `trace_ref` y `olmstead`.
+  - Controles negativos falsados:
+    1. `no_loan_return`: omite la restitución de `J = 42`; el salto aguas abajo por `mem[42]` falla (`mem[42] ∈ {1, 3} ≠ 120`, exit != 0).
+    2. `no_restore`: omite la restauración de `S = 40` en recuperación; `mem[40]` permanece corrupto (`mem[40] ≠ 29526/29522`).
+    3. `corrupt_journal`: daña `J = 42` antes del restore; la recuperación falla o produce estado corrupto.
+    4. `force_retry_failure`: introduce una transición inválida en el retry; `mem[40]` termina en valor inválido (`mem[40] ≠ 29526/29522`).

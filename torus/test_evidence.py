@@ -43,4 +43,48 @@ class Evidence(unittest.TestCase):
  def test_recomputed_96_sets_are_relocated_not_identical(self):
   sets={n:set(map(int,(ROOT/'sets'/n/'intersection.txt').read_text().split())) for n in ['m281','lutter','m284']}
   self.assertEqual([len(v) for v in sets.values()],[96,96,96]);self.assertNotEqual(sets['m281'],sets['lutter'])
+ def test_dce_borrow_windows_contract(self):
+  p=ROOT/'runs/dce_borrow_windows.json'
+  self.assertTrue(p.exists(),'dce_borrow_windows.json missing')
+  data=json.loads(p.read_text())
+  self.assertTrue(data['shared_low_memory_dce_band_39_44']['in_D_minus_C_minus_E_across_all_three_quines'])
+  self.assertEqual(data['shared_low_memory_dce_band_39_44']['addresses'],[39,40,41,42,43,44])
+  self.assertIn('FORBIDDEN',data['cell_53_policy'])
+  for q in ['m281','lutter','m284']:
+   self.assertNotIn(53,[c['address'] for c in data['quines'][q]['pass_through_r0_w0_cells']])
+ def test_torus_borrow_e_t2_g_t2(self):
+  p=ROOT/'runs/torus_e_t2_report.json'
+  self.assertTrue(p.exists(),'torus_e_t2_report.json missing')
+  data=json.loads(p.read_text())
+  for inp in ['input_1','input_3']:
+   c=data['positive_cases'][inp]
+   self.assertEqual(c['terminal'],'HALT')
+   self.assertTrue(c['mem41_restored'])
+   self.assertEqual(c['mem41_value'],121)
+   self.assertEqual(c['mb_ref_exit'],0)
+   self.assertEqual(c['mb_ref_stdout'],'y')
+   self.assertTrue(c['cell_53_untouched'])
+   self.assertTrue(c['cells_in_D_minus_C_minus_E'])
+  for ctrl in ['no_return_input_1','no_return_input_3']:
+   nr=data['negative_controls'][ctrl]
+   self.assertNotEqual(nr['terminal'],'HALT')
+   self.assertNotEqual(nr['mem41_unreturned'],121)
+   self.assertNotEqual(nr['mb_ref_exit'],0)
+ def test_torus_borrow_e_t3_g_t3(self):
+  p=ROOT/'runs/torus_e_t3_report.json'
+  self.assertTrue(p.exists(),'torus_e_t3_report.json missing')
+  data=json.loads(p.read_text())
+  exp={'initial_1_cand_1':(29526,'V'),'initial_1_cand_3':(29526,'V'),
+       'initial_3_cand_1':(29522,'R'),'initial_3_cand_3':(29522,'R')}
+  for k,(exp_state,exp_out) in exp.items():
+   c=data['positive_cases'][k]
+   self.assertEqual(c['terminal'],'HALT')
+   self.assertTrue(c['mem42_returned'])
+   self.assertEqual(c['mem40_committed'],exp_state)
+   self.assertEqual(c['output'],exp_out)
+   self.assertTrue(c['oracle_parity'])
+   self.assertTrue(c['cell_53_untouched'])
+   self.assertTrue(c['cells_in_D_minus_C_minus_E'])
+  for ctrl_key,ctrl in data['negative_controls'].items():
+   self.assertTrue(ctrl['falsified_as_expected'],ctrl_key)
 if __name__=='__main__':unittest.main(verbosity=2)

@@ -1,0 +1,7 @@
+{
+"status":"NONPRINTABLE_PC","steps":678,"cells_source":29718,"event_sha256":"5ec0721c9fe093611ed34a3ef87ee06e093d3d36ccf63494f5a782a7edb61969",
+"visited_c":678,"visited_d":65,"intersection":17,"union":726,"complement":58323,"D_minus_C":48,"read_unique":21,"written_unique":9,"encrypted_unique":678,"read_written_not_C":9,
+"read_events":171,"direct_write_events":70,"encryption_hits":678,"inputs":3,"output_len":0,
+"delta_segments":102,"break4":5,"break40":96,"break_other":0,"diagonal_steps":577,"diagonal_fraction":0.851032448378,"max_segment_transitions":37,"distinct_deltas":102,"delta_reentries":0,
+"increment_wrap_c":0,"increment_wrap_d":0,"simultaneous_c_eq_d":1,"unique_projected_pairs":678,"projected_pair_revisits":0,"C_min_cyclic_period":59049,"C_shift_symmetry_count_correct":0,
+"opcodes":{"4":5,"23":3,"39":56,"40":96,"62":14,"68":504}}

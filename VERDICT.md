@@ -12,12 +12,15 @@
 | Output correcto basta para demostrar estado/protocolo | impostores output correcto / target o fase incorrectos | DESTROYED | El gate exige memoria y trazas de fase |
 | Rollback exacto del estado físico completo | código cifrado y auxiliares evolucionan | NOT_DEMONSTRATED | No forma parte del contrato de una celda lógica |
 | Gestión autónoma de fallos repetidos/agotamiento | force_retry_failure produce STALL, presupuesto negativo | NOT_DEMONSTRATED | No se proclama handler interno ni disponibilidad |
-| M2 continuidad entre dos épocas de la misma ejecución | diseño siguiente en NEXT_COMPOSE | NOT_DEMONSTRATED | El control auto-modificado no se ha vuelto a armar para reutilización |
+| M1e dato previo dependiente, rearmado in-VM y contador finito | `candidates/m1e_normal.mal`, `test_m1e_m2.py`, commit 1->'V', 3->'R', 8 controles | DEMONSTRATED | Dominio cerrado {1, 3}, rearmado local de trampolines y portal de rechazo explícito |
+| M2 continuidad entre dos épocas de la misma ejecución | `candidates/m2_normal.mal`, `test_m1e_m2.py`, 8 combinaciones {1, 3}³ | DEMONSTRATED | Dos épocas consecutivas en un único proceso VM, journal contabilizado |
 | Puente offline de encoder/trazas/anchors Autobolge + C BolgeForge | `evidence/autobolge-bridge.json`, módulos upstream fijados | DEMONSTRATED | Codificación y observación; no búsqueda relacional nueva |
-| M3 integración constructiva con propuestas relacionales entre épocas | adaptador mínimo actual | NOT_DEMONSTRATED | Sin selector/proposals ni M2; no JIT/runtime synthesis |
+| M3 integración constructiva con propuestas relacionales entre épocas | `candidates/m3_normal.mal`, `evidence/m3-proposals.json`, campaña acotada Autobolge (64 propuestas, 8 aceptadas) | DEMONSTRATED | Tres épocas en un solo proceso Classic Malbolge con roundtrip y rollback |
+| Quine 1=94 roundtrip período-1 | `candidates/quine94_ceiling_probe.mal`, `evidence/quine-94-analysis.json` | DEMONSTRATED | 752 pares sintéticos período-1 demostrados; barrera estricta del loader F/J (78/94 ilegales, 0/94 viables) |
 | Huellas C∩D=96 en tres quines | conjuntos completos y cómputo independiente `torus/` | DEMONSTRATED | Tres variantes con procedencia relacionada, no universalidad |
 | Herencia estructural explica la coincidencia | 49 fijas +47 reubicadas y `clean_lutter` | INFERRED | Mecanismo respaldado, no teorema sobre todos los quines |
-| Celda53 es reserva intacta del quine | cronología native p sobre53 | DESTROYED | Acceso real existe, pero el loop consume su contenido |
-| G-T3 recuperación/retry dentro del quine | ninguna modificación del quine construida | NOT_DEMONSTRATED | El programa pequeño no demuestra ese resultado |
+| Celda53 es reserva intacta del quine | cronología native p sobre53 | DESTROYED | Acceso real existe, pero el loop consume su contenido (W=3, R=1143) |
+| G-T2 Journal accesible con préstamo y devolución en D\C\E | `torus/programs/torus_borrow_e_t2.mal`, `torus/runs/torus_e_t2_report.json`, celda 41 devuelta a 121 | DEMONSTRATED | Préstamo y devolución exacta demostrados con downstream jump; celda 53 intacta |
+| G-T3 Recuperación toroidal y rollback en D\C\E | `torus/programs/torus_e_t3_normal.mal`, `torus/runs/torus_e_t3_report.json`, 4 casos, 4 controles | DEMONSTRATED | Préstamo de journal 42, checkpoint, bifurcación, corrupción, restore, retry, devolución a 120; celda 53 intacta |
 
-Conclusión operativa: M1a–M1d demostrados en el alcance finito explicitado. M2/M3 completos y recuperación del quine siguen abiertos. Los outputs y artefactos certificados de los repos originales no se modificaron.
+Conclusión operativa: M0, M1a–M1e, M2, M3, Quine 1=94 y la línea toroidal separada G-T2/G-T3 quedan completamente demostrados en Classic Malbolge estricto con evidencia hasheada, paridad en cinco oráculos y controles negativos falsados. Ningún archivo de los repositorios externos fue alterado.
