@@ -1,0 +1,40 @@
+{
+  "kind": "DYNAMIC_WHILE_LOOP_HOT_REARM_BOSS3",
+  "boss": "Boss 3: El Santo Grial",
+  "mode": "normal",
+  "sha256": "f59cf283414251ee23d35f98beffaf634f7b69ef9f8cb23e259fdb7c5329d1d2",
+  "length_bytes": 102,
+  "loop_body_addresses": [
+    64,
+    65,
+    88,
+    89
+  ],
+  "oscillator_cycle": "Twin-Cylinder F(70) <-> J(74) (Period 2)",
+  "output_cell": 88,
+  "halt_cell": 100,
+  "prelanding_halt": 99,
+  "labels": {
+    "input_read": 19,
+    "initial_output": 20,
+    "condition_dispatch": 37,
+    "loop_cylinder": 64,
+    "loop_jump": 65,
+    "loop_output": 88,
+    "loop_reentry": 89,
+    "halt_portal": 100
+  },
+  "supported_inputs": [
+    "0",
+    "1",
+    "2",
+    "3"
+  ],
+  "claims": {
+    "address_reuse": true,
+    "unbounded_iterations": true,
+    "no_unrolling": true,
+    "strict_3_oracle_parity": true,
+    "zero_entropic_decay": true
+  }
+}
