@@ -32,6 +32,22 @@ def raw_reference(source, payload, budget=5000):
         return subprocess.run([str(build/'mb_ref'), str(path), str(budget)], input=payload, capture_output=True, timeout=20)
 
 
+EXPECTED_STOPS = {
+    'HALT': (0, 0, 0),
+    'BUDGET': (2, 2, None),
+    'STALL': (3, 3, None),
+}
+
+
+def validate_parity(report):
+    if not all(report.get(k) for k in ['trace_equal', 'memory_equal', 'registers_equal', 'terminal_equal', 'outputs_equal']):
+        return False
+    expected = EXPECTED_STOPS.get(report.get('terminal'))
+    if expected is None:
+        return False
+    return (report.get('reference_returncode'), report.get('instrumented_returncode'), report.get('original_returncode')) == expected
+
+
 def verify(source, payload, budget=5000, evidence=None):
     build = compile_oracles()
     py = run(source, payload, budget)

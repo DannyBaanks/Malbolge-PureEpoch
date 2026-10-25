@@ -51,6 +51,8 @@ La recuperación lógica promete la restauración de `mem[36]` en una fase concr
 
 Los checkouts originales tenían trabajo no seguido; se registró en `evidence/initial_state.json`. El laboratorio tiene Git propio, rama `codex/pure-epoch-m1`. `sources/` contiene clones de inspección ignorados por Git. El ZIP inicial no estaba disponible en las ubicaciones suministradas; se preservó la carpeta extraída completa ya proporcionada.
 
+Durante la campaña, el checkout original de Autobolge avanzó por trabajo concurrente hasta `dcfcd6fff0e40001ae686432d60a77434834e0b6` y quedó limpio. No se revirtió ni se mezcló ese avance con las revisiones fijadas del experimento. `evidence/final_source_integrity.json` registra la diferencia; BolgeForge original y los siete archivos M0 conservan sus bytes/estado iniciales.
+
 Se ejecutó `make test` en el clon BolgeForge: 52 unit tests, corpus, comprimidos, cinco quines y 236 comparaciones del espejo. En Autobolge se compilaron `bolge.zig` y `trace_probe.zig` y se ejecutaron 15 tests de anchors, trazas y síntesis. No se ejecutó `make test-rebuild` ni la suite completa de Autobolge. Los errores iniciales de preparación/ruta y binario faltante se conservaron, con corridas corregidas separadas.
 
 Para repetir esas regresiones opcionales: clonar los remotos, hacer checkout de los commits fijados, compilar los dos binarios Zig con `zig build-exe <archivo.zig> -O ReleaseFast -femit-bin=<nombre.exe>` desde `Autobolge/zig`, ejecutar `python3 -B -m pytest -p no:cacheprovider tests/test_anchors.py tests/test_trace.py tests/test_synthesizer.py` desde la raíz Autobolge, y `PYTHONDONTWRITEBYTECODE=1 make test` desde BolgeForge.

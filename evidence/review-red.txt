@@ -1,0 +1,102 @@
+test_documented_collection_runs_without_zig_or_source_clones (test_review_regressions.ReviewRegressions.test_documented_collection_runs_without_zig_or_source_clones) ... FAIL
+test_loader_and_encryption_divergences_are_reproduced (test_review_regressions.ReviewRegressions.test_loader_and_encryption_divergences_are_reproduced) ... FAIL
+test_nonzero_independent_halt_cannot_be_certified (test_review_regressions.ReviewRegressions.test_nonzero_independent_halt_cannot_be_certified) ... FAIL
+test_vt_and_ff_are_classic_loader_whitespace (test_review_regressions.ReviewRegressions.test_vt_and_ff_are_classic_loader_whitespace) ... 
+  test_vt_and_ff_are_classic_loader_whitespace (test_review_regressions.ReviewRegressions.test_vt_and_ff_are_classic_loader_whitespace) (prefix=b'\x0b') ... FAIL
+  test_vt_and_ff_are_classic_loader_whitespace (test_review_regressions.ReviewRegressions.test_vt_and_ff_are_classic_loader_whitespace) (prefix=b'\x0c') ... FAIL
+
+======================================================================
+FAIL: test_documented_collection_runs_without_zig_or_source_clones (test_review_regressions.ReviewRegressions.test_documented_collection_runs_without_zig_or_source_clones)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 68, in test_documented_collection_runs_without_zig_or_source_clones
+    self.assertEqual(result.returncode,0,result.stderr[-3000:])
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/tmpeo0auw4k/lab/tools/collect_evidence.py", line 97, in <module>
+    main()
+  File "/tmp/tmpeo0auw4k/lab/tools/collect_evidence.py", line 66, in main
+    'zig':subprocess.check_output(['zig','version'],text=True).strip()}
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'zig'
+
+
+======================================================================
+FAIL: test_loader_and_encryption_divergences_are_reproduced (test_review_regressions.ReviewRegressions.test_loader_and_encryption_divergences_are_reproduced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 38, in test_loader_and_encryption_divergences_are_reproduced
+    self.assertTrue(hasattr(autobolge_adapter, 'semantic_probes'), 'loader/encryption probes missing')
+AssertionError: False is not true : loader/encryption probes missing
+
+======================================================================
+FAIL: test_nonzero_independent_halt_cannot_be_certified (test_review_regressions.ReviewRegressions.test_nonzero_independent_halt_cannot_be_certified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 17, in test_nonzero_independent_halt_cannot_be_certified
+    self.assertTrue(hasattr(oracles, 'validate_parity'), 'stop-aware certification gate missing')
+AssertionError: False is not true : stop-aware certification gate missing
+
+======================================================================
+FAIL: test_vt_and_ff_are_classic_loader_whitespace (test_review_regressions.ReviewRegressions.test_vt_and_ff_are_classic_loader_whitespace) (prefix=b'\x0b')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 31, in test_vt_and_ff_are_classic_loader_whitespace
+    report = oracles.verify(prefix+b'uP', b'')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tools/oracles.py", line 37, in verify
+    py = run(source, payload, budget)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tools/observe.py", line 10, in run
+    vm = Machine(load(source), payload)
+                 ^^^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/baseline/epoch_probe.py", line 42, in load
+    raise ValueError(f"non-ASCII printable byte at file offset {pos}")
+ValueError: non-ASCII printable byte at file offset 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 33, in test_vt_and_ff_are_classic_loader_whitespace
+    self.fail(f'valid Classic whitespace rejected by observer: {error}')
+AssertionError: valid Classic whitespace rejected by observer: non-ASCII printable byte at file offset 0
+
+======================================================================
+FAIL: test_vt_and_ff_are_classic_loader_whitespace (test_review_regressions.ReviewRegressions.test_vt_and_ff_are_classic_loader_whitespace) (prefix=b'\x0c')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 31, in test_vt_and_ff_are_classic_loader_whitespace
+    report = oracles.verify(prefix+b'uP', b'')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tools/oracles.py", line 37, in verify
+    py = run(source, payload, budget)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tools/observe.py", line 10, in run
+    vm = Machine(load(source), payload)
+                 ^^^^^^^^^^^^
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/baseline/epoch_probe.py", line 42, in load
+    raise ValueError(f"non-ASCII printable byte at file offset {pos}")
+ValueError: non-ASCII printable byte at file offset 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/danny/Development/ISyCo Git/PureEpoch-2026-10-25/tests/test_review_regressions.py", line 33, in test_vt_and_ff_are_classic_loader_whitespace
+    self.fail(f'valid Classic whitespace rejected by observer: {error}')
+AssertionError: valid Classic whitespace rejected by observer: non-ASCII printable byte at file offset 0
+
+----------------------------------------------------------------------
+Ran 4 tests in 13.202s
+
+FAILED (failures=5)

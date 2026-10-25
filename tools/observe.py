@@ -3,7 +3,25 @@
 No snapshots are injected or restored. Each run starts from the source loader.
 The observer retains before/after values exclusively for comparisons and traces.
 """
-from baseline.epoch_probe import Machine, load, MEM_SIZE
+from baseline.epoch_probe import Machine, MEM_SIZE, XLAT1, VALID, crazy
+
+
+def load(source):
+    cells = []
+    for pos, byte in enumerate(source):
+        if byte in (9, 10, 11, 12, 13, 32):
+            continue
+        if not 33 <= byte <= 126:
+            raise ValueError(f"non-ASCII printable byte at file offset {pos}")
+        instruction = XLAT1[(byte - 33 + len(cells)) % 94]
+        if instruction not in VALID:
+            raise ValueError(f"strict loader rejects position {len(cells)}: {instruction!r}")
+        cells.append(byte)
+    if not 2 <= len(cells) <= MEM_SIZE:
+        raise ValueError("program must occupy 2..59049 cells")
+    while len(cells) < MEM_SIZE:
+        cells.append(crazy(cells[-1], cells[-2]))
+    return cells
 
 
 def run(source, payload, max_steps=5000):

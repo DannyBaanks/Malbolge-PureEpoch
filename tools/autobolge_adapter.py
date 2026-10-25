@@ -11,6 +11,7 @@ import hashlib
 
 from tools.build_candidates import build_conditional
 from tools.observe import run
+from tools.oracles import raw_reference
 
 ROOT = Path(__file__).resolve().parents[1]
 AUTO = ROOT/'vendor/autobolge'
@@ -42,6 +43,61 @@ def eof_probe():
                           'reason': dbg.get_state().stop_reason, 'steps': dbg.step_count}}
 
 
+def semantic_probes():
+    Debugger, _, _, _, _ = modules()
+    enc_src = bytes.fromhex('2750')
+    enc_strict = raw_reference(enc_src, b'', 10)
+    enc_obs = run(enc_src, b'', 10)
+    enc_dbg = Debugger(enc_src.decode('latin1'), '', 10)
+    while not enc_dbg.is_stopped and enc_dbg.step_count < 10:
+        enc_dbg.step()
+
+    ldr_src = bytes.fromhex('af50')
+    ldr_strict = raw_reference(ldr_src, b'', 10)
+    try:
+        ldr_obs = run(ldr_src, b'', 10)
+        ldr_obs_info = {'terminal': ldr_obs['terminal']}
+    except ValueError as err:
+        ldr_obs_info = {'rejected': str(err)}
+    ldr_dbg = Debugger(ldr_src.decode('latin1'), '', 10)
+    while not ldr_dbg.is_stopped and ldr_dbg.step_count < 10:
+        ldr_dbg.step()
+
+    return {
+        'invalid_encryption': {
+            'source_hex': enc_src.hex(),
+            'strict_returncode': enc_strict.returncode,
+            'strict_stderr': enc_strict.stderr.decode('latin1').strip(),
+            'observer': {
+                'a': enc_obs['registers'][0],
+                'c': enc_obs['registers'][1],
+                'd': enc_obs['registers'][2],
+                'terminal': enc_obs['terminal'],
+            },
+            'autobolge': {
+                'a': enc_dbg.a,
+                'c': enc_dbg.c,
+                'd': enc_dbg.d,
+                'reason': enc_dbg.get_state().stop_reason,
+                'steps': enc_dbg.step_count,
+            },
+        },
+        'non_ascii_loader': {
+            'source_hex': ldr_src.hex(),
+            'strict_returncode': ldr_strict.returncode,
+            'strict_stderr': ldr_strict.stderr.decode('latin1').strip(),
+            'observer': ldr_obs_info,
+            'autobolge': {
+                'a': ldr_dbg.a,
+                'c': ldr_dbg.c,
+                'd': ldr_dbg.d,
+                'reason': ldr_dbg.get_state().stop_reason,
+                'steps': ldr_dbg.step_count,
+            },
+        },
+    }
+
+
 def bridge(payload):
     Debugger, Anchor, verify_trace, replay_trace, char_for = modules()
     source, meta = build_conditional(encoder=char_for)
@@ -69,5 +125,5 @@ def bridge(payload):
 
 if __name__ == '__main__':
     dest = ROOT/'evidence/autobolge-bridge.json'
-    dest.write_text(json.dumps({'eof_difference': eof_probe(), 'cases': [bridge(p) for p in [b'\x01\x03', b'\x03\x03']]}, indent=2)+'\n')
+    dest.write_text(json.dumps({'eof_difference': eof_probe(), 'semantic_probes': semantic_probes(), 'cases': [bridge(p) for p in [b'\x01\x03', b'\x03\x03']]}, indent=2)+'\n')
     print(dest)

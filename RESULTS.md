@@ -81,7 +81,11 @@ Instrumentar observación no convierte al observador en restaurador. El C instru
 
 Autobolge: 15 tests pertinentes pasan en el clon fijado, tras compilar los dos probes necesarios. BolgeForge: `make test` pasa con 52 unit tests y sus controles de corpus/compresión/quines/espejo. Logs crudos conservados. El adaptador offline emplea el `char_for` real de Autobolge, reproduce los mismos bytes, exporta anchors **observados** después de restore y valida replay desde cero. No llama a `EpochAnchorV1.restore()` y no guía aún propuestas relacionales.
 
-Una reproducción mínima expone la diferencia EOF: fuente de dos bytes `uP`, stdin vacío. Classic estricto alcanza HALT con a=59048; Autobolge se detiene en INPUT_UNDERFLOW con a=0. Resultado completo en `evidence/autobolge-bridge.json`. No se declara paridad global entre ambas semánticas.
+Una reproducción mínima expone la diferencia EOF: fuente de dos bytes `uP`, stdin vacío. Classic estricto alcanza HALT con a=59048; Autobolge se detiene en INPUT_UNDERFLOW con a=0. Dos sondas adicionales (`semantic_probes` en `evidence/autobolge-bridge.json`) exponen las divergencias de cifrado post-ejecución (`2750`: `INVALID_ENCRYPTION`/STALL en Classic frente a `TERMINATED` con a=13 en Autobolge) y de loader no-ASCII (`af50`: rechazo del loader Classic frente a `TERMINATED` en Autobolge). No se declara paridad global entre ambas semánticas.
+
+El fixture EOF se ejecutó también en C estricto, C instrumentado y Olmstead original: `evidence/eof-strict/` registra paridad de trazas/estado de los dos motores observados y HALT de los dos originales. Esa ejecución adicional está separada de los 19 casos de candidatos.
+
+La comprobación final detectó progreso concurrente del Autobolge original hasta `dcfcd6fff0e40001ae686432d60a77434834e0b6`; no se escribió ni reseteó ese checkout. El experimento conserva sus fuentes fijadas. BolgeForge original y M0 permanecieron iguales según `evidence/final_source_integrity.json`.
 
 ## Addendum toroidal
 

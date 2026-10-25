@@ -49,5 +49,5 @@ Interfaces: `build_reversible(rotations=10, initial=37) -> (bytes, metadata)`; `
 
 - [x] Generate raw traces, hashes, manifests, measurements, exact reproduction commands, failures, results, verdict and next compose.
 - [x] Integrate toroidal evidence separately; no rollback claims from access projections.
-- [ ] Run complete lab suite, review through a fresh subagent, address substantive findings with regressions.
-- [ ] Commit the standalone lab and report achieved gates, exclusions and next experiment.
+- [x] Run complete lab suite, review through a fresh subagent, address substantive findings with regressions.
+- [x] Commit the standalone lab and report achieved gates, exclusions and next experiment.

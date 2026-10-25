@@ -1,0 +1,15 @@
+{
+  "Autobolge": {
+    "head_unchanged": false,
+    "status_unchanged": false,
+    "final_head": "dcfcd6fff0e40001ae686432d60a77434834e0b6",
+    "final_status": ""
+  },
+  "BolgeForge": {
+    "head_unchanged": true,
+    "status_unchanged": true,
+    "final_head": "454ab61e61ef94745b2e7178205cf0e56f41010c",
+    "final_status": "?? docs/evidence/2026-10-24-truth-machine-independent/solver.py\n"
+  },
+  "original_baseline_bytes_unchanged": true
+}

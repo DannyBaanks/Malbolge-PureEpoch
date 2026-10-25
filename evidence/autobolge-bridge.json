@@ -62,6 +62,41 @@
       "steps": 1
     }
   },
+  "semantic_probes": {
+    "invalid_encryption": {
+      "source_hex": "2750",
+      "strict_returncode": 3,
+      "strict_stderr": "INVALID_ENCRYPTION: cell 0 value 13 step 0",
+      "observer": {
+        "a": 13,
+        "c": 0,
+        "d": 0,
+        "terminal": "STALL"
+      },
+      "autobolge": {
+        "a": 13,
+        "c": 1,
+        "d": 1,
+        "reason": "StopReason.TERMINATED",
+        "steps": 2
+      }
+    },
+    "non_ascii_loader": {
+      "source_hex": "af50",
+      "strict_returncode": 1,
+      "strict_stderr": "Invalid character 0xaf",
+      "observer": {
+        "rejected": "non-ASCII printable byte at file offset 0"
+      },
+      "autobolge": {
+        "a": 0,
+        "c": 0,
+        "d": 0,
+        "reason": "StopReason.TERMINATED",
+        "steps": 1
+      }
+    }
+  },
   "cases": [
     {
       "same_source": true,

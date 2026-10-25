@@ -1,0 +1,2 @@
+{"step":0,"pre":[0,0,0,0],"opcode":23,"post":[59048,1,1,0],"changes":[[0,117,111]],"output":[],"terminal":"RUNNING"}
+{"step":1,"pre":[59048,1,1,0],"opcode":81,"post":[59048,1,1,0],"changes":[],"output":[],"terminal":"HALT"}

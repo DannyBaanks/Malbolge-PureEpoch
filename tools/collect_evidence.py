@@ -3,15 +3,27 @@ from pathlib import Path
 import hashlib
 import json
 import platform
+import shutil
 import subprocess
 import sys
 
 from tools import build_candidates as build
 from tools.observe import run, target_contract, conditional_contract
-from tools.oracles import verify, compile_oracles
-from tools.autobolge_adapter import bridge, eof_probe
+from tools.oracles import verify, compile_oracles, validate_parity
+from tools.autobolge_adapter import bridge, eof_probe, semantic_probes
 
 ROOT = Path(__file__).resolve().parents[1]
+
+PINNED_REPOSITORIES = {
+    'Autobolge': {
+        'remote': 'https://github.com/DannyBaanks/Autobolge.git',
+        'commit': 'ac0de274cee079ed4c85e4f018754a538c952a9e',
+    },
+    'BolgeForge': {
+        'remote': 'https://github.com/DannyBaanks/BolgeForge.git',
+        'commit': 'eef65c83a2885b6e3d66c26fede9931dfdba5e40',
+    },
+}
 
 
 def digest(path):
@@ -43,7 +55,7 @@ def main():
         else:
             contract = target_contract(result, meta['target'], 37 if name.startswith('m1a') else 29524-payload[0])
         expected = name in {'m1a_rot10','m1b_normal','m1c_normal'}
-        parity = all(report[k] for k in ['trace_equal','memory_equal','registers_equal','terminal_equal','outputs_equal'])
+        parity = validate_parity(report)
         if not parity or contract != expected:
             raise AssertionError((tag, report, contract, expected))
         phases = {label: [e for e in result['trace'] if e['pre'][1] == pc] for label, pc in meta.get('labels',{}).items()}
@@ -59,17 +71,23 @@ def main():
         measurements.append(report)
         print(tag, 'HALT/state:',report['terminal'],contract,'instructions:',len(result['trace']))
     emit_json(ROOT/'evidence/measurements.json', measurements)
+    eof_strict = verify(b'uP', b'', 10, ROOT/'evidence/eof-strict')
+    if not validate_parity(eof_strict):
+        raise AssertionError(('eof-strict', eof_strict))
     emit_json(ROOT/'evidence/autobolge-bridge.json', {'eof_difference':eof_probe(),
+               'semantic_probes':semantic_probes(),
                'cases':[bridge(p) for p in [b'\x01\x03',b'\x03\x03']]})
+    zig_bin = shutil.which('zig')
     tool_versions = {'python':sys.version,'platform':platform.platform(),
                      'gcc':subprocess.check_output(['gcc','--version'],text=True).splitlines()[0],
-                     'zig':subprocess.check_output(['zig','version'],text=True).strip()}
-    repositories = {}
+                     'zig':subprocess.check_output([zig_bin,'version'],text=True).strip() if zig_bin else 'not_installed (optional)'}
+    repositories = dict(PINNED_REPOSITORIES)
+    git_bin = shutil.which('git')
     for name in ['Autobolge','BolgeForge']:
         repo=ROOT/'sources'/name
-        if repo.exists():
-            repositories[name]={'remote':subprocess.check_output(['git','remote','get-url','origin'],cwd=repo,text=True).strip(),
-                                'commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()}
+        if repo.exists() and git_bin:
+            repositories[name]={'remote':subprocess.check_output([git_bin,'remote','get-url','origin'],cwd=repo,text=True).strip(),
+                                'commit':subprocess.check_output([git_bin,'rev-parse','HEAD'],cwd=repo,text=True).strip()}
     paths = [p for d in ['baseline','vendor','candidates','tools','tests'] for p in (ROOT/d).rglob('*')
              if p.is_file() and '__pycache__' not in p.parts]
     binaries = {p.name:digest(p) for p in compile_oracles().iterdir() if p.is_file()}

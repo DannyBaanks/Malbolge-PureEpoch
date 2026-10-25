@@ -14,8 +14,12 @@ test_same_artifact_commits_or_restores_then_retries (test_conditional.Conditiona
 test_wrong_saved_state_is_rejected_even_if_retry_commits (test_conditional.ConditionalRecovery.test_wrong_saved_state_is_rejected_even_if_retry_commits) ... ok
 test_independent_runs_agree_on_every_transition_and_full_memory (test_oracles.OracleParity.test_independent_runs_agree_on_every_transition_and_full_memory) ... ok
 test_strict_loader_rejection_is_not_certified (test_oracles.OracleParity.test_strict_loader_rejection_is_not_certified) ... ok
+test_documented_collection_runs_without_zig_or_source_clones (test_review_regressions.ReviewRegressions.test_documented_collection_runs_without_zig_or_source_clones) ... ok
+test_loader_and_encryption_divergences_are_reproduced (test_review_regressions.ReviewRegressions.test_loader_and_encryption_divergences_are_reproduced) ... ok
+test_nonzero_independent_halt_cannot_be_certified (test_review_regressions.ReviewRegressions.test_nonzero_independent_halt_cannot_be_certified) ... ok
+test_vt_and_ff_are_classic_loader_whitespace (test_review_regressions.ReviewRegressions.test_vt_and_ff_are_classic_loader_whitespace) ... ok
 
 ----------------------------------------------------------------------
-Ran 16 tests in 8.924s
+Ran 20 tests in 21.629s
 
 OK
