@@ -132,5 +132,65 @@
       "autobolge_steps_including_halt": 249,
       "scope": "offline encoding and observational anchors only; no relational proposal search, JIT, or snapshot resume"
     }
-  ]
+  ],
+  "m3_campaign_summary": {
+    "schema": "pure-epoch-m3-proposal-campaign/v1",
+    "budget_max_candidates": 128,
+    "budget_max_steps_per_candidate": 10000,
+    "total_candidates_evaluated": 64,
+    "accepted_count": 8,
+    "rejected_count": 56,
+    "unique_accepted_sha256": [
+      "7f95770a4786132dd148ccbf4af328d6e62be68ed6732754b2f50c5019114689"
+    ],
+    "canonical_m3_sha256": "7f95770a4786132dd148ccbf4af328d6e62be68ed6732754b2f50c5019114689",
+    "autobolge_encoder_matches_native": true,
+    "rejection_breakdown_by_gate": {
+      "no_save_or_checkpoint_gate": 7,
+      "no_restore_gate": 7,
+      "broken_return_gate": 7,
+      "positive_3epoch_contract_gate": 5,
+      "distinct_eof_gate": 2,
+      "corrupt_journal_gate": 7,
+      "repeated_failure_gate": 7,
+      "output_impostor_gate": 7,
+      "strict_loader_gate": 7
+    },
+    "discrepancies_recorded": {
+      "trace_expander_snapshot_vs_from_zero": {
+        "anchor_digest": "f4e3e14bf47112f0c9fc6b43090b134733377462884c7d9b572cd8ad5228f8ed",
+        "raw_expander_proposals": 1,
+        "raw_expander_prunes": 7,
+        "finding": "TraceExpander._valid_extensions proposes single-byte extensions at len(anchor.program), while EpochAnchorV1.restore() resumes the mutated in-memory snapshot in Python without re-running the strict Classic loader from step 0."
+      },
+      "m3_eof_3byte_payload_discrepancy": {
+        "payload_hex": "010101",
+        "strict_classic": {
+          "terminal": "HALT",
+          "steps": 7509,
+          "output": "VVV",
+          "final_mem36": 29526,
+          "epoch3_restores": 1
+        },
+        "autobolge_debugger": {
+          "stop_reason": "StopReason.INPUT_UNDERFLOW",
+          "steps": 6158,
+          "output": "VV",
+          "final_mem36": 29523
+        }
+      }
+    },
+    "canonical_m3_oracle_parity": {
+      "triple_rollback_01030303": {
+        "parity_ok": true,
+        "steps": 8969,
+        "output_hex": "565656"
+      },
+      "eof_recovery_010101": {
+        "parity_ok": true,
+        "steps": 7509,
+        "output_hex": "565656"
+      }
+    }
+  }
 }

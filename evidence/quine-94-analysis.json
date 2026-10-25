@@ -1,0 +1,347 @@
+{
+  "schema": "pure-epoch-quine-94-analysis/v1",
+  "question": "If 4=376 and 2=188 exist in Malbolge loop/quine architectures, can a 1=94 quine or period-1 loop exist using Roundtrip + Rollback?",
+  "xlat2_structure": {
+    "modulus": 94,
+    "mod_ladder": {
+      "1x94": 94,
+      "2x94": 188,
+      "4x94": 376
+    },
+    "cycle_count": 6,
+    "cycle_lengths": [
+      68,
+      9,
+      6,
+      5,
+      4,
+      2
+    ],
+    "fixed_points_period_1": [],
+    "min_cycle_length": 2,
+    "period_2_cycle": {
+      "length": 2,
+      "chars": "FJ",
+      "bytes": [
+        70,
+        74
+      ]
+    },
+    "cycles": [
+      {
+        "length": 68,
+        "chars": "!5-wN1W0{GS^9[jMA;\\sRvkKhY8,(y#]bT=da.ecV_mX/4H7n~@Q6Z|\"z?+$&ql'tEpD",
+        "bytes": [
+          33,
+          53,
+          45,
+          119,
+          78,
+          49,
+          87,
+          48,
+          123,
+          71,
+          83,
+          94,
+          57,
+          91,
+          106,
+          77,
+          65,
+          59,
+          92,
+          115,
+          82,
+          118,
+          107,
+          75,
+          104,
+          89,
+          56,
+          44,
+          40,
+          121,
+          35,
+          93,
+          98,
+          84,
+          61,
+          100,
+          97,
+          46,
+          101,
+          99,
+          86,
+          95,
+          109,
+          88,
+          47,
+          52,
+          72,
+          55,
+          110,
+          126,
+          64,
+          81,
+          54,
+          90,
+          124,
+          34,
+          122,
+          63,
+          43,
+          36,
+          38,
+          113,
+          108,
+          39,
+          116,
+          69,
+          112,
+          68
+        ]
+      },
+      {
+        "length": 9,
+        "chars": "2PB>LOCUI",
+        "bytes": [
+          50,
+          80,
+          66,
+          62,
+          76,
+          79,
+          67,
+          85,
+          73
+        ]
+      },
+      {
+        "length": 6,
+        "chars": "%guox:",
+        "bytes": [
+          37,
+          103,
+          117,
+          111,
+          120,
+          58
+        ]
+      },
+      {
+        "length": 5,
+        "chars": ")f`<3",
+        "bytes": [
+          41,
+          102,
+          96,
+          60,
+          51
+        ]
+      },
+      {
+        "length": 4,
+        "chars": "*r}i",
+        "bytes": [
+          42,
+          114,
+          125,
+          105
+        ]
+      },
+      {
+        "length": 2,
+        "chars": "FJ",
+        "bytes": [
+          70,
+          74
+        ]
+      }
+    ]
+  },
+  "period2_loader_wall_in_94": {
+    "block_size": 94,
+    "f_byte": 70,
+    "j_byte": 74,
+    "f_legal_count": 8,
+    "j_legal_count": 8,
+    "either_legal_count": 16,
+    "both_legal_count": 0,
+    "both_legal_positions": [],
+    "neither_legal_count": 78,
+    "neither_legal_fraction": 0.829787,
+    "f_legal_positions": [
+      {
+        "pos": 11,
+        "op": "v"
+      },
+      {
+        "pos": 28,
+        "op": "i"
+      },
+      {
+        "pos": 29,
+        "op": "<"
+      },
+      {
+        "pos": 47,
+        "op": "/"
+      },
+      {
+        "pos": 63,
+        "op": "*"
+      },
+      {
+        "pos": 64,
+        "op": "j"
+      },
+      {
+        "pos": 86,
+        "op": "p"
+      },
+      {
+        "pos": 92,
+        "op": "o"
+      }
+    ],
+    "j_legal_positions": [
+      {
+        "pos": 7,
+        "op": "v"
+      },
+      {
+        "pos": 24,
+        "op": "i"
+      },
+      {
+        "pos": 25,
+        "op": "<"
+      },
+      {
+        "pos": 43,
+        "op": "/"
+      },
+      {
+        "pos": 59,
+        "op": "*"
+      },
+      {
+        "pos": 60,
+        "op": "j"
+      },
+      {
+        "pos": 82,
+        "op": "p"
+      },
+      {
+        "pos": 88,
+        "op": "o"
+      }
+    ],
+    "conclusion": "In a 1x94 (0..93) block, strict Classic loading rejects both 'F' and 'J' at 78/94 positions (82.98%), and there are 0/94 positions where both 'F' and 'J' are simultaneously loader-legal. Therefore a static period-2 ring cannot be loaded in 1x94 without runtime crazy writes."
+  },
+  "standalone_94_quine_obstructions": {
+    "acyclic_output_ceiling": {
+      "max_instructions_before_halt": 93,
+      "max_outputs_if_all_out": 93,
+      "max_distinct_byte_transitions_acyclic": 47,
+      "can_emit_94_bytes_without_loop": false
+    },
+    "looped_94_cell_budget_floor": {
+      "in_vm_4step_rearm_ops_per_cell": 8,
+      "min_roundtrip_helper_cells_in_low_mem": 85,
+      "status": "FALSIFIED_FOR_STANDALONE_94_BYTE_QUINE",
+      "reason": "XLAT2 has 0 fixed points (period 1), strict loading blocks period-2 F/J at 79/94 positions, an acyclic 94-cell program can emit at most 93 bytes (<94), and an in-VM crazy roundtrip loop requires code + pointer tables exceeding 94 total file bytes."
+    }
+  },
+  "synthetic_period1_roundtrip_theorem": {
+    "identity": "crazy(x_const, crazy(0, crazy(80, crazy(29524, XLAT2(pre))))) == pre",
+    "verified_pos_op_pairs": 752,
+    "expected_pos_op_pairs": 752,
+    "all_verified": true,
+    "control_core_footprint_in_m3": {
+      "dispatch_trampolines_in_0_93": [
+        2,
+        5,
+        8,
+        11,
+        14,
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        37,
+        42,
+        46,
+        70,
+        74,
+        77
+      ],
+      "state_journal_portals_constants_in_0_93": [
+        36,
+        37,
+        38,
+        41,
+        43,
+        45,
+        46,
+        47,
+        48,
+        50,
+        52,
+        53,
+        54,
+        60,
+        62,
+        63,
+        64,
+        75,
+        76,
+        79,
+        80,
+        81,
+        84
+      ],
+      "meaning": "Instead of duplicating control rings across 2x94=188 or 4x94=376 cells, Roundtrip + Rollback synthesizes a Period-1 (1=94) rearming fixed point that reuses a single 0..93 control core across 3 full epochs in M3."
+    }
+  },
+  "verified_94_byte_ceiling_probe": {
+    "length_bytes": 94,
+    "sha256": "65722e4a4566207e66e86c1ce8f464c5b9e94103729fb365951c4f37f7546e59",
+    "terminal": "HALT",
+    "steps": 35,
+    "output_latin1": "Q",
+    "restored_cell_81": 81,
+    "initial_cell_81": 81,
+    "roundtrip_exact": true,
+    "oracle_parity": {
+      "trace_equal": true,
+      "memory_equal": true,
+      "registers_equal": true,
+      "terminal_equal": true,
+      "outputs_equal": true,
+      "reference_returncode": 0,
+      "original_returncode": 0,
+      "original_run": "completed",
+      "instrumented_returncode": 0,
+      "source_sha256": "65722e4a4566207e66e86c1ce8f464c5b9e94103729fb365951c4f37f7546e59",
+      "payload_hex": "",
+      "terminal": "HALT",
+      "steps_excluding_halt": 35,
+      "fetched_instructions": 36,
+      "registers": [
+        81,
+        35,
+        83,
+        0
+      ],
+      "output_hex": "51",
+      "memory_sha256": "047b85b7fc20151fac8e496ab3151a1dcfd342dfd3b3f3c57d10b2fa08e1b840",
+      "trace_sha256": "794e42d1046b4a3dfa548d51380a9d89fa0017f7d4b2431c4e2952180cfb4643",
+      "parity_ok": true
+    }
+  }
+}

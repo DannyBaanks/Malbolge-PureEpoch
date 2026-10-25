@@ -648,6 +648,120 @@
           "mem_after": 42
         }
       ]
+    },
+    {
+      "name": "epoch3_entry_prelanding",
+      "pos": 32815,
+      "op": "o",
+      "role": "encrypted by continue_1/continue_3(i) when mem[38]=32815",
+      "pre_byte": 59,
+      "pre_char": ";",
+      "post_xlat2_byte": 92,
+      "post_xlat2_char": "\\",
+      "post_xlat2_decoded_op": "Z",
+      "rearm_constant_x": 29549,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 92,
+          "mem_after": 2
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 2,
+          "mem_after": 29485
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29485,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29549,
+          "mem_before": 29524,
+          "mem_after": 59
+        }
+      ]
+    },
+    {
+      "name": "epoch3_portal_prelanding",
+      "pos": 9815,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=9815",
+      "pre_byte": 123,
+      "pre_char": "{",
+      "post_xlat2_byte": 71,
+      "post_xlat2_char": "G",
+      "post_xlat2_decoded_op": "s",
+      "rearm_constant_x": 29410,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 71,
+          "mem_after": 62
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 62,
+          "mem_after": 29515
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29515,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29410,
+          "mem_before": 29524,
+          "mem_after": 123
+        }
+      ]
+    },
+    {
+      "name": "epoch3_reject_prelanding",
+      "pos": 42637,
+      "op": "o",
+      "role": "encrypted by recovery_jump(i) when mem[62]=42637",
+      "pre_byte": 107,
+      "pre_char": "k",
+      "post_xlat2_byte": 75,
+      "post_xlat2_char": "K",
+      "post_xlat2_decoded_op": "2",
+      "rearm_constant_x": 29456,
+      "rearm_sequence_from_post": [
+        {
+          "op": "p",
+          "a_in": 29524,
+          "mem_before": 75,
+          "mem_after": 72
+        },
+        {
+          "op": "p",
+          "a_in": 80,
+          "mem_before": 72,
+          "mem_after": 29520
+        },
+        {
+          "op": "p",
+          "a_in": 0,
+          "mem_before": 29520,
+          "mem_after": 29524
+        },
+        {
+          "op": "p",
+          "a_in": 29456,
+          "mem_before": 29524,
+          "mem_after": 107
+        }
+      ]
     }
   ]
 }

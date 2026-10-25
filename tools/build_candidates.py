@@ -216,6 +216,9 @@ def trampoline_rearm_analysis():
         {'name': 'epoch2_entry_prelanding', 'pos': 39397, 'op': 'o', 'role': 'encrypted by continue_1/continue_3(i) when mem[38]=39397'},
         {'name': 'epoch2_portal_prelanding', 'pos': 49208, 'op': 'o', 'role': 'encrypted by recovery_jump(i) when mem[62]=49208'},
         {'name': 'epoch2_reject_prelanding', 'pos': 55768, 'op': 'o', 'role': 'encrypted by recovery_jump(i) when mem[62]=55768'},
+        {'name': 'epoch3_entry_prelanding', 'pos': 32815, 'op': 'o', 'role': 'encrypted by continue_1/continue_3(i) when mem[38]=32815'},
+        {'name': 'epoch3_portal_prelanding', 'pos': 9815, 'op': 'o', 'role': 'encrypted by recovery_jump(i) when mem[62]=9815'},
+        {'name': 'epoch3_reject_prelanding', 'pos': 42637, 'op': 'o', 'role': 'encrypted by recovery_jump(i) when mem[62]=42637'},
     ]
     records = []
     for item in specs:
@@ -632,6 +635,257 @@ def build_m2(mode='normal', encoder=encode):
     }
 
 
+def build_m3(mode='normal', encoder=encode, slot_overrides=None):
+    """Step 5: Three-epoch roundtrip + rollback composition in a single Classic Malbolge process.
+    Reuses the 1x94 (0..93) low-memory dispatch/state core across 3 consecutive epochs via
+    in-VM 4-step crazy trampoline rearming, portal rotation, and EOF-masked candidate evaluation.
+    stdin = [initial selector 1|3, epoch1 candidate 1|3, epoch2 candidate 1|3, epoch3 candidate 1|3].
+    """
+    modes = {
+        'normal', 'no_save', 'corrupt_journal', 'no_restore',
+        'broken_rearm', 'broken_return', 'force_retry_failure',
+        'output_impostor', 'eof_unmasked',
+    }
+    if mode not in modes:
+        raise ValueError(mode)
+    overrides = dict(slot_overrides or {})
+    b = Layout(encoder)
+    b.cells.update({
+        37: 61, 38: 95, 41: 92, 43: 90, 45: 88, 46: 35, 47: 86, 48: 69, 50: 125,
+        53: 81, 54: 108, 60: 73, 62: 37, 63: 35, 64: 111,
+        75: 81, 76: 80, 79: 54, 80: 54, 81: 81, 84: 72, 94: 81, 97: 36,
+        29530: 48,
+    })
+    b.mutable.update({38, 41, 43, 45, 47, 48, 50, 53, 54, 60, 62, 64, 75, 76, 79, 80, 81, 84, 94})
+    cell, load_const, reset_scratch_cell, trip_to_trampoline, rearm_trampoline_cell, eval_candidate_to_op = _emit_helpers(b)
+
+    def zero_scratch_53(slot_name):
+        reset_scratch_cell(53)
+        if mode != 'eof_unmasked':
+            cell(81, '*')
+            cell(53, overrides.get(slot_name, 'p'), slot_name)
+
+    cell(75, 'p', 'zero_seed_to_ones')
+    cell(75, 'p', 'initialize_zero')
+    cell(53, 'p')
+    cell(75, '*')
+    cell(54, 'p')
+    load_const(81, 3)
+    cell(54, 'p', 'initialize_tramp_ptr')
+    cell(75, '*')
+    cell(81, 'p', 'initialize_ones')
+    cell(75, '*')
+    cell(52, 'p', 'initialize_journal')
+    cell(75, '*')
+    cell(64, 'p', 'initialize_attempt_counter')
+    reset_scratch_cell(80)
+    load_const(79, 3)
+    cell(80, 'p', 'initialize_c29525')
+    load_const(84, 2)
+    cell(62, '*', 'initialize_recovery_portal')
+    cell(38, '*', 'initialize_epoch2_portal')
+
+    # ================= EPOCH 1 =================
+    cell(75, '*')
+    cell(36, 'p', 'epoch1_preclear_target')
+    b.emit('/', 'read_initial')
+    cell(36, 'p', 'epoch1_initialize_target')
+    cell(52, 'p', 'epoch1_save')
+
+    load_const(84, 10)
+    cell(64, 'p', 'epoch1_count_attempt_1')
+    zero_scratch_53('epoch1_eof_mask')
+    b.emit('/', 'read_candidate_1')
+    eval_candidate_to_op('epoch1_attempt1')
+    cell(36, 'p', 'epoch1_transition')
+    cell(36, 'i', 'epoch1_dispatch')
+
+    b.cells[29521] = encoder('v', 29521)
+    b.cells[29523] = encoder('<', 29523)
+    b.cells[29524] = encoder('i', 29524)
+    b.cells[29525] = encoder('j', 29525)
+    b.cells[29526] = encoder('i', 29526)
+    b.cells[29527] = encoder('<', 29527)
+    b.cells[29528] = encoder('i', 29528)
+    b.cells[29529] = encoder('v', 29529)
+    b.cells[6566] = encoder('v', 6566)
+    b.cells[55769] = encoder('v', 55769)
+    b.cells[42638] = encoder('v', 42638)
+    b.labels.update({
+        'no_save_reject': 29521,
+        'commit_3': 29523,
+        'continue_or_halt_3': 29524,
+        'failure_route': 29525,
+        'recovery_jump': 29526,
+        'commit_1': 29527,
+        'continue_or_halt_1': 29528,
+        'no_restore_reject': 29529,
+        'epoch1_reject_halt': 6566,
+        'epoch2_reject_halt': 55769,
+        'epoch3_reject_halt': 42638,
+        'epoch1_recovery_entry': 19696,
+        'epoch2_entry': 39398,
+        'epoch2_recovery_entry': 49209,
+        'epoch3_entry': 32816,
+        'epoch3_recovery_entry': 9816,
+    })
+
+    # ================= EPOCH 1 RECOVERY (c = 19696, d = 63) =================
+    b.c, b.d = 19696, 63
+    cell(75, '*')
+    cell(53, 'p')
+    load_const(80, 10)
+    cell(64, 'p', 'epoch1_count_attempt_2')
+    cell(62, '*', 'epoch1_arm_reject_portal')
+    rearm_trampoline_cell(29524, 43, 'epoch1_rearm_continue3')
+    rearm_trampoline_cell(29525, 50, 'epoch1_rearm_failure_route')
+
+    cell(75, '*', 'epoch1_recovery_load_zero')
+    cell(36, 'p', 'epoch1_recovery_reset_target')
+    for i in range(10):
+        cell(52, '*', f'epoch1_journal_read_rotation_{i+1}')
+    cell(36, 'p', 'epoch1_restore')
+    load_const(84, 10)
+    cell(36, 'p', 'epoch1_retry')
+    cell(36, 'i', 'epoch1_retry_dispatch')
+
+    # ================= EPOCH 2 CONTINUATION (c = 39398, d = 39) =================
+    b.c, b.d = 39398, 39
+    reset_scratch_cell(53)
+    rearm_trampoline_cell(29523, 41, 'epoch2_rearm_commit3')
+    rearm_trampoline_cell(29524, 43, 'epoch2_rearm_continue3')
+    rearm_trampoline_cell(29525, 50, 'epoch2_rearm_failure_route')
+    rearm_trampoline_cell(29526, 45, 'epoch2_rearm_recovery_jump')
+    rearm_trampoline_cell(29527, 45, 'epoch2_rearm_commit1')
+    rearm_trampoline_cell(29528, 47, 'epoch2_rearm_continue1')
+
+    cell(38, '*', 'epoch2_advance_to_epoch3_portal')
+    cell(75, '*')
+    cell(62, 'p', 'epoch2_reset_portal')
+    load_const(84, 10)
+    cell(62, 'p')
+    cell(62, '*', 'epoch2_initialize_recovery_portal')
+
+    reset_scratch_cell(52)
+    load_const(84, 10)
+    cell(36, 'p', 'epoch2_prepare_target')
+    cell(52, 'p', 'epoch2_save')
+
+    reset_scratch_cell(64)
+    load_const(84, 10)
+    cell(64, 'p', 'epoch2_count_attempt_1')
+
+    zero_scratch_53('epoch2_eof_mask')
+    b.emit('/', 'read_candidate_2')
+    eval_candidate_to_op('epoch2_attempt1')
+    cell(36, 'p', 'epoch2_transition')
+    cell(36, 'i', 'epoch2_dispatch')
+
+    # ================= EPOCH 2 RECOVERY (c = 49209, d = 63) =================
+    b.c, b.d = 49209, 63
+    cell(75, '*')
+    cell(53, 'p')
+    load_const(80, 10)
+    cell(64, 'p', 'epoch2_count_attempt_2')
+    cell(62, '*', 'epoch2_arm_reject_portal')
+    rearm_trampoline_cell(29524, 43, 'epoch2_recovery_rearm_continue3')
+    rearm_trampoline_cell(29525, 50, 'epoch2_recovery_rearm_failure_route')
+
+    cell(75, '*', 'epoch2_recovery_load_zero')
+    cell(36, 'p', 'epoch2_recovery_reset_target')
+    for i in range(10):
+        cell(52, '*', f'epoch2_journal_read_rotation_{i+1}')
+    cell(36, 'p', 'epoch2_restore')
+    load_const(84, 10)
+    cell(36, 'p', 'epoch2_retry')
+    cell(36, 'i', 'epoch2_retry_dispatch')
+
+    # ================= EPOCH 3 CONTINUATION (c = 32816, d = 39) =================
+    b.c, b.d = 32816, 39
+    reset_scratch_cell(53)
+    if mode != 'broken_rearm':
+        rearm_trampoline_cell(29523, 41, 'epoch3_rearm_commit3')
+        rearm_trampoline_cell(29524, 60, 'epoch3_rearm_halt3')
+        rearm_trampoline_cell(29525, 50, 'epoch3_rearm_failure_route')
+        rearm_trampoline_cell(29526, 45, 'epoch3_rearm_recovery_jump')
+        rearm_trampoline_cell(29527, 45, 'epoch3_rearm_commit1')
+        rearm_trampoline_cell(29528, 48, 'epoch3_rearm_halt1')
+
+    for _ in range(8):
+        cell(62, '*')
+    reset_scratch_cell(62)
+    load_const(45, 10)
+    cell(62, 'p')
+    cell(62, '*', 'epoch3_initialize_recovery_portal')
+
+    reset_scratch_cell(52)
+    load_const(84, 10)
+    cell(36, 'p', 'epoch3_prepare_target')
+    save_op = overrides.get('epoch3_save', 'o' if mode == 'no_save' else 'p')
+    cell(52, save_op, 'epoch3_save')
+
+    reset_scratch_cell(64)
+    load_const(84, 10)
+    cell(64, 'p', 'epoch3_count_attempt_1')
+
+    zero_scratch_53('epoch3_eof_mask')
+    b.emit('/', 'read_candidate_3')
+    eval_candidate_to_op('epoch3_attempt1')
+    cell(36, 'p', 'epoch3_transition')
+    cell(36, 'i', 'epoch3_dispatch')
+
+    # ================= EPOCH 3 RECOVERY (c = 9816, d = 63) =================
+    b.c, b.d = 9816, 63
+    cell(75, '*')
+    cell(53, 'p')
+    load_const(80, 10)
+    cell(64, 'p', 'epoch3_count_attempt_2')
+    cell(62, '*', 'epoch3_arm_reject_portal')
+    rearm_trampoline_cell(29524, 60, 'epoch3_recovery_rearm_halt3')
+    rearm_trampoline_cell(29525, 50, 'epoch3_recovery_rearm_failure_route')
+
+    cell(75, '*', 'epoch3_recovery_load_zero')
+    cell(36, 'p', 'epoch3_recovery_reset_target')
+    if mode == 'corrupt_journal' or 'epoch3_damage_journal' in overrides:
+        cell(52, overrides.get('epoch3_damage_journal', '*'), 'epoch3_damage_journal')
+    for i in range(10):
+        cell(52, '*', f'epoch3_journal_read_rotation_{i+1}')
+    restore_op = overrides.get('epoch3_restore', 'o' if mode == 'no_restore' else 'p')
+    cell(36, restore_op, 'epoch3_restore')
+
+    if mode == 'force_retry_failure':
+        cell(75, '*', 'epoch3_construct_retry_operand_fail')
+    elif 'epoch3_retry_const_op' in overrides:
+        cell(75, overrides['epoch3_retry_const_op'], 'epoch3_construct_retry_operand_override')
+    else:
+        load_const(84, 10)
+    cell(36, 'p', 'epoch3_retry')
+    if mode == 'output_impostor' or 'epoch3_post_output_op' in overrides:
+        b.emit('<', 'epoch3_impostor_output')
+        cell(36, overrides.get('epoch3_post_output_op', '*'), 'epoch3_post_output_damage')
+        b.emit('v', 'epoch3_impostor_halt')
+    else:
+        dispatch_op = overrides.get('epoch3_retry_dispatch', 'v' if mode == 'broken_return' else 'i')
+        cell(36, dispatch_op, 'epoch3_retry_dispatch')
+
+    return b.image(), {
+        'kind': 'THREE_EPOCH_ROUNDTRIP_M3',
+        'mode': mode,
+        'labels': b.labels,
+        'target': 36,
+        'journal': 52,
+        'zero_cell': 75,
+        'portal_cell': 62,
+        'continuation_portal_cell': 38,
+        'attempt_counter_cell': 64,
+        'low_memory_1x94_core': [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 36, 37, 38, 41, 42, 43, 45, 46, 47, 48, 50, 52, 53, 54, 60, 62, 63, 64, 70, 74, 75, 76, 77, 79, 80, 81, 84],
+        'domain': {'initial': [1, 3], 'candidate_1': [1, 3], 'candidate_2': [1, 3], 'candidate_3': [1, 3]},
+        'committed_state_by_initial': {'1': {'mem36': 29526, 'output': 'VVV'}, '3': {'mem36': 29522, 'output': 'RRR'}},
+        'epochs': 3,
+        'max_attempts_per_epoch': 2,
+    }
+
+
 def main():
     root = Path(__file__).resolve().parents[1]
     builders = {'m1a_rot10': lambda: build_reversible(),
@@ -644,6 +898,8 @@ def main():
                      for mode in ['normal', 'no_save', 'corrupt_journal', 'no_restore', 'no_recovery', 'broken_return', 'early_halt', 'output_impostor', 'force_retry_failure', 'force_retry_stall']})
     builders.update({f'm2_{mode}': lambda m=mode: build_m2(m)
                      for mode in ['normal', 'no_save', 'corrupt_journal', 'no_restore', 'broken_rearm', 'force_retry_failure', 'output_impostor']})
+    builders.update({f'm3_{mode}': lambda m=mode: build_m3(m)
+                     for mode in ['normal', 'no_save', 'corrupt_journal', 'no_restore', 'broken_rearm', 'broken_return', 'force_retry_failure', 'output_impostor', 'eof_unmasked']})
     for name, builder in builders.items():
         source, meta = builder()
         (root/'candidates'/f'{name}.mal').write_bytes(source)

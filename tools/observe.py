@@ -238,3 +238,98 @@ def m2_contract(result, meta, initial, cand1, cand2):
     expected_e2_rots = 0 if cand2 == 1 else 10
     return (jc['epoch1_journal_rotations'] == expected_e1_rots
             and jc['epoch2_journal_rotations'] == expected_e2_rots)
+
+
+def m3_journal_consumption(result, meta):
+    """Exact journal read/write/rotation consumption across all three epochs of M3."""
+    labels = meta['labels']
+    trace = result['trace']
+    def events(label):
+        return [e for e in trace if label in labels and e['pre'][1] == labels[label]]
+    e1_rots = sum(len(events(f'epoch1_journal_read_rotation_{i+1}')) for i in range(10))
+    e2_rots = sum(len(events(f'epoch2_journal_read_rotation_{i+1}')) for i in range(10))
+    e3_rots = sum(len(events(f'epoch3_journal_read_rotation_{i+1}')) for i in range(10))
+    return {
+        'epoch1_saves': len(events('epoch1_save')),
+        'epoch1_journal_rotations': e1_rots,
+        'epoch1_restores': len(events('epoch1_restore')),
+        'epoch2_saves': len(events('epoch2_save')),
+        'epoch2_journal_rotations': e2_rots,
+        'epoch2_restores': len(events('epoch2_restore')),
+        'epoch3_saves': len(events('epoch3_save')),
+        'epoch3_journal_rotations': e3_rots,
+        'epoch3_restores': len(events('epoch3_restore')),
+        'total_journal_rotations': e1_rots + e2_rots + e3_rots,
+        'journal_final_value': result['memory'][52],
+    }
+
+
+def m3_contract(result, meta, initial, cand1, cand2, cand3, expected_reads=4):
+    """Step 5 contract for M3: three complete epochs with in-VM roundtrip + rollback in a single process."""
+    if initial not in (1, 3) or cand1 not in (1, 3) or cand2 not in (1, 3) or cand3 not in (1, 3, 59048):
+        return False
+    labels = meta['labels']
+    trace = result['trace']
+    def events(label):
+        return [e for e in trace if label in labels and e['pre'][1] == labels[label]]
+    expected_mem36 = 29526 if initial == 1 else 29522
+    expected_out = b'VVV' if initial == 1 else b'RRR'
+    expected_commit_label = 'commit_1' if initial == 1 else 'commit_3'
+    expected_commit_pc = labels[expected_commit_label]
+    expected_e3_attempts = 29528 if cand3 == 1 else 7
+    if not (target_contract(result, 36, expected_mem36)
+            and result['memory'][52] == initial
+            and result['memory'][64] == expected_e3_attempts
+            and result['memory'][84] == 8
+            and result['output'] == expected_out
+            and result['registers'][3] == expected_reads
+            and sum(1 for e in trace if e['opcode'] == 23) == 4):
+        return False
+    out_events = [e for e in trace if e['output']]
+    if len(out_events) != 3 or any(e['pre'][1] != expected_commit_pc for e in out_events):
+        return False
+    e1_save = events('epoch1_save')
+    e2_entry = events('epoch2_entry')
+    e2_prep = events('epoch2_prepare_target')
+    e2_save = events('epoch2_save')
+    e3_entry = events('epoch3_entry')
+    e3_prep = events('epoch3_prepare_target')
+    e3_save = events('epoch3_save')
+    if not (len(e1_save) == 1 and e1_save[0]['opcode'] == 62 and e1_save[0]['post'][0] == initial):
+        return False
+    if not (len(e2_entry) == 1 and len(e2_prep) == 1 and e2_prep[0]['post'][0] == 29524 - initial):
+        return False
+    if not (len(e2_save) == 1 and e2_save[0]['opcode'] == 62 and e2_save[0]['post'][0] == initial):
+        return False
+    if not (len(e3_entry) == 1 and len(e3_prep) == 1 and e3_prep[0]['post'][0] == 29524 - initial):
+        return False
+    if not (len(e3_save) == 1 and e3_save[0]['opcode'] == 62 and e3_save[0]['post'][0] == initial):
+        return False
+    if not (e1_save[0]['step'] < out_events[0]['step'] < e2_entry[0]['step'] < e2_save[0]['step']
+            < out_events[1]['step'] < e3_entry[0]['step'] < e3_save[0]['step'] < out_events[2]['step']):
+        return False
+    for idx, cand in enumerate((cand1, cand2, cand3), start=1):
+        disp = events(f'epoch{idx}_dispatch')
+        landing = expected_commit_pc if cand == 1 else labels['failure_route']
+        if not (len(disp) == 1 and disp[0]['opcode'] == 4 and disp[0]['post'][1] == landing):
+            return False
+        rest = events(f'epoch{idx}_restore')
+        ret = events(f'epoch{idx}_retry')
+        rdisp = events(f'epoch{idx}_retry_dispatch')
+        if cand == 1:
+            if rest or ret or rdisp:
+                return False
+        else:
+            if not (len(rest) == len(ret) == len(rdisp) == 1):
+                return False
+            if not ([36, 29524, 29524 - initial] in rest[0]['changes']
+                    and ret[0]['post'][0] == expected_mem36
+                    and rdisp[0]['post'][1] == expected_commit_pc):
+                return False
+    jc = m3_journal_consumption(result, meta)
+    expected_e1_rots = 0 if cand1 == 1 else 10
+    expected_e2_rots = 0 if cand2 == 1 else 10
+    expected_e3_rots = 0 if cand3 == 1 else 10
+    return (jc['epoch1_journal_rotations'] == expected_e1_rots
+            and jc['epoch2_journal_rotations'] == expected_e2_rots
+            and jc['epoch3_journal_rotations'] == expected_e3_rots)

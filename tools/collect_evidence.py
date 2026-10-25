@@ -8,9 +8,14 @@ import subprocess
 import sys
 
 from tools import build_candidates as build
-from tools.observe import run, target_contract, conditional_contract, m1e_contract, m2_contract, m2_journal_consumption
+from tools.observe import (
+    run, target_contract, conditional_contract,
+    m1e_contract, m2_contract, m2_journal_consumption,
+    m3_contract, m3_journal_consumption,
+)
 from tools.oracles import verify, compile_oracles, validate_parity
-from tools.autobolge_adapter import bridge, eof_probe, semantic_probes
+from tools.autobolge_adapter import bridge, eof_probe, semantic_probes, m3_proposal_campaign
+from tools.quine_94_probe import build_94_cell_probe, quine_94_bounds_and_roundtrip
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -37,7 +42,9 @@ def emit_json(path, value):
 
 def main():
     build.main()
+    (ROOT/'candidates/quine94_ceiling_probe.mal').write_bytes(build_94_cell_probe())
     emit_json(ROOT/'evidence/trampoline-rearm.json', build.trampoline_rearm_analysis())
+    emit_json(ROOT/'evidence/quine-94-analysis.json', quine_94_bounds_and_roundtrip())
     measurements = []
     cases = [('m1a_rot10', b'', 5000), ('m1a_rot9_negative', b'', 5000)]
     cases += [('m1b_normal', p, 5000) for p in [b'\x01\x00', b'\x03\x00']]
@@ -48,6 +55,10 @@ def main():
     cases += [(f'm1e_{mode}', p, 5000) for mode in ['no_save','corrupt_journal','no_restore','no_recovery','broken_return','early_halt','output_impostor','force_retry_failure','force_retry_stall'] for p in [b'\x01\x03', b'\x03\x03']]
     cases += [('m2_normal', bytes([i, c1, c2]), 10000) for i in [1, 3] for c1, c2 in [(1, 1), (3, 1), (1, 3), (3, 3)]]
     cases += [(f'm2_{mode}', bytes([i, 3, 3]), 10000) for mode in ['no_save','corrupt_journal','no_restore','broken_rearm','force_retry_failure','output_impostor'] for i in [1, 3]]
+    cases += [('m3_normal', bytes([i, c1, c2, c3]), 10000) for i in [1, 3] for c1, c2, c3 in [(1, 1, 1), (3, 1, 1), (1, 3, 1), (1, 1, 3), (3, 3, 3)]]
+    cases += [('m3_normal', bytes([i, 1, 1]), 10000) for i in [1, 3]]
+    cases += [(f'm3_{mode}', bytes([i, 3, 3, 3]), 10000) for mode in ['no_save','corrupt_journal','no_restore','broken_rearm','broken_return','force_retry_failure','output_impostor'] for i in [1, 3]]
+    cases += [('m3_eof_unmasked', bytes([i, 1, 1]), 10000) for i in [1, 3]]
     for name, payload, budget in cases:
         source = (ROOT/'candidates'/f'{name}.mal').read_bytes()
         meta = json.loads((ROOT/'candidates'/f'{name}.json').read_text())
@@ -55,7 +66,12 @@ def main():
         dest = ROOT/'evidence/traces'/tag
         report = verify(source, payload, budget, dest)
         result = run(source, payload, budget)
-        if name.startswith('m2'):
+        if name.startswith('m3'):
+            if len(payload) == 3:
+                contract = m3_contract(result, meta, payload[0], payload[1], payload[2], 59048, expected_reads=3)
+            else:
+                contract = m3_contract(result, meta, payload[0], payload[1], payload[2], payload[3])
+        elif name.startswith('m2'):
             contract = m2_contract(result, meta, payload[0], payload[1], payload[2])
         elif name.startswith('m1e'):
             contract = m1e_contract(result, meta, payload[0], payload[1])
@@ -63,7 +79,7 @@ def main():
             contract = conditional_contract(result, meta, payload[0], payload[1])
         else:
             contract = target_contract(result, meta['target'], 37 if name.startswith('m1a') else 29524-payload[0])
-        expected = name in {'m1a_rot10','m1b_normal','m1c_normal','m1e_normal','m2_normal'}
+        expected = name in {'m1a_rot10','m1b_normal','m1c_normal','m1e_normal','m2_normal','m3_normal'}
         parity = validate_parity(report)
         if not parity or contract != expected:
             raise AssertionError((tag, report, contract, expected))
@@ -75,6 +91,8 @@ def main():
         extra = {'attempt_counter_final': result['memory'][meta['attempt_counter_cell']]} if 'attempt_counter_cell' in meta else {}
         if name.startswith('m2'):
             extra['journal_consumption'] = m2_journal_consumption(result, meta)
+        elif name.startswith('m3'):
+            extra['journal_consumption'] = m3_journal_consumption(result, meta)
         report.update({'name':name, 'source_bytes':len(source), 'logical_contract':contract,
                        'expected_logical_contract':expected, 'target_final':result['memory'][meta['target']],
                        'journal_final':result['memory'][meta['journal']] if 'journal' in meta else None,
@@ -87,9 +105,14 @@ def main():
     eof_strict = verify(b'uP', b'', 10, ROOT/'evidence/eof-strict')
     if not validate_parity(eof_strict):
         raise AssertionError(('eof-strict', eof_strict))
-    emit_json(ROOT/'evidence/autobolge-bridge.json', {'eof_difference':eof_probe(),
-               'semantic_probes':semantic_probes(),
-               'cases':[bridge(p) for p in [b'\x01\x03',b'\x03\x03']]})
+    m3_report = m3_proposal_campaign()
+    emit_json(ROOT/'evidence/m3-proposals.json', m3_report)
+    emit_json(ROOT/'evidence/autobolge-bridge.json', {
+        'eof_difference':eof_probe(),
+        'semantic_probes':semantic_probes(),
+        'cases':[bridge(p) for p in [b'\x01\x03',b'\x03\x03']],
+        'm3_campaign_summary':{k: v for k, v in m3_report.items() if k != 'proposals'},
+    })
     zig_bin = shutil.which('zig')
     tool_versions = {'python':sys.version,'platform':platform.platform(),
                      'gcc':subprocess.check_output(['gcc','--version'],text=True).splitlines()[0],

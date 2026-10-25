@@ -151,4 +151,41 @@ Siguiendo `NEXT_COMPOSE.md` y preservando `candidates/m1c_normal.mal` (`17ff6f32
 | válido / inválido (`init=3`) | `030103` | `0 + 10 = 10` | 4,663 | 29522 | 3 | 7 | `5252` (`RR`) | `True` |
 | inválido / inválido (`init=3`) | `030303` | `10 + 10 = 20` | 5,450 | 29522 | 3 | 7 | `5252` (`RR`) | `True` |
 
-Las 61 ejecuciones de la campaña ampliada (`19` de M1a/b/c + `22` de M1e + `20` de M2) tienen paridad exacta entre Python, `trace_ref`, `mb_ref` y `olmstead` (en todos los casos `HALT`).
+### 5. Composición M3 de tres épocas con Roundtrip + Rollback y campaña de propuestas acotadas (`candidates/m3_normal.mal`, 55,770 bytes, SHA256 `7f95770a4786132dd148ccbf4af328d6e62be68ed6732754b2f50c5019114689`)
+
+- **Arquitectura de tres épocas en un único proceso Classic Malbolge (`stdin = [initial, cand_1, cand_2, cand_3]`):**
+  1. **Época 1 (`c = 98`, recuperación `c = 19696`, rechazo `c = 6566`):** inicializa `mem[36]` desde `initial ∈ {1, 3}`, guarda el journal en `mem[52]`, evalúa `cand_1` (con enmascaramiento de `EOF = 59048` poniendo `mem[53] = 0` antes de `/`, de modo que `crazy(59048, 0) = 0 → op = 0`), recupera desde `mem[52]` si `cand_1 = 3`, emite el primer byte comprometido (`V` o `R`) y salta por `mem[38] = 39397` hacia la Época 2 (`c = 39398`).
+  2. **Época 2 (`c = 39398`, recuperación `c = 49209`, rechazo `c = 55769`):** rearma in-VM la tabla de trampolines `29523..29528` conservando `i` en `29524` (`90`) y `29528` (`86`, celda constante `47`), rota una vez `mem[38]` (`39397 → 32815`, preparando `c = 32816` para la Época 3), rearma el portal `mem[62] = 49208`, des-compromete `mem[36]`, guarda el journal `mem[52]` de la Época 2, evalúa `cand_2` (con rollback/retry si `cand_2 = 3`), emite el segundo byte comprometido y salta hacia la Época 3 (`c = 32816`).
+  3. **Época 3 (`c = 32816`, recuperación `c = 9816`, rechazo `c = 42638`):** rearma por segunda vez in-VM `29523..29528` (instalando `v` en `29524` y `29528` para el cierre final), resetea `mem[62]` desde `{49208, 55768}` a `29524` mediante `rot^8` + `reset_scratch_cell(62)` y arma el portal de la Época 3 (`mem[62] = 9815 → c = 9816`, rechazo `42637 → c = 42638`), guarda el journal `mem[52]` de la Época 3, evalúa `cand_3` (incluyendo el caso `EOF = 59048` con `stdin` truncado a 3 bytes `010101` / `030101`), emite el tercer byte comprometido (`VVV` o `RRR`) y ejecuta `HALT`.
+
+| Trayectoria M3 (`m3_normal`) | stdin hex | Rotaciones de journal (E1+E2+E3) | Instrucciones incl. HALT | `mem[36]` final | `mem[52]` final | `mem[64]` final (E3) | stdout | Contrato |
+|---|---|---|---:|---:|---:|---:|---|---|
+| limpio 3 épocas (`init=1`) | `01010101` | `0 + 0 + 0 = 0` | 6,763 | 29526 | 1 | 29528 | `565656` (`VVV`) | `True` |
+| fallo E1 (`init=1`) | `01030101` | `10 + 0 + 0 = 10` | 7,555 | 29526 | 1 | 29528 | `565656` (`VVV`) | `True` |
+| fallo E2 (`init=1`) | `01010301` | `0 + 10 + 0 = 10` | 7,431 | 29526 | 1 | 29528 | `565656` (`VVV`) | `True` |
+| fallo E3 (`init=1`) | `01010103` | `0 + 0 + 10 = 10` | 7,510 | 29526 | 1 | 7 | `565656` (`VVV`) | `True` |
+| triple rollback E1+E2+E3 (`init=1`) | `01030303` | `10 + 10 + 10 = 30` | 8,970 | 29526 | 1 | 7 | `565656` (`VVV`) | `True` |
+| triple rollback E1+E2+E3 (`init=3`) | `03030303` | `10 + 10 + 10 = 30` | 8,970 | 29522 | 3 | 7 | `525252` (`RRR`) | `True` |
+| `EOF` en E3 recuperado (`init=1`) | `010101` | `0 + 0 + 10 = 10` | 7,510 | 29526 | 1 | 7 | `565656` (`VVV`) | `True` |
+| `EOF` en E3 recuperado (`init=3`) | `030101` | `0 + 0 + 10 = 10` | 7,510 | 29522 | 3 | 7 | `525252` (`RRR`) | `True` |
+| `m3_force_retry_failure` | `01030303` / `03030303` | `10 + 10 + 10 = 30` | 8,940 | 29524 | 1 / 3 | 7 | `VV` / `RR` | `False` |
+| `m3_eof_unmasked` | `010101` / `030101` | `0 + 0 + 0 = 0` | 6,732 (`STALL`) | 29526 / 29522 | 1 / 3 | 29528 | `VVV` / `RRR` | `False` |
+
+- **Campaña offline de propuestas acotadas (`evidence/m3-proposals.json`, `tools/autobolge_adapter.py`):**
+  - Se evaluaron **64 candidatos** (`<= 128` de presupuesto, `<= 10,000` instrucciones por corrida) generados sobre 8 familias de slots (`epoch3_save`, `epoch3_restore`, `epoch3_retry_dispatch`, `epoch3_eof_mask`, `epoch3_damage_journal`, `epoch3_retry_const_op`, `epoch3_post_output_op`, `strict_loader_boundary`) usando el codificador `char_for` y `TraceExpander` de Autobolge.
+  - **Resultado:** `8` propuestas aceptadas (las 8 convergen exactamente al fuente canónico `m3_normal.mal` SHA256 `7f95770a4786…`) y `56` propuestas rechazadas y conservadas con su gate exacto (`strict_loader_gate`: 7, `no_save_or_checkpoint_gate`: 7, `no_restore_gate`: 7, `broken_return_gate`: 7, `corrupt_journal_gate`: 7, `repeated_failure_gate`: 7, `output_impostor_gate`: 7, `distinct_eof_gate`: 1 + 6 fallos previos en positivo).
+  - **Discrepancias registradas:**
+    1. `TraceExpander._valid_extensions` propone extensiones en `len(anchor.program)` mientras `EpochAnchorV1.restore()` reanuda el snapshot mutado en memoria sin recargar desde cero.
+    2. En el payload `EOF` de 3 bytes (`010101`), Classic estricto lee `59048`, lo enmascara a `op = 0`, ejecuta rollback en `epoch3_restore` y compromete `VVV` (`HALT` en `7,510` fetches), mientras `ClassicDebugger` de Autobolge detiene la ejecución en `read_candidate_3` con `StopReason.INPUT_UNDERFLOW` y salida truncada `VV`.
+
+### 6. Análisis de la escalera Mod-94 (`4=376`, `2=188`, `1=94`) y Punto Fijo Sintético de Periodo-1 (`evidence/quine-94-analysis.json`)
+
+- **Por qué existen `4 = 376` y `2 = 188`, pero NO una quine Classic autónoma de `1 = 94` bytes bajo loader estricto (`tools/quine_94_probe.py`):**
+  1. **Descomposición de ciclos de `XLAT2`:** los 94 caracteres ASCII imprimibles se particionan en 6 ciclos disjuntos de longitudes `[68, 9, 6, 5, 4, 2]` (`68+9+6+5+4+2 = 94`). No existe **ningún punto fijo de longitud 1** (`fixed_points_period_1 = []`); el ciclo mínimo tiene longitud **2** (`'F' (70) ↔ 'J' (74)`), razón por la cual los anillos estáticos de dos y cuatro tiempos requieren múltiplos de `2 × 94 = 188` o `4 × 94 = 376` (y la quine de Lutter usa dos mitades `2C = 2 × 94 × m = 188 × m`).
+  2. **Muro del loader Classic estricto en `0..93` (`1 = 94`):** en un bloque único de 94 celdas, `'F'` sólo es legal en 8 posiciones y `'J'` en 8 posiciones (`16` posiciones únicas de 94, con **0 posiciones donde ambos sean simultáneamente legales**); en **78 de las 94 posiciones (`82.98%`)** ni `'F'` ni `'J'` son aceptados por el loader estricto.
+  3. **Techo acíclico (`93 < 94`):** sin un salto hacia atrás (`i`), un programa de 94 celdas que termina en `v` ejecuta a lo sumo 93 instrucciones antes de `HALT`, por lo que puede emitir como máximo 93 bytes (`< 94`, y a lo sumo 47 transiciones distintas de `A`). Se verificó empíricamente en los 3 oráculos el programa `candidates/quine94_ceiling_probe.mal` de exactamente `94` bytes (`SHA256 717f0cd4…`), que ejecuta un roundtrip de 10 rotaciones sobre `mem[81] = 81` dentro de `0..93`.
+- **Teorema del Punto Fijo Sintético de Periodo-1 (`1 = 94`) vía Roundtrip:**
+  - Aunque `XLAT2` no tiene puntos fijos nativos de periodo 1, la secuencia in-VM de 4 pasos `crazy(x_const, crazy(0, crazy(80, crazy(29524, XLAT2(pre))))) == pre` restaura exactamente el byte pre-`XLAT2` en la **misma dirección módulo 94** (verificado exhaustivamente en los `94 × 8 = 752` pares `(pos, opcode)`).
+  - Gracias a este punto fijo sintético de periodo 1, `M3` mantiene todo su núcleo de despacho y estado (`17` trampolines en `2..77` + celdas lógicas, portales, journal, contador y constantes en `36..84`) dentro del **primer bloque `1 = 94` (`0..93`)**, reutilizándolo a lo largo de 3 épocas completas sin duplicar anillos de `188` o `376` celdas.
+
+Las **89 ejecuciones** de la campaña completa (`19` de M1a/b/c + `22` de M1e + `20` de M2 + `28` de M3) tienen paridad exacta entre Python, `trace_ref`, `mb_ref` y `olmstead` (en todos los casos `HALT`).
