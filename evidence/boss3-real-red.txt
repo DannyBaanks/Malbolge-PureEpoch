@@ -1,0 +1,191 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+rootdir: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch
+plugins: mock-3.15.1, asyncio-1.4.0, cov-7.1.0, anyio-4.15.1, timeout-2.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 12 items
+
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G1_same_pc_repeated_exactly_N FAILED [  8%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G2_distinct_output_instructions_constant FAILED [ 16%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G3_exact_output_0_to_9 FAILED [ 25%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G4_out_of_domain_defined FAILED [ 33%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G5_no_host_writes PASSED [ 41%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G6_parity_three_oracles FAILED [ 50%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G7_immutable_reproducible FAILED [ 58%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G8_strict_loader FAILED [ 66%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_broken_decrement_fails_G3 FAILED [ 75%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_broken_exit_fails_G3_G4 FAILED [ 83%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_broken_rearm_fails_G1_or_G3 FAILED [ 91%]
+tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_off_by_one_fails_G3 FAILED [100%]
+
+=================================== FAILURES ===================================
+_________ TestBoss3RealLoopContract.test_G1_same_pc_repeated_exactly_N _________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G1_same_pc_repeated_exactly_N>
+
+    def test_G1_same_pc_repeated_exactly_N(self):
+>       img, meta = _load_artifact()
+                    ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+___ TestBoss3RealLoopContract.test_G2_distinct_output_instructions_constant ____
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G2_distinct_output_instructions_constant>
+
+    def test_G2_distinct_output_instructions_constant(self):
+>       img, _ = _load_artifact()
+                 ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+____________ TestBoss3RealLoopContract.test_G3_exact_output_0_to_9 _____________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G3_exact_output_0_to_9>
+
+    def test_G3_exact_output_0_to_9(self):
+>       img, _ = _load_artifact()
+                 ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+___________ TestBoss3RealLoopContract.test_G4_out_of_domain_defined ____________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G4_out_of_domain_defined>
+
+    def test_G4_out_of_domain_defined(self):
+>       img, _ = _load_artifact()
+                 ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+____________ TestBoss3RealLoopContract.test_G6_parity_three_oracles ____________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G6_parity_three_oracles>
+
+    def test_G6_parity_three_oracles(self):
+>       img, meta = _load_artifact()
+                    ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+___________ TestBoss3RealLoopContract.test_G7_immutable_reproducible ___________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G7_immutable_reproducible>
+
+    def test_G7_immutable_reproducible(self):
+>       img, meta = _load_artifact()
+                    ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+_______________ TestBoss3RealLoopContract.test_G8_strict_loader ________________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_G8_strict_loader>
+
+    def test_G8_strict_loader(self):
+>       img, _ = _load_artifact()
+                 ^^^^^^^^^^^^^^^^
+
+tests/test_boss3_real_loop.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _load_artifact():
+        if not CANDIDATE_PATH.exists():
+>           raise FileNotFoundError(f"{CANDIDATE_PATH} no existe")
+E           FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+
+tests/test_boss3_real_loop.py:27: FileNotFoundError
+_______ TestBoss3RealLoopContract.test_mutant_broken_decrement_fails_G3 ________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_mutant_broken_decrement_fails_G3>
+
+    def test_mutant_broken_decrement_fails_G3(self):
+        # Se espera que el mutante rompa G3
+        # Placeholder: al no existir mutantes, el test falla en rojo
+>       self.assertTrue(False, "Mutante broken_decrement no implementado")
+E       AssertionError: False is not true : Mutante broken_decrement no implementado
+
+tests/test_boss3_real_loop.py:153: AssertionError
+________ TestBoss3RealLoopContract.test_mutant_broken_exit_fails_G3_G4 _________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_mutant_broken_exit_fails_G3_G4>
+
+    def test_mutant_broken_exit_fails_G3_G4(self):
+>       self.assertTrue(False, "Mutante broken_exit no implementado")
+E       AssertionError: False is not true : Mutante broken_exit no implementado
+
+tests/test_boss3_real_loop.py:156: AssertionError
+______ TestBoss3RealLoopContract.test_mutant_broken_rearm_fails_G1_or_G3 _______
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_mutant_broken_rearm_fails_G1_or_G3>
+
+    def test_mutant_broken_rearm_fails_G1_or_G3(self):
+>       self.assertTrue(False, "Mutante broken_rearm no implementado")
+E       AssertionError: False is not true : Mutante broken_rearm no implementado
+
+tests/test_boss3_real_loop.py:159: AssertionError
+__________ TestBoss3RealLoopContract.test_mutant_off_by_one_fails_G3 ___________
+
+self = <test_boss3_real_loop.TestBoss3RealLoopContract testMethod=test_mutant_off_by_one_fails_G3>
+
+    def test_mutant_off_by_one_fails_G3(self):
+>       self.assertTrue(False, "Mutante off_by_one no implementado")
+E       AssertionError: False is not true : Mutante off_by_one no implementado
+
+tests/test_boss3_real_loop.py:162: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G1_same_pc_repeated_exactly_N - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G2_distinct_output_instructions_constant - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G3_exact_output_0_to_9 - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G4_out_of_domain_defined - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G6_parity_three_oracles - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G7_immutable_reproducible - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_G8_strict_loader - FileNotFoundError: /home/danny/Development/ISyCo Git/Malbolge-PureEpoch/candidates/boss3_real_loop.mal no existe
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_broken_decrement_fails_G3 - AssertionError: False is not true : Mutante broken_decrement no implementado
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_broken_exit_fails_G3_G4 - AssertionError: False is not true : Mutante broken_exit no implementado
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_broken_rearm_fails_G1_or_G3 - AssertionError: False is not true : Mutante broken_rearm no implementado
+FAILED tests/test_boss3_real_loop.py::TestBoss3RealLoopContract::test_mutant_off_by_one_fails_G3 - AssertionError: False is not true : Mutante off_by_one no implementado
+========================= 11 failed, 1 passed in 0.05s =========================

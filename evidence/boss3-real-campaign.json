@@ -1,0 +1,15 @@
+{
+  "schema": "boss3-real-campaign/v1",
+  "candidates_tried": 1,
+  "budget": 128,
+  "results": [
+    {
+      "candidate_index": 0,
+      "sha256": "065db44fc09e793d51fca8ee8076358e09b368b6c91e121b511f4f525d0009cb",
+      "gate_failed": "G3",
+      "reason": "Artefacto placeholder HALT inmediato sin salida. No hay iteración ni conteo."
+    }
+  ],
+  "verdict": "NOT_DEMONSTRATED",
+  "frontier": "G1 no comprobable, G3 falla para N>=1, G2/G6/G7/G8 pasan sintácticamente pero sin bucle real."
+}

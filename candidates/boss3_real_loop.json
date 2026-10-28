@@ -1,0 +1,12 @@
+{
+  "kind": "BOSS3_REAL_LOOP_PLACEHOLDER",
+  "mode": "normal",
+  "sha256": "065db44fc09e793d51fca8ee8076358e09b368b6c91e121b511f4f525d0009cb",
+  "length_bytes": 2,
+  "loop_body_addresses": [],
+  "claims": {
+    "autonomous_loop": false,
+    "host_intervention_required": false,
+    "zero_external_memory_writes": true
+  }
+}
