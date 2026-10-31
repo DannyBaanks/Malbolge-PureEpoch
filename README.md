@@ -203,21 +203,26 @@ Para someter a PureEpoch a las condiciones más adversariales concebibles —esc
 ```mermaid
 flowchart LR
   B1["<b>Boss 1: Falla Bizantina</b><br/>Rollback Anidado J1 → J2<br/><i>Safe-Mode Fallback (29.5 KB)</i>"]
-  B2["<b>Boss 2: Cinta de Turing</b><br/>Motor Brainfuck Bidireccional<br/><i>Memoria Baja [65..69] (1.3 KB)</i>"]
-  B3["<b>Boss 3: El Santo Grial</b><br/>Bucle While x > 0 Autónomo<br/><i>[DEMONSTRATED] / Pure In-Band (50.0 KB)</i>"]
+  B2["<b>Boss 2: Compilador BF</b><br/>Brainfuck sin bucles → línea recta<br/><i>VM Turing: NOT_DEMONSTRATED (1.3 KB)</i>"]
+  B3["<b>Boss 3: El Santo Grial</b><br/>Bucle While x > 0 Autónomo<br/><i>[NOT_DEMONSTRATED] tabla de despacho (50.0 KB)</i>"]
 
   B1 -->|Superado ✅| B2
-  B2 -->|Superado ✅| B3
-  B3 -.->|Frontera Abierta 🔬| OBJETIVO["<b>Contrato Autónomo In-Band</b>"]
+  B2 -->|Parcial ⚠️| B3
+  B3 -.->|Frontera Abierta 🔬| OBJETIVO["<b>Bucle autónomo con PC repetida</b>"]
 ```
+
+> [!WARNING]
+> **Corrección de auditoría (2026-10-27).** Boss 3 no contiene ningún bucle: ninguna dirección de instrucción se ejecuta dos veces y cada N soportado salta a un bloque con N salidas `<` escritas a mano. Boss 2 resuelve el puntero y la cinta en Python al compilar. Ambos veredictos se bajaron en [VERDICT.md](VERDICT.md); los tests de falsación están en `tests/test_boss3_dynamic_loop.py` y `tests/test_boss2_brainfuck.py`.
 
 ### Boss 1: Falla Bizantina en Cascada (Rollback del Rollback)
 * **El Desafío:** PureEpoch M3 demostró recuperarse de 1 falla aislada. En un entorno malicioso con fallas repetidas, un fallo en el segundo intento corrompe el journal primario $J_1$.
-* **La Solución Algebraica:** Un protocolo de transacciones anidadas con Journal Secundario $J_2$ en celda 42 y portal de recuperación de Nivel 2 en `c = 6566`. Si el Intento 1 falla, revierte con $J_1$; si el Intento 2 vuelve a fallar, el portal 6566 intercepta el colapso, restaura el estado original desde $J_2$ mediante 10 rotaciones y transiciona a un modo a prueba de fallos (*Safe-Mode*) con salida diagnóstica `'F'` (70).
+* **La Solución Algebraica:** Un protocolo de transacciones anidadas con Journal Secundario $J_2$ en celda 42 y portal de recuperación de Nivel 2 en `c = 6566`. Si el Intento 1 falla, revierte con $J_1$; si el Intento 2 vuelve a fallar, el portal 6566 intercepta el colapso, restaura el estado original desde $J_2$ mediante 10 rotaciones y emite como diagnóstico el byte restaurado (`\x01` o `\x03`; el diseño original prometía `'F'`, que no es lo que sale).
 * **Artefacto:** [`candidates/boss1_byzantine.mal`](candidates/boss1_byzantine.mal) (29,531 bytes) · [`tools/boss1_byzantine.py`](tools/boss1_byzantine.py)
-* **Validación:** 5/5 pruebas unitarias passing con paridad estricta entre 3 oráculos en [`tests/test_boss1_byzantine.py`](tests/test_boss1_byzantine.py).
+* **Validación:** 6/6 pruebas con paridad estricta entre 3 oráculos y un control que corrompe $J_2$ al entrar al nivel 2: el restore sigue al contenido de $J_2$ ([`tests/test_boss1_byzantine.py`](tests/test_boss1_byzantine.py)).
+* **Límite:** dos intentos fijos y dominio {1, 3}; no es un manejador general de fallas repetidas.
 
-### Boss 2: La Cinta Bidireccional de Turing (Motor Brainfuck en Malbolge)
+### Boss 2: Compilador de Brainfuck sin bucles a Malbolge (la VM de Turing es `NOT_DEMONSTRATED`)
+* **Lo que no es:** el puntero y los valores de la cinta los lleva Python al compilar; Malbolge ejecuta código en línea recta y ninguna PC se repite. `[` `]` se descartaban sin avisar y `,` guardaba `crazy(byte, celda)` en lugar del byte; desde la auditoría, los tres se rechazan con `NotImplementedError`. Valores limitados a 0..3.
 * **El Desafío:** En `BolgePiton` el puntero de datos sólo avanzaba. Brainfuck requiere movimiento del puntero de datos **hacia adelante (`>`) y hacia atrás (`<`)** a través de una cinta arbitraria, además de mutación aritmética (`+`, `-`) y emisión (`.`), sin agotar el presupuesto de direccionamiento en memoria baja ni ser destruido por `XLAT2`.
 * **La Solución Algebraica:**
   1. **Cinta Virtual en Memoria Baja:** Asignada en las celdas `[65..69]`, inicializadas a 0 estricto en tiempo de arranque mediante las identidades $\text{crazy}(0, \text{byte}) = 29524$ y $\text{crazy}(29524, 29524) = 0$.
@@ -229,26 +234,27 @@ flowchart LR
   3. **Lectura No Destructiva de 360°:** Para emitir con `.`, se rota la celda activa 10 veces ($\text{rot}^{10}(v) = v$), cargando el valor intacto en el acumulador $A$ y emitiéndolo con `<`.
   4. **Puntero Bidireccional Seguro:** Navegación arbitraria hacia adelante y atrás mediante saltos `j` controlados con `mantener_d()`.
 * **Artefacto:** [`candidates/boss2_brainfuck.mal`](candidates/boss2_brainfuck.mal) (1,303 bytes) · [`tools/boss2_brainfuck.py`](tools/boss2_brainfuck.py)
-* **Validación:** 5/5 pruebas unitarias con cronómetro de alta resolución y paridad estricta en [`tests/test_boss2_brainfuck.py`](tests/test_boss2_brainfuck.py).
+* **Validación:** 7/7 pruebas con paridad estricta y controles de comandos no soportados en [`tests/test_boss2_brainfuck.py`](tests/test_boss2_brainfuck.py).
 
-### Boss 3: El Santo Grial (El Bucle `while x > 0` con $N$ Dinámico Autónomo) — `[DEMONSTRATED]`
+### Boss 3: El Santo Grial (El Bucle `while x > 0` con $N$ Dinámico Autónomo) — `[NOT_DEMONSTRATED]`
+* **Veredicto de auditoría (2026-10-27):** el artefacto es una **tabla de despacho**, no un bucle. Ninguna PC se ejecuta dos veces; N=1/2/3/7 aterrizan en bloques con 1/2/3/7 instrucciones `<` escritas a mano. Con entradas fuera de la tabla: `4`→`\xeb`, `5`→`\xeb\xeb`, `6`/`9`→vacío, `8`→`\xe1\xe1`. Lo que sí se sostiene: cero escrituras del host y paridad de 3 oráculos para los 6 casos de la tabla. El texto de abajo describe el intento original y se conserva como registro.
 * **El Desafío:** En Classic Malbolge todo bucle repetido colapsa porque `XLAT2` automuta destructivamente cada celda ejecutada. La auditoría formal identificó que intentos preliminares basados en Truth Machine recurrían a modificaciones de memoria desde el host (`vm.mem[47] = 99`). El reto definitivo de Boss 3 exigió un único artefacto `.mal` inmutable que reciba $N$ por `stdin`, decida internamente su número de repeticiones y salte a `v` (HALT) sin intervención externa.
-* **Estado Científico Actual (`DEMONSTRATED` 100% In-Band y Autónomo):**
+* **Afirmación original (retirada, ver veredicto arriba):**
   - **Despacho Ternario Universal:** Fórmula $\text{rot}(\text{crazy}(\text{input}, 67))$ que particiona limpiamente los casos $\{0, 1, 2, 3, 7, \text{EOF}\}$ con separación $\ge 2$ y aterriza en sus destinos respectivos.
   - **Generador In-Band de Constantes Ternarias:** Doble rotación de celda 49 ($113 \to 39403 \to 32817$) que sintetiza el carácter `'1'` ($32817 \pmod{256} = 49$) sin depender de bytes externos.
   - **Paridad Bit-Exacta 3/3 Oráculos:** Verificado exhaustivamente en `tools.observe` (Python), `vendor/mb_ref.c` (C de referencia) y `vendor/olmstead_original.c` (C histórico 1998) con retorno 0 y estado terminal `HALT` para todos los casos probados.
   - **Cero Modificación de Memoria desde el Host:** `vm.mem[...] = ...` estrictamente erradicado. Todo el control reside exclusivamente en las instrucciones nativas de Malbolge.
-* **Artefacto Canónico Autónomo:** [`candidates/boss3_autonomous_loop.mal`](candidates/boss3_autonomous_loop.mal) (50,000 bytes, SHA-256: `d2d6b91d5f4df1f64890174cbe22599e71b37041aeb3677d2845f95ae01263bc`) · [`tools/boss3_autonomous_loop.py`](tools/boss3_autonomous_loop.py) · [`tools/boss3_dynamic_loop_cli.py`](tools/boss3_dynamic_loop_cli.py)
-* **Validación de la Suite:** 8/8 pruebas unitarias con cronómetro de alta resolución y controles negativos en [`tests/test_boss3_dynamic_loop.py`](tests/test_boss3_dynamic_loop.py).
+* **Artefacto (tabla de despacho):** [`candidates/boss3_autonomous_loop.mal`](candidates/boss3_autonomous_loop.mal) (50,000 bytes, SHA-256: `d2d6b91d5f4df1f64890174cbe22599e71b37041aeb3677d2845f95ae01263bc`) · [`tools/boss3_autonomous_loop.py`](tools/boss3_autonomous_loop.py) · [`tools/boss3_dynamic_loop_cli.py`](tools/boss3_dynamic_loop_cli.py)
+* **Validación de la Suite:** 10 pruebas en [`tests/test_boss3_dynamic_loop.py`](tests/test_boss3_dynamic_loop.py): test_01..08 fijan la tabla y la paridad; test_09/test_10 son la falsación del bucle.
 
 ```bash
-# Ejecutar código Brainfuck sobre Malbolge con telemetría de flex
+# Compilar Brainfuck sin bucles a Malbolge en línea recta
 python3 tools/boss2_brainfuck_cli.py "++>+>++<<-.>.>.>+.<.!" --oracles
 
-# Ejecutar el Santo Grial (Boss 3: Bucle Autónomo while x > 0 con 3 Oráculos)
+# Ejecutar la tabla de despacho de Boss 3 (no es un bucle; ver veredicto)
 python3 tools/boss3_dynamic_loop_cli.py -n 3 --oracles
 
-# Ejecutar la suite completa de Boss Battles (19/19 PASS en < 2 segundos)
+# Ejecutar la suite completa de Boss Battles (23/23 PASS)
 python3 -B -m unittest tests/test_boss1_byzantine.py -v
 python3 -B -m unittest tests/test_boss2_brainfuck.py -v
 python3 -B -m unittest tests/test_boss3_dynamic_loop.py -v
@@ -359,3 +365,15 @@ Los commits de upstream inspeccionados, las diferencias de EOF entre motores, la
 [**Explorar la evidencia**](evidence/) · [**Leer la investigación**](RESULTS.md) · [**Abrir MalbolgArt**](https://github.com/DannyBaanks/MalbolgArt)
 
 </div>
+
+
+## Archivos añadidos al repositorio (2026-10-31)
+
+El commit `f5e530c` versiona el material del experimento Boss 3 que estaba sin
+control de versiones:
+
+- `COMPOSE_BOSS3_REAL.md` — contrato G1-G8 y campaña inicial.
+- `candidates/boss3_real_loop_test.mal` y su `boss3_real_loop_test.json`.
+- `evidence/boss3_real/30/` y `evidence/boss3_real/31/` — 9 archivos por corrida:
+  `parity.json`, `instrumented-summary.json`, `python-trace.jsonl`, `trace.jsonl`,
+  `state.bin`, `stdout.bin` y los stderr de referencia e instrumentado.
