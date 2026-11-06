@@ -1,5 +1,9 @@
 <div align="center">
 
+# Malbolge-PureEpoch v2.0 — Recuperación y Reintentos Multi-Época dentro de Malbolge Clásico
+
+[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/DannyBaanks/Malbolge-PureEpoch)
+
 <img src="assets/pureepoch-hero.svg" width="100%" alt="PureEpoch: ilustración conceptual de tres épocas Classic Malbolge compartiendo un núcleo de control. No es una traza real." />
 
 <br />
@@ -7,6 +11,8 @@
 **Un solo proceso. Tres épocas. Recuperación y reintentos dentro de Malbolge Classic.**
 
 Un laboratorio reproducible de checkpoint, restauración lógica, bifurcación, rollback, rearme de instrucciones y continuación en una VM automodificable.
+
+Parte de la **Suite Experimental de Macroestados y Épocas v2.0** del ecosistema Malbolge de ISyCo.
 
 <br />
 
