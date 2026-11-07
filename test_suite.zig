@@ -315,3 +315,55 @@ test "Fail-Closed: Mutants Detection" {
     vm2.run("", 50000);
     try testing.expect(vm2.terminal != mal.Terminal.HALT);
 }
+
+test "ABI: Mutant NOP Execution and Post-Encryption" {
+    var vm = mal.Machine.init();
+    // Simulate non-operator ASCII character in cell 0 ('E')
+    vm.mem[0] = 'E';
+    vm.step("");
+    try testing.expectEqual(mal.Terminal.RUNNING, vm.terminal);
+    try testing.expectEqual(@as(u16, 1), vm.c);
+    try testing.expectEqual(@as(u16, 1), vm.d);
+    try testing.expectEqual(@as(u16, mal.XLAT2['E' - 33]), vm.mem[0]);
+}
+
+test "ABI: Canonical EOF Handling" {
+    var vm = mal.Machine.init();
+    // Two instructions: '/' (input) at 0, 'v' (halt) at 1
+    // Find valid source bytes for '/' and 'v'
+    var b0: u8 = 33;
+    while (b0 <= 126) : (b0 += 1) {
+        if (mal.XLAT1[(b0 - 33 + 0) % 94] == '/') break;
+    }
+    var b1: u8 = 33;
+    while (b1 <= 126) : (b1 += 1) {
+        if (mal.XLAT1[(b1 - 33 + 1) % 94] == 'v') break;
+    }
+    const prog = [_]u8{ b0, b1 };
+    _ = try vm.loadProgram(&prog);
+    vm.run("", 10);
+    try testing.expectEqual(mal.Terminal.HALT, vm.terminal);
+    try testing.expectEqual(@as(u16, 59048), vm.a);
+}
+
+test "Synthesizer: High-Throughput Slot Search" {
+    const syn = @import("src/synthesizer.zig");
+    var s = syn.Synthesizer.init();
+    
+    // Template with 2 bytes: byte 0 is wildcard, byte 1 is 'v' (halt)
+    var b1: u8 = 33;
+    while (b1 <= 126) : (b1 += 1) {
+        if (mal.XLAT1[(b1 - 33 + 1) % 94] == 'v') break;
+    }
+    const template = [_]u8{ 'o', b1 };
+
+    const res = s.searchSlot(&template, 0, "ov", .{
+        .expected_output = "",
+        .require_halt = true,
+        .max_steps = 10,
+    });
+
+    try testing.expect(res.found);
+    try testing.expect(res.candidates_evaluated > 0);
+    try testing.expectEqual(mal.Terminal.HALT, res.terminal);
+}

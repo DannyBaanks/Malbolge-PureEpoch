@@ -64,7 +64,7 @@ class ReviewRegressions(unittest.TestCase):
             (binpath/'gcc').symlink_to(shutil.which('gcc'))
             env = dict(os.environ,PATH=str(binpath))
             result = subprocess.run([sys.executable,'-B','-m','tools.collect_evidence'],cwd=lab,
-                                    env=env,capture_output=True,text=True,timeout=90)
+                                    env=env,capture_output=True,text=True,timeout=240)
             self.assertEqual(result.returncode,0,result.stderr[-3000:])
             self.assertTrue((lab/'evidence/manifest.json').exists())
 

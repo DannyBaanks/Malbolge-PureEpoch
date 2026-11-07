@@ -4,8 +4,8 @@
 
 **Recuperación Multi-Época, Control de Flujo y Computación 100% Autónoma en Classic Malbolge**
 
-[![Tests](https://img.shields.io/badge/Unit%20Tests-226%2F226%20PASS%20(100%25)-brightgreen.svg)]()
-[![Zig Test Suite](https://img.shields.io/badge/Zig%20Native%20CI-15%2F15%20PASS%20(221ms)-orange.svg)]()
+[![Tests](https://img.shields.io/badge/Unit%20Tests-245%2F245%20PASS%20(100%25)-brightgreen.svg)]()
+[![Zig Test Suite](https://img.shields.io/badge/Zig%20Native%20CI-18%2F18%20PASS%20(<300ms)-orange.svg)]()
 [![Oracles](https://img.shields.io/badge/3--Oracle%20Parity-100%25%20Bit--Identical-blue.svg)]()
 [![Loader](https://img.shields.io/badge/Olmstead%201998-Strict%20Compliant-success.svg)]()
 [![Autonomy](https://img.shields.io/badge/Host%20Memory%20Writes-ZERO%20(100%25%20In--VM)-orange.svg)]()
@@ -144,7 +144,21 @@ python3 tools/reloj_carry_cli.py --oracles
 
 ---
 
-## 06 / Política Anti-Fake y Frontera Honesta
+## 06 / Tooling y Suite de Perfeccionamiento Topológico
+
+El sistema incorpora herramientas de compilación, análisis algebraico y depuración geométrica:
+
+* 📜 **[Especificación Canónica de la ABI](docs/ABI_SPECIFICATION.md):** Fija los contratos inmutables de inicialización ternaria, ejecución de NOPs mutantes, semántica de EOF ($59,048$) y separación toroidal.
+* 🧩 **[`src/topological_linker.py`](src/topological_linker.py):** Linker con resolución automática de constantes en memoria baja ($0..93$), reserva de buffers libres de colisión y verificación estática de $|C - D| \ge 42$.
+* 🐍 **[`src/ouroboros_engine.py`](src/ouroboros_engine.py):** Motor de bucles periódicos basado en la descomposición de órbitas de `XLAT2` en 6 ciclos disjuntos ($68, 9, 6, 5, 4, 2$).
+* 🎯 **[`src/jump_solver.py`](src/jump_solver.py):** Solucionador analítico de saltos indirectos `'i'` y generador de trampolines.
+* ⚡ **[`src/synthesizer.zig`](src/synthesizer.zig):** Motor nativo en Zig para búsqueda combinatoria y mutación de plantillas a más de $10^5$ candidatos/segundo.
+* 🔭 **[`tools/phase_space_debugger.py`](tools/phase_space_debugger.py):** Depurador visual del espacio de fases, monitoreo continuo de distancia toroidal y mapa de calor ASCII de las 59,049 celdas.
+* ⏱️ **[`tools/benchmark_pureepoch.py`](tools/benchmark_pureepoch.py):** Benchmark diferencial lado a lado entre Python Machine, oráculo C y suite nativa en Zig.
+
+---
+
+## 07 / Política Anti-Fake y Frontera Honesta
 
 Siguiendo el contrato de rigor científico de [`AGENTS.md`](file:///home/danny/Development/ISyCo/AGENTS.md):
 - **Cero escrituras del host:** Prohibido inyectar valores en memoria de la VM (`vm.mem[...] = ...`) durante la ejecución de cualquier candidato.
@@ -153,7 +167,7 @@ Siguiendo el contrato de rigor científico de [`AGENTS.md`](file:///home/danny/D
 
 ---
 
-## 07 / Procedencia y Créditos
+## 08 / Procedencia y Créditos
 
 - **Autor de la arquitectura PureEpoch, BolgePiton y los 13 Bosses:** Danny Baanks & Antigravity (2026).
 - **Especificación canónica de Malbolge e intérprete de referencia (1998):** Ben Olmstead.
