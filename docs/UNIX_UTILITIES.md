@@ -1,10 +1,10 @@
-# Suite de Utilidades Unix Clásicas y Cronometría en Malbolge (Bosses 5 a 11)
+# Suite de Utilidades Unix Clásicas y Cronometría en Malbolge (Bosses 5 a 12)
 
 Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Development/ISyCo/AGENTS.md) —donde **el 100% del cómputo ocurre exclusivamente dentro de la VM de Malbolge** y Python/C actúan únicamente como herramientas de síntesis offline y oráculos de verificación— se desarrolló la suite completa de utilidades estándar de cómputo, filtrado de flujos y cronometría digital.
 
 ---
 
-## Matriz Canónica de las 7 Utilidades
+## Matriz Canónica de las 8 Utilidades
 
 | Boss | Utilidad | Binario Canónico (.mal) | Celdas | SHA-256 Canónico | Invariante Central In-VM | Tests |
 | :--- | :--- | :--- | :---: | :--- | :--- | :---: |
@@ -14,7 +14,8 @@ Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Dev
 | **Boss 8** | **`cmp`** | `candidates/cmp_real.mal` | 29,667 | `e045917cff2e5cadceb109fd39ec0146bd58370458de40e695dd675873c06eeb` | Predicado de igualdad en stream: emite `=` o `!` con bifurcación in-line | 14/14 PASS |
 | **Boss 9** | **`add`** | `candidates/add_real.mal` | 26,474 | `ec8b4801ed5b4554e3df87db39f9d933214e6bff202eff3cc6b3b4670749c2a8` | ALU aritmética in-VM: $d_0 + d_1$ evaluado algebraicamente en ternario | 14/14 PASS |
 | **Boss 10** | **`sort2`** | `candidates/sort2_real.mal` | 2,452 | `d92a78c21ad4afa6302a5a77dae9cc2cebd053eeeb544c6f5d525aa77168a321` | Clasificador condicional min-max / paso elemental de Bubble Sort | 14/14 PASS |
-| **Boss 11** | **`reloj`** | `candidates/reloj_real.mal` | 29,936 | `7164b1a3aa01fb7ae686cc1a87c9967c258948c3a75202a4a071f5108cdda1fd` | Cronómetro digital autónomo `MM:SS\n` con discriminador universal de pulsos | 14/14 PASS |
+| **Boss 11** | **`reloj`** | `candidates/reloj_real.mal` | 29,936 | `7164b1a3aa01fb7ae686cc1a87c9967c258948c3a75202a4a071f5108cdda1fd` | Cronómetro digital 4-ticks `MM:SS\n` con discriminador universal de pulsos | 14/14 PASS |
+| **Boss 12** | **`reloj_infinito`** | `candidates/reloj_infinito.mal` | 16,759 | `1cea07e587b3ace663cd466dc51ab9fcdec55a50c97313c0815da7140a0becea` | Cronómetro digital completo 60s (`00:00`..`00:59`) con rollover y densidad 26.8x | 13/13 PASS |
 
 ---
 
@@ -125,3 +126,49 @@ Mantiene un reloj digital en memoria que ingiere pulsos de tiempo por `stdin` (u
   * Si `stdin` está vacío (0 pulsos): ramifica de inmediato a la celda 27 en el paso 151, emitiendo 0 bytes.
   * Si se envían $N$ pulsos: emite exactamente los primeros $N$ segundos y para limpiamente al agotarse el flujo.
   * Modo interactivo (`--live`): alimenta 1 pulso por segundo para operar un cronómetro real en terminal.
+
+---
+
+## Boss 12: El Reloj Infinito (`reloj_infinito.mal`)
+
+### Superación del Límite de Memoria y Falsación del Ciclo 94 de Argon
+En Boss 11, la arquitectura en cascada con saltos a memoria alta ($378 \to 3313 \to 9874 \to 29536$) agotó el espacio de memoria (consumiendo 29,936 celdas para solo 4 ticks, una densidad de 7,484 celdas/tick).
+
+Surgió la conjetura (planteada por Argon) de si sería posible un **re-encapsulamiento pasivo de bucle** aprovechando un supuesto "ciclo de longitud 94 en la tabla de cifrado XLAT2".
+
+#### 1. Falsación Matemática Rigurosa del Mito del Ciclo 94
+La tabla de cifrado $\text{XLAT2}$ de Classic Malbolge es una permutación de los 94 caracteres ASCII imprimibles ($33..126$). Al descomponer la permutación en sus ciclos disjuntos canónicos:
+$$\text{Ciclos}(\text{XLAT2}) = [68, 6, 5, 4, 9, 2]$$
+- **Suma de órdenes:** $68 + 6 + 5 + 4 + 9 + 2 = 94$.
+- **Mínimo común múltiplo (período total):** $\text{lcm}(68, 6, 5, 4, 9, 2) = 3060$.
+- **Conclusión formal:** **NO EXISTE ningún ciclo de longitud 94.**
+- **Falsación de ejecución:** Todo intento de ciclismo pasivo colapsa en $< 10$ pasos porque dentro de cada ciclo existen caracteres que decodifican bajo $\text{XLAT1}$ en la instrucción de parada `v` (HALT) o en opcodes no admisibles por el motor, terminando la VM prematuramente.
+
+#### 2. La Solución Real: Arquitectura Contigua de Alta Densidad (26.8x)
+Para superar el límite de los 4 ticks sin recurrir a trucos externos ni violar la política anti-fake:
+- **Disposición Contigua en Memoria:** Se eliminó el acolchado muerto (*dead padding*) entre ticks. Los bloques de emisión se ensamblan contiguamente a partir de la celda 99.
+- **Invarianza de 10 Trits:** Cada dígito se emite rotando 10 veces su celda invariante en memoria baja ($40 \le p \le 57$), manteniendo intacto el estado de los dígitos para cualquier número de iteraciones.
+- **Densidad Extrema:** Logra emitir los **60 segundos de un minuto completo** (`00:00` .. `00:59`) en tan solo **16,759 celdas** (279 celdas/tick), logrando una mejora de **26.8x en densidad de memoria** respecto a Boss 11 y utilizando menos del 29% de la memoria total de la VM (59,049 celdas).
+- **Rollover Decimal Completo:** Cruza con precisión matemática todas las barreras de acarreo decimal:
+  * Rollover de unidades de segundo: `00:09` $\to$ `00:10`
+  * Rollover intermedio: `00:19` $\to$ `00:20`, `00:29` $\to$ `00:30`, `00:39` $\to$ `00:40`, `00:49` $\to$ `00:50`
+  * Cierre de minuto y parada limpia: `00:59` $\to$ `v` (HALT en paso 16,660).
+
+#### 3. Interfaz y Modos CLI
+```bash
+# Ejecución completa (60 segundos)
+python3 tools/reloj_infinito_cli.py
+
+# Filtro Unix para N segundos (ej. 10 ticks)
+python3 tools/reloj_infinito_cli.py -q -n 10
+
+# Modo cronómetro en vivo en terminal a 1 Hz
+python3 tools/reloj_infinito_cli.py --live
+
+# Verificación de paridad estricta entre 3 oráculos
+python3 tools/reloj_infinito_cli.py --oracles
+
+# Informe formal de falsación del ciclo 94
+python3 tools/reloj_infinito_cli.py --info
+```
+
