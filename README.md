@@ -4,7 +4,7 @@
 
 **Recuperación Multi-Época, Control de Flujo y Computación 100% Autónoma en Classic Malbolge**
 
-[![Tests](https://img.shields.io/badge/Unit%20Tests-84%2F84%20PASS-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Unit%20Tests-98%2F98%20PASS-brightgreen.svg)]()
 [![Oracles](https://img.shields.io/badge/3--Oracle%20Parity-100%25%20Bit--Identical-blue.svg)]()
 [![Loader](https://img.shields.io/badge/Olmstead%201998-Strict%20Compliant-success.svg)]()
 [![Autonomy](https://img.shields.io/badge/Host%20Memory%20Writes-ZERO%20(100%25%20In--VM)-orange.svg)]()
@@ -23,9 +23,9 @@ Malbolge es legendario por automutar y cifrar cada instrucción inmediatamente d
 
 ---
 
-## 02 / La Campaña de los 10 Hitos (The 10 Boss Battles)
+## 02 / La Campaña de los 11 Hitos (The 11 Boss Battles)
 
-La investigación se articuló en 10 hitos computacionales adversariales, todos completamente demostrados y verificados:
+La investigación se articuló en 11 hitos computacionales adversariales, todos completamente demostrados y verificados:
 
 | Hito | Nombre / Utilidad | Tipo de Cómputo In-VM | Celdas (.mal) | Verificación |
 | :--- | :--- | :--- | :---: | :---: |
@@ -39,6 +39,7 @@ La investigación se articuló en 10 hitos computacionales adversariales, todos 
 | **Boss 8** | **`cmp` Real** | Predicado de igualdad en stream (`=` o `!`) con salto in-line | 29,667 | 14/14 PASS |
 | **Boss 9** | **`add` Real** | ALU aritmética in-VM: evaluador de suma de un dígito | 26,474 | 14/14 PASS |
 | **Boss 10** | **`sort2` Real** | Clasificador condicional min-max / Bubble Sort elemental | 2,452 | 14/14 PASS |
+| **Boss 11** | **`reloj` Real** | Cronómetro digital autónomo `MM:SS\n` con pulsos in-VM | 29,936 | 14/14 PASS |
 
 ---
 
@@ -63,6 +64,12 @@ $ echo -n "==" | python3 tools/cmp_real_cli.py -q
 $ echo -n "10" | python3 tools/sort2_real_cli.py -q
 01
 
+# Cronómetro digital in-VM (Boss 11: Reloj Real)
+$ echo -n "PPP" | python3 tools/reloj_real_cli.py -q
+00:00
+00:01
+00:02
+
 # Composición en tubería Unix pura:
 $ echo -n "21" | python3 tools/sort2_real_cli.py -q | python3 tools/rev_real_cli.py -q
 21
@@ -76,7 +83,7 @@ Para mantener este README conciso y accesible, el detalle matemático exhaustivo
 
 - 🏛️ **[Arquitectura Técnica](docs/ARCHITECTURE.md):** El problema de las 94 celdas, la mecánica de las tres épocas, el journaling toroidal sin memoria protegida y la VM reflexiva **BolgePiton** (el Ciclo Ouroboros).
 - ⚔️ **[Boss Battles 1 a 4](docs/BOSS_BATTLES_1_4.md):** Falla bizantina en cascada, compilador Brainfuck lineal, resolución formal del bucle con PC repetida (**Boss 3 Ruta A**) y el autómata celular Wolfram Regla 90 (**Boss 4 Sierpiński**).
-- 🛠️ **[Utilidades Unix In-VM](docs/UNIX_UTILITIES.md):** Análisis algebraico profundo, involuciones biyectivas en 121, discriminadores EOF y geometría de drenajes de los Bosses 5 a 10 (`cat`, `rev`, `wc`, `cmp`, `add`, `sort2`).
+- 🛠️ **[Utilidades Unix y Reloj In-VM](docs/UNIX_UTILITIES.md):** Análisis algebraico profundo, involuciones biyectivas en 121, discriminadores EOF y geometría de drenajes de los Bosses 5 a 11 (`cat`, `rev`, `wc`, `cmp`, `add`, `sort2`, `reloj`).
 - 🔬 **[Guía de Reproducibilidad y Oráculos](docs/REPRODUCIBILITY.md):** Protocolo de verificación sin conexión, triple paridad de oráculos (Python Machine M0, C `mb_ref`, Olmstead 1998 nativo) y controles negativos mutantes.
 
 ---
@@ -90,14 +97,15 @@ Todo el laboratorio se ejecuta de forma determinista y offline utilizando única
 git clone https://github.com/DannyBaanks/Malbolge-PureEpoch.git
 cd Malbolge-PureEpoch
 
-# Ejecutar la suite completa de las 6 utilidades Unix (84/84 PASS)
+# Ejecutar la suite completa de las 7 utilidades Unix y Reloj (98/98 PASS)
 python3 -m unittest \
   tests/test_cat_real.py \
   tests/test_rev_real.py \
   tests/test_wc_real.py \
   tests/test_cmp_real.py \
   tests/test_add_real.py \
-  tests/test_sort2_real.py
+  tests/test_sort2_real.py \
+  tests/test_reloj_real.py
 
 # Ejecutar las Boss Battles 1 a 4 (35/35 PASS)
 python3 -m unittest \
@@ -107,7 +115,7 @@ python3 -m unittest \
   tests/test_boss4_v3_ca.py
 
 # Verificar paridad estricta contra el ejecutable original de Ben Olmstead de 1998
-python3 tools/sort2_real_cli.py -i "10" --oracles --trace-sort
+python3 tools/reloj_real_cli.py -n 3 --oracles
 ```
 
 ---
@@ -123,7 +131,7 @@ Siguiendo el contrato de rigor científico de [`AGENTS.md`](file:///home/danny/D
 
 ## 07 / Procedencia y Créditos
 
-- **Autor de la arquitectura PureEpoch, BolgePiton y los 10 Bosses:** Danny Baanks & Antigravity (2026).
+- **Autor de la arquitectura PureEpoch, BolgePiton y los 11 Bosses:** Danny Baanks & Antigravity (2026).
 - **Especificación canónica de Malbolge e intérprete de referencia (1998):** Ben Olmstead.
 - **Análisis criptográfico pionero de Malbolge (1998):** Lou Scheffer.
 - **Ecosistema de investigación:** Ecosistema ISyCo Monorepo.

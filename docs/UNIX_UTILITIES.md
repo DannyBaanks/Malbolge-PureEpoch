@@ -1,10 +1,10 @@
-# Suite de Utilidades Unix Clásicas en Malbolge (Bosses 5 a 10)
+# Suite de Utilidades Unix Clásicas y Cronometría en Malbolge (Bosses 5 a 11)
 
-Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Development/ISyCo/AGENTS.md) —donde **el 100% del cómputo ocurre exclusivamente dentro de la VM de Malbolge** y Python/C actúan únicamente como herramientas de síntesis offline y oráculos de verificación— se desarrolló la suite completa de utilidades estándar de cómputo y filtrado de flujos.
+Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Development/ISyCo/AGENTS.md) —donde **el 100% del cómputo ocurre exclusivamente dentro de la VM de Malbolge** y Python/C actúan únicamente como herramientas de síntesis offline y oráculos de verificación— se desarrolló la suite completa de utilidades estándar de cómputo, filtrado de flujos y cronometría digital.
 
 ---
 
-## Matriz Canónica de las 6 Utilidades
+## Matriz Canónica de las 7 Utilidades
 
 | Boss | Utilidad | Binario Canónico (.mal) | Celdas | SHA-256 Canónico | Invariante Central In-VM | Tests |
 | :--- | :--- | :--- | :---: | :--- | :--- | :---: |
@@ -14,6 +14,7 @@ Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Dev
 | **Boss 8** | **`cmp`** | `candidates/cmp_real.mal` | 29,667 | `e045917cff2e5cadceb109fd39ec0146bd58370458de40e695dd675873c06eeb` | Predicado de igualdad en stream: emite `=` o `!` con bifurcación in-line | 14/14 PASS |
 | **Boss 9** | **`add`** | `candidates/add_real.mal` | 26,474 | `ec8b4801ed5b4554e3df87db39f9d933214e6bff202eff3cc6b3b4670749c2a8` | ALU aritmética in-VM: $d_0 + d_1$ evaluado algebraicamente en ternario | 14/14 PASS |
 | **Boss 10** | **`sort2`** | `candidates/sort2_real.mal` | 2,452 | `d92a78c21ad4afa6302a5a77dae9cc2cebd053eeeb544c6f5d525aa77168a321` | Clasificador condicional min-max / paso elemental de Bubble Sort | 14/14 PASS |
+| **Boss 11** | **`reloj`** | `candidates/reloj_real.mal` | 29,936 | `7164b1a3aa01fb7ae686cc1a87c9967c258948c3a75202a4a071f5108cdda1fd` | Cronómetro digital autónomo `MM:SS\n` con discriminador universal de pulsos | 14/14 PASS |
 
 ---
 
@@ -96,3 +97,31 @@ Toma dos elementos de entrada y los emite en orden ordenado ascendente (FIFO si 
   * Ordenado: aterriza en 2194 (`DRAIN_SORTED_FIFO`: emite $d_0$ luego $d_1$).
   * Invertido: aterriza en 2356 (`DRAIN_INVERTED_LIFO`: emite $d_1$ luego $d_0$).
 - **Optimización de Claves:** Requiere únicamente 2,452 celdas en total, logrando la implementación más compacta y eficiente de la serie.
+
+---
+
+## Boss 11: El Reloj Real (`reloj_real.mal`)
+
+### Cronómetro Digital Autónomo In-VM (`MM:SS\n`)
+Mantiene un reloj digital en memoria que ingiere pulsos de tiempo por `stdin` (un pulso por segundo) y emite la visualización de tiempo formateada (`00:00\n`, `00:01\n`, `00:02\n`, `00:03\n`).
+
+- **Bloque Invariante de Dígitos en Memoria Baja ($40 \le p \le 57$):**
+  * Celdas $50 - d$ (para $d \in [0, 9]$): contienen los caracteres ASCII `'0' + d` ($48..57$).
+  * Celda 40: contiene el separador ASCII `':'` ($58$).
+  * Celda 57: contiene $118$ ($\text{rot}_1(118) \pmod{256} = 10$, carácter `\n`).
+  * **Teorema de los 10 Trits:** En palabras de 10 trits ($3^{10} = 59049$), aplicar exactamente 10 rotaciones a una celda preserva su valor inicial de forma estrictamente invariante:
+    $$\text{rot}_{10}(v) = v \quad \forall v \in [0, 59048]$$
+    Esto permite emitir cualquier dígito un número indefinido de veces sin destruir su valor en memoria.
+
+- **Cascada de Discriminación Universal de Pulsos:**
+  En lugar de asumir un carácter de pulso específico, los discriminadores colapsan **todo el dominio de bytes $0..255$** (256 valores posibles) exactamente al mismo destino del siguiente tick:
+  * **Pista 0:** $(w=121, y_1=80, \text{rots}=4, y_2=53) \implies \text{EOF} \to 27 \text{ ('v')}, \quad \text{Bytes} \to 378 \text{ (Tick 0)}$.
+  * **Tick 0:** $(w=121, y_1=80, \text{rots}=2, y_2=72) \implies \text{EOF} \to 73 \text{ ('v')}, \quad \text{Bytes} \to 3313 \text{ (Tick 1)}$.
+  * **Tick 1:** $(w=80, y_1=78, \text{rots}=2, y_2=72) \implies \text{EOF} \to 6634 \text{ ('v')}, \quad \text{Bytes} \to 9874 \text{ (Tick 2)}$.
+  * **Tick 2:** $(w=80, y_1=54, \text{rots}=3, y_2=51) \implies \text{EOF} \to 28456 \text{ ('v')}, \quad \text{Bytes} \to 29536 \text{ (Tick 3)}$.
+  * **Tick 3:** Emite `00:03\n` y finaliza en la celda 29935 con `v`.
+
+- **Control de Flujo Dinámico:**
+  * Si `stdin` está vacío (0 pulsos): ramifica de inmediato a la celda 27 en el paso 151, emitiendo 0 bytes.
+  * Si se envían $N$ pulsos: emite exactamente los primeros $N$ segundos y para limpiamente al agotarse el flujo.
+  * Modo interactivo (`--live`): alimenta 1 pulso por segundo para operar un cronómetro real en terminal.
