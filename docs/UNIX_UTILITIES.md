@@ -1,10 +1,10 @@
-# Suite de Utilidades Unix Clásicas y Cronometría en Malbolge (Bosses 5 a 12)
+# Suite de Utilidades Unix Clásicas y Cronometría en Malbolge (Bosses 5 a 13)
 
 Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Development/ISyCo/AGENTS.md) —donde **el 100% del cómputo ocurre exclusivamente dentro de la VM de Malbolge** y Python/C actúan únicamente como herramientas de síntesis offline y oráculos de verificación— se desarrolló la suite completa de utilidades estándar de cómputo, filtrado de flujos y cronometría digital.
 
 ---
 
-## Matriz Canónica de las 8 Utilidades
+## Matriz Canónica de las 9 Utilidades
 
 | Boss | Utilidad | Binario Canónico (.mal) | Celdas | SHA-256 Canónico | Invariante Central In-VM | Tests |
 | :--- | :--- | :--- | :---: | :--- | :--- | :---: |
@@ -16,6 +16,7 @@ Bajo la estricta política **anti-fake** de [`AGENTS.md`](file:///home/danny/Dev
 | **Boss 10** | **`sort2`** | `candidates/sort2_real.mal` | 2,452 | `d92a78c21ad4afa6302a5a77dae9cc2cebd053eeeb544c6f5d525aa77168a321` | Clasificador condicional min-max / paso elemental de Bubble Sort | 14/14 PASS |
 | **Boss 11** | **`reloj`** | `candidates/reloj_real.mal` | 29,936 | `7164b1a3aa01fb7ae686cc1a87c9967c258948c3a75202a4a071f5108cdda1fd` | Cronómetro digital 4-ticks `MM:SS\n` con discriminador universal de pulsos | 14/14 PASS |
 | **Boss 12** | **`reloj_infinito`** | `candidates/reloj_infinito.mal` | 16,759 | `1cea07e587b3ace663cd466dc51ab9fcdec55a50c97313c0815da7140a0becea` | Cronómetro digital completo 60s (`00:00`..`00:59`) con rollover y densidad 26.8x | 13/13 PASS |
+| **Boss 13** | **`reloj_carry`** | `candidates/reloj_carry.mal` | 1,905 | `2573ab1da5c880acdcd99a6821440a97597ad06663325702ac60d1af7f514f94` | Acarreo temporal BCD in-VM: transición `00:59` $\to$ `01:00` computada en memoria | 12/12 PASS |
 
 ---
 
@@ -171,4 +172,63 @@ python3 tools/reloj_infinito_cli.py --oracles
 # Informe formal de falsación del ciclo 94
 python3 tools/reloj_infinito_cli.py --info
 ```
+
+---
+
+## Boss 13: El Acarreo Temporal In-VM (`reloj_carry.mal`)
+
+### De la Secuencia Precompilada al Mecanismo Reutilizable de Incremento Temporal
+En Bosses 11 y 12, Python determinaba de antemano la sucesión de timestamps y generaba bloques de emisión precompilados.
+
+**Boss 13 representa el salto computacional decisivo:** el estado temporal reside en **registros variables en la memoria de la VM**, y la transición crítica del cierre de minuto:
+$$\mathbf{00:59} \longrightarrow \mathbf{01:00}$$
+es **computada enteramente dentro de Malbolge mediante un motor de acarreo en cascada (Ripple-Carry Engine)**, sin que Python haya hardcodeado ni escrito previamente los dígitos de `01:00`.
+
+#### 1. Arquitectura de Registros de Memoria Baja
+El estado temporal se almacena en 4 registros independientes:
+- `REG_M10` (celda 50): Decenas de minuto, valor inicial $48$ (`'0'`).
+- `REG_M1` (celda 51): Unidades de minuto, valor inicial $48$ (`'0'`).
+- `REG_S10` (celda 45): Decenas de segundo, valor inicial $53$ (`'5'`).
+- `REG_S1` (celda 41): Unidades de segundo, valor inicial $57$ (`'9'`).
+
+#### 2. Álgebra del Motor de Acarreo Ternario In-VM
+Al recibir el pulso de avance temporal, Malbolge ejecuta las ecuaciones aritméticas ternarias de propagación de acarreo:
+
+1. **Acarreo en Unidades de Segundo ($s_1: 9 \to 0$, Carry Out = 1):**
+   $$z_1 = \text{crazy}(33, \text{mem}[41]) = \text{crazy}(33, 57) = 29554$$
+   $$k_1 = \text{crazy}(33, 75) = 29563$$
+   $$\text{mem}[41] = \text{crazy}(k_1, z_1) = 48 \quad (\text{ASCII '0'})$$
+
+2. **Acarreo en Decenas de Segundo ($s_{10}: 5 \to 0$, Módulo 60, Carry Out = 1):**
+   $$z_{10} = \text{crazy}(35, \text{mem}[45]) = \text{crazy}(35, 53) = 29506$$
+   $$k_{10} = \text{crazy}(39, 36) = 29485$$
+   $$\text{mem}[45] = \text{crazy}(k_{10}, z_{10}) = 48 \quad (\text{ASCII '0'})$$
+
+3. **Absorción de Acarreo en Unidades de Minuto ($m_1: 0 \to 1$, Carry Out = 0):**
+   $$k_{m1} = \text{crazy}(40, 40) = 29484$$
+   $$\text{mem}[51] = \text{crazy}(k_{m1}, \text{mem}[51]) = \text{crazy}(29484, 48) = 49 \quad (\text{ASCII '1'})$$
+
+4. **Decenas de Minuto ($m_{10}$):**
+   Permanece invariante en $48$ (`'0'`).
+
+#### 3. Flujo de Ejecución y Telemetría
+1. **Emisión 1 (Display):** Lee registros $\{50, 51, 40, 45, 41, 57\}$ y emite `00:59\n`.
+2. **Cómputo In-VM (Pasos 841 a 1355):** El Ripple-Carry Engine evalúa las operaciones ternarias y muta las celdas de memoria 41, 45 y 51.
+3. **Emisión 2 (Display):** Lee los mismos registros (ahora conteniendo $\{48, 49, 58, 48, 48, 118\}$) y emite `01:00\n`.
+4. **Parada Limpia:** Ejecuta `v` (HALT) en el paso 1,806 con código de salida 0.
+
+#### 4. Uso del CLI y Telemetría
+```bash
+# Modo telemetría: inspecciona los registros antes, durante y después del acarreo
+python3 tools/reloj_carry_cli.py --telemetry
+
+# Filtro Unix estándar
+$ python3 tools/reloj_carry_cli.py -q
+00:59
+01:00
+
+# Verificación de paridad entre 3 oráculos
+python3 tools/reloj_carry_cli.py --oracles
+```
+
 

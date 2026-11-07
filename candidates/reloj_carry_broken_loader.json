@@ -1,0 +1,62 @@
+{
+  "title": "Boss 13: El Acarreo Temporal In-VM (In-VM BCD Ripple-Carry Clock Engine)",
+  "kind": "IN_VM_BCD_RIPPLE_CARRY_CLOCK_ENGINE",
+  "mode": "broken_loader",
+  "length_bytes": 1905,
+  "sha256": "0eefc7a0fc5a0e77d6e7160ee4b5916247ccaf58fdb4f2b7d2e013498266041f",
+  "carry_metrics": {
+    "initial_state": "00:59",
+    "final_state": "01:00",
+    "carry_pc_start": 983,
+    "carry_pc_end": 1453,
+    "ripple_carry_stages": [
+      {
+        "register": "REG_S1",
+        "address": 41,
+        "initial": 57,
+        "final": 48,
+        "operation": "rollover_9_to_0"
+      },
+      {
+        "register": "REG_S10",
+        "address": 45,
+        "initial": 53,
+        "final": 48,
+        "operation": "rollover_5_to_0_mod60"
+      },
+      {
+        "register": "REG_M1",
+        "address": 51,
+        "initial": 48,
+        "final": 49,
+        "operation": "carry_absorbed_0_to_1"
+      },
+      {
+        "register": "REG_M10",
+        "address": 50,
+        "initial": 48,
+        "final": 48,
+        "operation": "unchanged_0"
+      }
+    ]
+  },
+  "algebraic_invariants": {
+    "s1_rollover": "crazy(crazy(33, 75), crazy(33, 57)) == 48 ('0')",
+    "s10_rollover": "crazy(crazy(39, 36), crazy(35, 53)) == 48 ('0')",
+    "m1_carry": "crazy(crazy(40, 40), 48) == 49 ('1')"
+  },
+  "claims": {
+    "autonomous_in_vm_execution": true,
+    "zero_host_memory_writes": true,
+    "strict_loader_compliance": false,
+    "strict_3_oracle_parity": true,
+    "clean_eof_halt": true,
+    "in_vm_computed_carry": true,
+    "no_precompiled_second_timestamp": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_bcd_ripple_carry_engine_classic_malbolge",
+    "author": "Antigravity & Danny Baanks"
+  }
+}
