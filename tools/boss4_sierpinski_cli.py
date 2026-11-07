@@ -33,7 +33,7 @@ def main():
         help="Modo de síntesis ('normal', 'broken_space', 'broken_star', 'broken_halt')"
     )
     parser.add_argument(
-        "--oracles", action="store_true",
+        "--oracle", "--oracles", action="store_true", dest="oracles",
         help="Verificar paridad estricta entre 3 oráculos (Python Machine, C mb_ref, Olmstead 1998)"
     )
     args = parser.parse_args()

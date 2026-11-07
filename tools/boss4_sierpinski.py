@@ -1,15 +1,10 @@
-"""Boss 4: Autómata Celular Wolfram Regla 90 (El Triángulo de Sierpiński) en Classic Malbolge.
+"""Boss 4: Renderizador del Triángulo de Sierpiński en Classic Malbolge.
 
-Sintetiza un autómata celular 1D en Malbolge puro bajo el cargador estricto de Olmstead 1998:
-- Regla 90 de Wolfram: c_i(t+1) = c_{i-1}(t) XOR c_{i+1}(t) sobre una grilla periódica de ancho 15.
-- Estado inicial: un único pulso activo en el centro (índice 7).
-- Salida visual: el Triángulo Fractal de Sierpiński en ASCII ('*' para activo, ' ' para inactivo, '\\n' por línea).
-- Arquitectura de rotación invertible y portales de baja memoria:
-    * Portales en celdas [37, 43, 56] con ciclos de rotación ternaria cerrados (360° / orden mod 10)
-    * Invarianza de '<' sobre el registro A: emisión secuencial por tramos sin recargas
-- Cumplimiento 100% de paridad estricta entre 3 oráculos (Python Machine, C mb_ref, Olmstead 1998)
-- 0 escrituras externas del host (vm.mem[...] = ... estrictamente prohibido durante ejecución)
-- Salida limpia con instrucción 'v' (HALT)
+AUDITORÍA 2026-11-07 — veredicto NOT_DEMONSTRATED para "evolución dinámica de autómata celular en runtime":
+- El fractal se calcula previamente en Python (rule90 offline) y se sintetiza como código Malbolge en línea recta.
+- Las emisiones usan portales de rotación invertibles en memoria baja [37, 43, 56] y emisión por tramos con '<'.
+- Experimento de falsificación: dos estados de entrada distintos producen la misma salida (0 bytes leídos).
+Lo que sí está demostrado: programa Malbolge válido, 0 escrituras del host, cargador estricto y paridad 3 oráculos.
 """
 import hashlib
 import json
@@ -157,12 +152,19 @@ def build_boss4_sierpinski(generations: int = 8, mode: str = "normal") -> Tuple[
             "star": {"address": CELL_STAR, "initial": val_star, "rot_to_load": 10, "rot_to_restore": 0},
         },
         "claims": {
-            "cellular_automaton_rule90": True,
-            "fractal_sierpinski_verified": True,
-            "host_intervention_required": False,
+            "is_malbolge_program": True,
+            "renders_correct_sierpinski_fractal": True,
             "zero_external_memory_writes": True,
             "strict_loader_compliant": True,
             "strict_3_oracle_parity": True,
+            "computes_rule90_in_vm_runtime": False,
+            "evolves_arbitrary_input_state": False,
+        },
+        "audit_2026_11_07": {
+            "verdict": "NOT_DEMONSTRATED",
+            "classification": "unrolled_fractal_renderer_with_rotation_portals",
+            "consumed_input_bytes": 0,
+            "runtime_state_evolution": False,
         },
     }
     return img, meta

@@ -122,6 +122,26 @@ class TestBoss4Sierpinski(unittest.TestCase):
         res = run(broken_img, b"", max_steps=1000)
         self.assertNotEqual(res["terminal"], "HALT")
 
+    def test_10_falsification_inputs_ignored_not_demonstrated(self):
+        """Auditoría 2026-11-07: Dos entradas distintas producen la misma salida y consumen 0 bytes.
+        Falsifica la afirmación de 'evolución dinámica en runtime': el artefacto actual es un
+        renderizador estático en línea recta (veredicto NOT_DEMONSTRATED para CA dinámico).
+        """
+        input_a = b"       *       \n"
+        input_b = b"  * *     * *  \n"
+        res_a = run(self.img, input_a)
+        res_b = run(self.img, input_b)
+        # Ambas salidas son idénticas al fractal por defecto
+        self.assertEqual(res_a["output"], res_b["output"])
+        self.assertEqual(res_a["output"], self.expected_fractal)
+        # No se leyó ningún byte de la entrada
+        self.assertEqual(res_a["registers"][3], 0)
+        self.assertEqual(res_b["registers"][3], 0)
+        # El contrato registra formalmente que la evolución dinámica NO está demostrada en este artefacto
+        self.assertFalse(self.meta["claims"]["computes_rule90_in_vm_runtime"])
+        self.assertFalse(self.meta["claims"]["evolves_arbitrary_input_state"])
+
+
 
 if __name__ == "__main__":
     unittest.main()

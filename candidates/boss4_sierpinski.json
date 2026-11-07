@@ -29,11 +29,23 @@
     }
   },
   "claims": {
-    "cellular_automaton_rule90": true,
-    "fractal_sierpinski_verified": true,
-    "host_intervention_required": false,
+    "is_malbolge_program": true,
+    "renders_correct_sierpinski_fractal": true,
     "zero_external_memory_writes": true,
     "strict_loader_compliant": true,
-    "strict_3_oracle_parity": true
+    "strict_3_oracle_parity": true,
+    "computes_rule90_in_vm_runtime": false,
+    "evolves_arbitrary_input_state": false
+  },
+  "audit_2026_11_07": {
+    "verdict": "NOT_DEMONSTRATED",
+    "classification": "unrolled_fractal_renderer_with_rotation_portals",
+    "consumed_input_bytes": 0,
+    "runtime_state_evolution": false,
+    "falsification_experiment": {
+      "input_a": "single_star",
+      "input_b": "two_stars",
+      "result": "identical_output_independent_of_input"
+    }
   }
 }
