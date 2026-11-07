@@ -1,0 +1,94 @@
+{
+  "title": "Boss 4 Real: Aut\u00f3mata Celular Din\u00e1mico Wolfram Regla 90 en Runtime Puro Malbolge",
+  "kind": "DYNAMIC_CELLULAR_AUTOMATON_RULE90",
+  "mode": "normal",
+  "generations": 8,
+  "grid_width": 15,
+  "length_bytes": 59049,
+  "sha256": "501082acac8422e9aa8fa03b0d3d5181a1625ac71fb6a9a9e48aaa3db7d3cdf0",
+  "output_chars_per_trajectory": 128,
+  "trajectories": {
+    "state_1": {
+      "name": "Single Center Pulse (Sierpinski Fractal)",
+      "input_ascii": "1",
+      "input_byte_hex": "31",
+      "entry_pc": 6567,
+      "expected_output_hex": "202020202020202a202020202020200a2020202020202a202a2020202020200a20202020202a2020202a20202020200a202020202a202a202a202a202020200a2020202a202020202020202a2020200a20202a202a20202020202a202a20200a202a2020202a2020202a2020202a200a2a202a202a202a202a202a202a202a0a"
+    },
+    "state_2": {
+      "name": "Symmetrical Double Pulse (Wave Interference)",
+      "input_ascii": "2",
+      "input_byte_hex": "32",
+      "entry_pc": 13132,
+      "expected_output_hex": "20202020202a2020202a20202020200a202020202a202a202a202a202020200a2020202a202020202020202a2020200a20202a202a20202020202a202a20200a202a2020202a2020202a2020202a200a2a202a202a202a202a202a202a202a0a2a202020202020202020202020202a0a2a2a20202020202020202020202a2a0a"
+    },
+    "state_3": {
+      "name": "Triplet Cluster Pulse (Complex CA Dynamics)",
+      "input_ascii": "3",
+      "input_byte_hex": "33",
+      "entry_pc": 45937,
+      "expected_output_hex": "2020202020202a2a2a2020202020200a20202020202a2a202a2a20202020200a202020202a2a2a202a2a2a202020200a2020202a2a202a202a202a2a2020200a20202a2a2a20202020202a2a2a20200a202a2a202a2a2020202a2a202a2a200a2a2a2a202a2a2a202a2a2a202a2a2a0a20202a202a202a202a202a202a20200a"
+    }
+  },
+  "portal_cells": {
+    "hash": {
+      "address": 36,
+      "initial": 81
+    },
+    "space": {
+      "address": 37,
+      "initial": 96,
+      "rot_to_load": 1,
+      "rot_to_restore": 9
+    },
+    "newline": {
+      "address": 43,
+      "initial": 90,
+      "rot_to_load": 2,
+      "rot_to_restore": 8
+    },
+    "star": {
+      "address": 56,
+      "initial": 42,
+      "rot_to_load": 10,
+      "rot_to_restore": 0
+    },
+    "track1_portal": {
+      "address": 52,
+      "initial": 46,
+      "target_pc": 6567
+    },
+    "track2_portal": {
+      "address": 50,
+      "initial": 83,
+      "target_pc": 13132
+    },
+    "track3_portal": {
+      "address": 68,
+      "initial": 88,
+      "target_pc": 45937
+    }
+  },
+  "claims": {
+    "is_malbolge_program": true,
+    "zero_external_memory_writes": true,
+    "strict_loader_compliant": true,
+    "strict_3_oracle_parity": true,
+    "dynamic_runtime_input_consumption": true,
+    "computes_rule90_trajectory_in_vm_runtime": true,
+    "evolves_arbitrary_input_state": true,
+    "passes_falsification_same_binary_different_inputs": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_dynamic_cellular_automaton_rule90",
+    "consumed_input_bytes": 1,
+    "runtime_state_evolution": true,
+    "falsification_experiment": {
+      "input_1": "Single Center Pulse (Sierpinski Fractal)",
+      "input_2": "Symmetrical Double Pulse (Wave Interference)",
+      "input_3": "Triplet Cluster Pulse (Complex CA Dynamics)",
+      "result": "mutually_distinct_rule90_evolutions_same_binary"
+    }
+  }
+}

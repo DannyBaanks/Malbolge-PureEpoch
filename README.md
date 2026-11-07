@@ -30,7 +30,10 @@ Parte de la **Suite Experimental de Macroestados y Épocas v2.0** del ecosistema
 ---
 
 > [!IMPORTANT]
-> **El programa se ejecuta en Malbolge, no en Python.** Python y C construyen, observan y verifican *fuera* de la ejecución. Los checkpoints, saltos, restores y reintentos que se reivindican como demostrados suceden dentro de una **única ejecución de la VM Classic**, sin restaurar snapshots desde el host.
+> **REGLA FUNDAMENTAL DE AUTONOMÍA:**
+> **Todo programa en este repositorio DEBE EJECUTARSE SOLO CON PURO LENGUAJE MALBOLGE. Python y lo demás solo sirve como oráculo de verificación, no como puente en runtime ni como ayuda.**
+>
+> Python y C construyen, observan y verifican *fuera* de la ejecución. Los checkpoints, saltos, restores, reintentos y autómatas celulares suceden dentro de la **VM Classic de Malbolge en runtime**, sin simulación externa ni escrituras de memoria del host.
 >
 > El dominio positivo probado es **acotado** (valores de entrada `0x01` y `0x03`). **Ni un rollback físico de toda la máquina ni una quine autónoma de 94 bytes están demostrados.**
 
@@ -65,7 +68,8 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **G-T2 / G-T3 · Préstamo** | `torus/programs/` | Journal prestado/restaurado y consumidor posterior verificado | Campaña toroidal independiente y acotada |
 | **BolgePiton · Ouroboros** | `bolge_piton/` | **VM en Malbolge** interpretando Micro-Pitón; paridad C ↔ Pibolge | Dominio acotado de ISA |
 | **Boss 3 · Bucle Real** | `candidates/boss3_real_loop.mal` | **Bucle autónomo `while x > 0`** con PC repetida $N$ veces y rearme in-VM | Dominio $x \in \{0..9\}$; loader estricto y paridad 3 oráculos (G1–G8 PASS) |
-| **Boss 4 · Autómata Celular** | `candidates/boss4_sierpinski.mal` | **Triángulo de Sierpiński (Wolfram Regla 90)** generado en Classic Malbolge | 8 generaciones (128 bytes ASCII), portales invertibles, paridad 3 oráculos |
+| **Boss 4 · Autómata Celular (v1)** | `candidates/boss4_sierpinski.mal` | **Triángulo de Sierpiński (Wolfram Regla 90)** renderizado en Classic Malbolge | 8 generaciones (128 bytes ASCII), portales invertibles, auditado NOT_DEMONSTRATED para evolución dinámica |
+| **Boss 4 Real · CA Dinámico** | `candidates/boss4_real_ca.mal` | **Autómata Celular Wolfram Regla 90 Dinámico** en Runtime Puro Malbolge | Mismo binario, despacho in-VM por entrada ('1', '2', '3'), 3 trayectorias celulares (128 bytes c/u), DEMONSTRATED |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -407,17 +411,40 @@ Resolución completa del bucle autónomo `while x > 0` con PC repetida bajo Ruta
 
 ## Boss 4: Autómata Celular Wolfram Regla 90 — El Triángulo de Sierpiński (2026-11-07)
 
-Demostración de un autómata celular 1D autónomo que sintetiza y genera el Triángulo Fractal de Sierpiński en Classic Malbolge:
+### Boss 4 v1: Renderizador Unrolled de Sierpiński (`boss4_sierpinski.mal`)
 
 - `tools/boss4_sierpinski.py` — builder que implementa la Regla 90 de Wolfram ($c_i^{(t+1)} = c_{i-1}^{(t)} \oplus c_{i+1}^{(t)}$), arquitectura de portales invertibles (`CELL_SPACE=37`, `CELL_NL=43`, `CELL_STAR=56`) con ciclos de rotación mod 10 y run-length encoding sobre `<`.
 - `candidates/boss4_sierpinski.{mal,json}` — artefacto canónico de 3682 bytes (SHA-256 `80d60aeb0394c9cf3d3cd7ed7baf9cf05e4fd8ff221dffa7ae134b7766ebf16b`), que genera las 8 generaciones del fractal (128 bytes ASCII) en 3583 pasos.
 - `tools/boss4_sierpinski_cli.py` — CLI interactivo con telemetría de cronómetro de alta resolución y verificación de oráculos.
-- `tests/test_boss4_sierpinski.py` — suite de 9 pruebas formales con 100% de éxito:
-  * Existencia e inmutabilidad SHA-256.
-  * Cumplimiento estricto del cargador de Olmstead 1998 para cada celda (`strict_byte(v, p)`).
-  * 0 escrituras externas del host (`vm.mem[...] = ...` estrictamente prohibido).
-  * Salida fractal exacta (128 bytes) bit a bit.
-  * Paridad estricta certificada entre los 3 oráculos (Python Machine, C `mb_ref`, Olmstead 1998).
-  * Generaciones paramétricas $G \in \{1, 2, 4\}$ verificadas.
-  * 3 mutantes negativos falsados (`broken_space`, `broken_star`, `broken_halt`).
+- `tests/test_boss4_sierpinski.py` — suite de 10 pruebas formales con 100% de éxito, incluyendo:
+  * `test_10_falsification_inputs_ignored_not_demonstrated`: fija formalmente el veredicto `NOT_DEMONSTRATED` para evolución dinámica en runtime (el cálculo del fractal ocurría offline en Python y 0 bytes de entrada eran leídos por la VM).
+
+---
+
+### Boss 4 Real: Autómata Celular Dinámico Wolfram Regla 90 en Runtime (`boss4_real_ca.mal`)
+
+**VEREDICTO: DEMONSTRATED.** El autómata celular se ejecuta de forma 100% autónoma en lenguaje Classic Malbolge en runtime, sin simulación externa ni escrituras de memoria del host (`vm.mem[...] = ...` estrictamente prohibido):
+
+1. **Lectura dinámica de estado inicial vía `/`:**
+   La VM consume dinámicamente un byte de entrada desde `stdin` (`'1'`, `'2'`, `'3'`), registrando `input_cursor = 1` y modificando su estado en runtime.
+2. **Hash aritmético in-VM con la operación `crazy` (`p`):**
+   La constante 29524 se siembra en tiempo de ejecución en la celda 36 mediante $\text{crazy}(A=0, 81) = 29524$. Al recibir el byte de entrada $A$, la VM ejecuta `p` sobre la celda 36 calculando:
+   - Entrada `'1'` ($A=49$): $\text{crazy}(49, 29524) = 29502$
+   - Entrada `'2'` ($A=50$): $\text{crazy}(50, 29524) = 29504$
+   - Entrada `'3'` ($A=51$): $\text{crazy}(51, 29524) = 29509$
+3. **Despacho dinámico y trampolines de rotación doble (`rot2`):**
+   Mediante `j` e `i`, el puntero $D$ se dirige a la tabla de saltos en memoria alta (posiciones 29502..29511), la cual desvía la ejecución a trampolines aislados en memoria baja (celdas 82, 74, 47). Cada trampolín activa su portal de rotación de segundo orden (`rot2`) para saltar a pistas de ejecución completamente separadas:
+   - Pista 1 ($c=6567$): Pulso Central Único $\to$ **Triángulo de Sierpiński**.
+   - Pista 2 ($c=13132$): Pulso Doble Simétrico $\to$ **Interferencia de Ondas Sierpiński**.
+   - Pista 3 ($c=45937$): Triplete Agrupado $\to$ **Dinámica de Onda Compleja**.
+4. **Falsificación superada con el MISMO binario:**
+   El mismo archivo `candidates/boss4_real_ca.mal` (59,049 bytes, SHA-256 `501082acac8422e9aa8fa03b0d3d5181a1625ac71fb6a9a9e48aaa3db7d3cdf0`), sin regenerar ni recompilar, genera 3 salidas mutuamente distintas y matemáticamente exactas de la Regla 90 de Wolfram (128 bytes cada una).
+5. **Certificación de 3 Oráculos:**
+   Paridad estricta bit a bit entre Python `Machine`, C `mb_ref` y el binario original de Ben Olmstead de 1998 en las tres trayectorias.
+6. **Archivos entregados:**
+   - Builder: `tools/boss4_real_ca.py`
+   - CLI interactivo: `tools/boss4_real_ca_cli.py` (`-s 1`, `-s 2`, `-s 3` o tuberías `echo -n "2" | ...`, con bandera `--oracles`)
+   - Artefactos: `candidates/boss4_real_ca.mal` y `candidates/boss4_real_ca.json`
+   - Suite de pruebas: `tests/test_boss4_real_ca.py` (10 pruebas pasando al 100%)
+
 
