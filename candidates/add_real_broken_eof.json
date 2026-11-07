@@ -1,0 +1,33 @@
+{
+  "title": "Boss 9: El Add Real (Universal In-VM Single-Digit Adder / ALU en Classic Malbolge)",
+  "kind": "IN_VM_UNIVERSAL_SINGLE_DIGIT_ADDER_ALU",
+  "mode": "broken_eof",
+  "length_bytes": 26474,
+  "sha256": "125e3d98b650f0bac227fc3207631bb917a6963b687c715a0789b97caad37d5b",
+  "algebraic_invariants": {
+    "eof0_discriminator_isolation": true,
+    "eof1_discriminator_isolation": true,
+    "bijective_121_byte_inversion": true,
+    "alu_sum0_evaluates_50_jump_26449": true,
+    "alu_sum1_a_evaluates_49_jump_26287": true,
+    "alu_sum1_b_evaluates_49_jump_26287": true,
+    "alu_sum2_evaluates_48_jump_26368": true,
+    "magic_pair_d0_rot3_emits_48": true,
+    "magic_pair_d1_rot2_emits_49": true,
+    "magic_pair_d2_rot2_emits_50": true,
+    "all_fixed_cells_strict_loader_compliant": true
+  },
+  "key_pcs": {
+    "read_pc_0": 99,
+    "read_pc_1": 378,
+    "alu_start_pc": 1132,
+    "halt_pc_drain0_eof": 27,
+    "halt_pc_drain1_eof": 79,
+    "output_pc_drain1": 26301,
+    "halt_pc_drain1": 26302,
+    "output_pc_drain2": 26379,
+    "halt_pc_drain2": 26380,
+    "output_pc_drain0": 26472,
+    "halt_pc_drain0": 26473
+  }
+}
