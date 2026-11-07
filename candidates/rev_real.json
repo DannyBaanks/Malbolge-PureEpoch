@@ -1,0 +1,45 @@
+{
+  "title": "Boss 6: El Rev Real (Universal In-VM LIFO Stream Reverser en Classic Malbolge)",
+  "kind": "IN_VM_UNIVERSAL_LIFO_STREAM_REVERSER",
+  "mode": "normal",
+  "length_bytes": 13185,
+  "sha256": "dc3ccc2f2da2a59751fcdc7f963ce17ab7900a4fc5e50a5a4661cf104b1ae1dc",
+  "stack_metrics": {
+    "stack_cell_w0": 54,
+    "stack_cell_w1": 41,
+    "recovery_key_k0": 71,
+    "recovery_key_k1": 35,
+    "read_pc_0": 121,
+    "read_pc_1": 378,
+    "output_pc_drain2_b1": 1186,
+    "output_pc_drain2_b0": 1244,
+    "halt_pc_drain2": 1245,
+    "output_pc_drain1": 13183,
+    "halt_pc_drain1": 13184,
+    "halt_pc_drain0": 27,
+    "rotations_per_pop": 10
+  },
+  "algebraic_invariants": {
+    "trit_storage_involution": "crazy(crazy(b, 121), 121) == b for all b in 0..255",
+    "discriminator_0": "rot4(crazy(crazy(x, 121), 80)) crazy 53 -> EOF: 26, Byte: 377",
+    "discriminator_1": "rot3(crazy(crazy(x, 121), 80)) crazy 78 -> EOF: 78, Byte: 1131",
+    "trampoline_portal": "rot2(74) == 13130 (lands on Drain 1 at 13131)"
+  },
+  "claims": {
+    "autonomous_in_vm_execution": true,
+    "in_vm_lifo_stack_order": true,
+    "terminates_on_eof": true,
+    "empty_stream_immediate_halt": true,
+    "single_byte_identity": true,
+    "two_byte_lifo_reversal": true,
+    "full_byte_domain_0_to_255": true,
+    "zero_external_memory_writes": true,
+    "strict_loader_compliance": true,
+    "strict_3_oracle_parity": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_universal_lifo_stream_reverser_classic_malbolge",
+    "author": "Antigravity & Danny Baanks"
+  }
+}

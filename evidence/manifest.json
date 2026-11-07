@@ -250,6 +250,20 @@
     "vendor/autobolge/relational/trace.py": "8b337c86bd8060fadb31d2533b788f4bcd72017b9c9b477518d10ac297b62141",
     "vendor/autobolge/relational/transition.py": "86c181e937546695e2675407e804c0508cb1fdf0f75a4ca9ef21983f4251e8f7",
     "vendor/mb_ref.c": "a8ce19c2dc93e36f8c9c24a271c4187d68f922b9455262c7199a009763fe3ad3",
-    "vendor/olmstead_original.c": "05abd38e78b266050c5a5e8cc5b36584daa5bbdeb404bfb351de7ea6fa26b510"
+    "vendor/olmstead_original.c": "05abd38e78b266050c5a5e8cc5b36584daa5bbdeb404bfb351de7ea6fa26b510",
+    "candidates/rev_real.mal": "dc3ccc2f2da2a59751fcdc7f963ce17ab7900a4fc5e50a5a4661cf104b1ae1dc",
+    "candidates/rev_real.json": "f2f794abea684e9ac7166c95e1af6db4fb25407bb0cf2d5b17a28bc31d15ab3b",
+    "candidates/boss6_rev_real.mal": "dc3ccc2f2da2a59751fcdc7f963ce17ab7900a4fc5e50a5a4661cf104b1ae1dc",
+    "candidates/boss6_rev_real.json": "f2f794abea684e9ac7166c95e1af6db4fb25407bb0cf2d5b17a28bc31d15ab3b",
+    "candidates/rev_real_broken_drain.mal": "dcc1e37ae80ae5d24a534d4006e8262bf641573b8b82712cbb9fb19975e8059d",
+    "candidates/rev_real_broken_drain.json": "23d51fc60e509d8996341faa0e7e1a0bf1822c2861fe86d94ac92dea7568e175",
+    "candidates/rev_real_broken_eof.mal": "0a86b853e2e345eb7b9f85e89b45e0be876375c3d47a4294c28c084086f4fd9d",
+    "candidates/rev_real_broken_eof.json": "5c418ff6254d04e3c8068b1a11b872196ba77a86904a7cad5766ab403b78a5b8",
+    "candidates/rev_real_broken_loader.mal": "d21af8b829f9944123e21a9664114d86755f407575ecc55f0134b633a8996ecc",
+    "candidates/rev_real_broken_loader.json": "2d7f8db4ee5b4056a4e5667a3bbb184951a13cdf74a0c962b2a0f7bbbbe752ab",
+    "tools/rev_real.py": "9a7afcaa6a119a0b3cae992bb370b0553b17de227f242bc9d68a937a209da969",
+    "tools/rev_real_cli.py": "963a76dad717dc7f9f8221b455bf4d05e933368f83f585a70669c5e846225586",
+    "tests/test_rev_real.py": "d0a749dc018a14c57f1c4d14c32ff5120f20e6c23bbb102005dc6f654babfe78",
+    "README.md": "64f103ab3704c53aeba774951f5d4e1351b78163765ae70a9c08942fc1658f46"
   }
 }

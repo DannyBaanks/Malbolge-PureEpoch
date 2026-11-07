@@ -72,6 +72,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **Boss 4 Real · Despacho Dinámico** | `candidates/boss4_real_ca.mal` | **Despacho Dinámico In-VM mediante CRAZY y Saltos Indirectos** en Malbolge | Mismo binario, despacho in-VM por entrada ('1', '2', '3'), 3 salidas celulares distintas; evolución in-situ NOT_DEMONSTRATED |
 | **Boss 4 v3 · Motor Celular In-VM** | `candidates/boss4_v3_ca.mal` | **Motor de Autómata Celular In-VM (Regla 90)** con Álgebra Booleana Cerrada | Álgebra ternaria cerrada in-VM (S0=29524, S1=59048), XOR de 6 pasos entre vecinos, doble buffer G0/G1 en memoria, 8 generaciones verificadas in-VM cell-by-cell, paridad 3 oráculos (DEMONSTRATED) |
 | **Boss 5 · El Cat Real** | `candidates/cat_real.mal` | **Universal In-VM Streaming Cat Terminado** en Classic Malbolge | Discriminador EOF ternario in-VM ($\text{crazy}(\text{crazy}(59048, \text{EOF}), 29524) = 0$), re-arme cíclico de 407 pasos/byte, flujos arbitrarios (0 bytes, texto, binario 0..255, 64 KiB+), paridad 3 oráculos (DEMONSTRATED) |
+| **Boss 6 · El Rev Real** | `candidates/rev_real.mal` | **In-VM LIFO Stream Reverser (`rev`)** en Classic Malbolge | Pila LIFO genuina in-VM ($\text{crazy}(\text{crazy}(b, 121), 121) = b$), lectura no destructiva de 10 rotaciones, desapilado estricto LIFO (tope primero), discriminación EOF dinámica (0 bytes $\to$ HALT, 1 byte $\to$ identity, 2 bytes $\to$ reversed), paridad 3 oráculos (DEMONSTRATED) |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -542,6 +543,76 @@ En la historia de la computación esotérica, el programa `cat` (que lee de `std
   * `candidates/boss5_cat_real.mal` (alias canónico)
   * `candidates/cat_real.json` (metadatos, teoremas algebraicos y registro de auditoría)
   * Mutantes de falsación negativa: `candidates/cat_real_broken_{rearm,eof,loader}.{mal,json}`
+
+---
+
+## Boss 6: El Rev Real — Universal In-VM LIFO Stream Reverser (2026-11-07) [DEMONSTRATED]
+
+### La Pila LIFO en Malbolge Clásico y la Inversión de Flujos (`rev`)
+
+Tras resolver el `cat` streaming terminante en Boss 5, el siguiente desafío estructural fundamental en Classic Malbolge es la utilidad estándar Unix `rev` (reversor de flujo / pila LIFO en memoria):
+- Mientras que `cat` es una cola FIFO transparente que emite inmediatamente cada byte conforme se lee, `rev` requiere **almacenamiento acumulativo** y **desapilado en orden inverso (LIFO)**.
+- El último byte empujado debe emitirse primero; el primer byte empujado debe emitirse al final.
+- En Malbolge, la memoria no posee instrucciones de `push` o `pop` nativas, y cada lectura/escritura (`*`, `p`) cifra y automodifica la celda con la tabla `XLAT2`.
+- `rev_real` resuelve este desafío implementando una **pila LIFO 100% in-VM** gobernada por teoremas algebraicos ternarios cerrados y discriminación dinámica de EOF.
+
+### Arquitectura Matemática de Boss 6
+
+1. **Involución Ternaria de Almacenamiento Sin Pérdidas:**
+   $$\text{crazy}(\text{crazy}(b, 121), 121) = b \quad \forall b \in \{0 \dots 255\}$$
+   - El valor $121$ ($11111_3$) actúa como clave de convolución involutiva perfecta: aplicar $\text{crazy}(-, 121)$ dos veces devuelve exactamente el byte original.
+   - Celda de almacenamiento $W_0 = 54$, clave $K_0 = 71$.
+   - Celda de almacenamiento $W_1 = 41$, clave $K_1 = 35$.
+   - Las cuatro celdas cumplen estrictamente $33 \le v \le 126$ y el predicado `strict_byte(v, p)` de Olmstead 1998.
+
+2. **Lectura No Destructiva de 10 Rotaciones:**
+   - La instrucción `*` realiza una rotación cíclica de 10 trits a la derecha:
+     $$\text{rot}_{10}(x) = x \quad \forall x \in \{0 \dots 59048\}$$
+   - Al ejecutar 10 rotaciones consecutivas sobre una celda de almacenamiento $W$, la celda retorna exactamente a su contenido previo $\text{crazy}(b, 121)$ y carga dicho valor en el acumulador $A$.
+   - Una posterior instrucción `p` contra la clave $K$ (con valor 121) des-convoluciona el dato: $A = \text{crazy}(\text{crazy}(b, 121), 121) = b$.
+   - La instrucción `<` emite $b$ a `stdout`.
+
+3. **Desapilado Estricto LIFO:**
+   - En Drain 2 (celda 1132), la rutina desapila $W_1$ (segundo byte leído) en el paso 303.
+   - Posteriormente desapila $W_0$ (primer byte leído) en el paso 361.
+   - Invariante formal: $t(\text{pop}_{W1}) < t(\text{pop}_{W0})$, logrando inversión temporal y espacial perfecta.
+
+4. **Discriminación Dinámica de EOF y Ramificación Multicanal:**
+   - **Discriminador 0 (en lectura 0, PC 121):**
+     $$\text{target}_0 = \text{crazy}(\text{rot}_4(\text{crazy}(\text{crazy}(X, 121), 80)), 53)$$
+     * Si $X = \text{EOF}$ (stream vacío $b""$): salta a celda 26, aterriza en 27 (`v` HALT) $\to$ 0 bytes emitidos en 128 pasos.
+     * Si $X = b_0$ ($0 \le b_0 \le 255$): salta a celda 377, aterriza en 378 (Pista 1) con $b_0$ almacenado en $W_0$.
+   - **Discriminador 1 (en lectura 1, PC 378):**
+     $$\text{target}_1 = \text{crazy}(\text{rot}_3(\text{crazy}(\text{crazy}(X, 121), 80)), 78)$$
+     * Si $X = \text{EOF}$ (stream de 1 byte $b"A"$): salta a celda 78, aterriza en 79 (trampolín indirecto a Drain 1 en 13131) $\to$ emite $b_0$ y finaliza en paso 304.
+     * Si $X = b_1$ (stream de 2 bytes $b"AB"$): salta a celda 1131, aterriza en 1132 (Drain 2) $\to$ emite $b_1$ y luego $b_0$, finalizando en paso 362.
+
+### Auditoría y Demostración en Código y Runtime
+
+| Criterio de Auditoría | Estado | Evidencia y Verificación |
+|---|---|---|
+| **Ejecución 100% Autónoma In-VM** | **DEMONSTRATED** | Cero escrituras de memoria del host (`vm.mem[...] = ...` estrictamente 0). Pila y bifurcaciones ejecutadas exclusivamente por instrucciones Malbolge. |
+| **Inversión LIFO Genuina** | **DEMONSTRATED** | Comprobado en traza in-VM: $W_1$ (tope) se lee después de $W_0$ y se desapila antes que $W_0$. $b"AB" \to b"BA"$, $b"12" \to b"21"$, $b"XY" \to b"YX"$. |
+| **Stream Vacío ($b"" \to b""$)** | **DEMONSTRATED** | Discriminador 0 detecta EOF en paso 23 y bifurca a celda 27 (`v` HALT) en paso 128 con 0 bytes emitidos y returncode 0. |
+| **Stream de 1 Byte ($b"A" \to b"A"$)** | **DEMONSTRATED** | Discriminador 1 detecta EOF tras el primer byte y bifurca vía trampolín hacia Drain 1, emitiendo exactamente $b"A"$ en paso 304. |
+| **Pares Binarios Arbitrarios ($0\text{x}00 \dots 0\text{xFF}$)** | **DEMONSTRATED** | Inversión bit a bit verificada en pares como $b"\x00\xff" \to b"\xff\x00"$, $b"\xaa\x55" \to b"\x55\xaa"$, etc. |
+| **Cargador Estricto Olmstead 1998** | **DEMONSTRATED** | El 100% de las 13,185 celdas del artefacto cumplen `strict_byte(v, p)`. |
+| **Paridad Estricta de 3 Oráculos** | **DEMONSTRATED** | Idéntico trace, memoria terminal, registros, código de salida y stdout entre Python Machine (M0), C `mb_ref` y C Olmstead original (1998). |
+| **Reemplazo Drop-in Tipo Unix** | **DEMONSTRATED** | Flag `-q` / `--quiet` en CLI para operar de forma transparente en tuberías: `echo -n "AB" \| python3 tools/rev_real_cli.py -q`. |
+
+### Herramientas y Suites de Prueba
+
+- **Builder y Generador de Mutantes:** `tools/rev_real.py`
+- **CLI Interactivo y Drop-in Pipeline:** `tools/rev_real_cli.py`
+  * Ejemplo interactivo: `python3 tools/rev_real_cli.py -i "AB" --trace-stack --oracles`
+  * Ejemplo en tubería Unix: `echo -n "XY" | python3 tools/rev_real_cli.py -q`
+- **Suite Formal de Pruebas:** `tests/test_rev_real.py` (14/14 pruebas PASS en ~2 s)
+- **Artefactos Canónicos:**
+  * `candidates/rev_real.mal` (13,185 bytes, SHA-256 `dc3ccc2f2da2a59751fcdc7f963ce17ab7900a4fc5e50a5a4661cf104b1ae1dc`)
+  * `candidates/boss6_rev_real.mal` (alias canónico)
+  * `candidates/rev_real.json` (metadatos, invariantes algebraicos y registro de auditoría)
+  * Mutantes de falsación negativa: `candidates/rev_real_broken_{drain,eof,loader}.{mal,json}`
+
 
 
 
