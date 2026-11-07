@@ -264,6 +264,19 @@
     "tools/rev_real.py": "9a7afcaa6a119a0b3cae992bb370b0553b17de227f242bc9d68a937a209da969",
     "tools/rev_real_cli.py": "963a76dad717dc7f9f8221b455bf4d05e933368f83f585a70669c5e846225586",
     "tests/test_rev_real.py": "d0a749dc018a14c57f1c4d14c32ff5120f20e6c23bbb102005dc6f654babfe78",
-    "README.md": "64f103ab3704c53aeba774951f5d4e1351b78163765ae70a9c08942fc1658f46"
+    "README.md": "00aa664d9540d1a7d575899b2a9d0d7282e9c9ad578e181e99b4322b706f18f4",
+    "candidates/wc_real.mal": "5bb531e9186e1c0bed0c94c24bd723020924b06d6d6d5cafac64216559d17a80",
+    "candidates/wc_real.json": "475eff96633ae671fe401f0db5175e1f6cc4a7a423419b29808b98c56accb68a",
+    "candidates/boss7_wc_real.mal": "5bb531e9186e1c0bed0c94c24bd723020924b06d6d6d5cafac64216559d17a80",
+    "candidates/boss7_wc_real.json": "475eff96633ae671fe401f0db5175e1f6cc4a7a423419b29808b98c56accb68a",
+    "candidates/wc_real_broken_drain.mal": "928c0938922d7f037fcaaccc68557dcf9d976ffca69314f415604bd16400f39e",
+    "candidates/wc_real_broken_drain.json": "420e05a31bf2c6044c7661a7cdd362484f5b80894515a794dc65cc27495d780a",
+    "candidates/wc_real_broken_eof.mal": "02d98561e07f7db17c4c7bcc927f97baea1ad5eb9dc9ca14290e4e66457fc9e9",
+    "candidates/wc_real_broken_eof.json": "1b90f77cc0695fdb0ff3e2ef001c6a224a09fcec5cf3310da10f54f040165f6b",
+    "candidates/wc_real_broken_loader.mal": "5972cb81eb89f910cdee0d99afa936a4c5b6fb7b10e3aa8ce80a9ef988c25868",
+    "candidates/wc_real_broken_loader.json": "8e2aed9105bf9d3b7fcbf91d1224b5d4bca6fa42da8b1c44beabc3192dfc2c3f",
+    "tools/wc_real.py": "28501260a77fa39480ec51fbee09ee50206c2ef5c54fe016e8e80423c2ca7940",
+    "tools/wc_real_cli.py": "ab1940521b5fb0b7ae1baba6506af5f170b0666846f0c2eecdaef3fb78b3c8a0",
+    "tests/test_wc_real.py": "90bcf381aa29a80a4819e1328b826fe7b3165acd0463ace59e9d593813acaadd"
   }
 }

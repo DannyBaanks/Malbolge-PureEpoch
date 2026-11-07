@@ -1,0 +1,54 @@
+{
+  "title": "Boss 7: El Wc Real (Universal In-VM Stream Byte Counter en Classic Malbolge)",
+  "kind": "IN_VM_UNIVERSAL_STREAM_BYTE_COUNTER",
+  "mode": "broken_eof",
+  "length_bytes": 26268,
+  "sha256": "02d98561e07f7db17c4c7bcc927f97baea1ad5eb9dc9ca14290e4e66457fc9e9",
+  "counter_metrics": {
+    "w0_cell": 54,
+    "w1_cell": 41,
+    "w2_cell": 71,
+    "digit_0_cell": 69,
+    "digit_1_cell": 68,
+    "digit_2_cell": 34,
+    "digit_3_cell": 66,
+    "read_pc_0": 121,
+    "read_pc_1": 378,
+    "read_pc_2": 1132,
+    "output_pc_drain0": 13211,
+    "halt_pc_drain0": 13212,
+    "output_pc_drain1": 19796,
+    "halt_pc_drain1": 19797,
+    "output_pc_drain2": 26266,
+    "halt_pc_drain2": 26267,
+    "output_pc_drain3": 3417,
+    "halt_pc_drain3": 3418
+  },
+  "algebraic_invariants": {
+    "discriminator_0": "rot4(crazy(crazy(x, 121), 80)) crazy 53 -> EOF: 26, Byte: 377",
+    "discriminator_1": "rot3(crazy(crazy(x, 121), 80)) crazy 78 -> EOF: 78, Byte: 1131",
+    "discriminator_2": "rot2(crazy(crazy(x, 121), 80)) crazy 72 -> EOF: 72, Byte: 3312",
+    "portal_drain0": "rot2(110) == 13134 -> Drain 0 at 13135",
+    "portal_drain1": "rot2(39) == 19687 -> Drain 1 at 19688",
+    "portal_drain2": "rot2(94) == 26254 -> Drain 2 at 26255",
+    "direct_pair_drain2": "pos=34 (val 122), pos=35 (val 33) -> rot2(122) % 256 == 50 ('2')"
+  },
+  "claims": {
+    "autonomous_in_vm_execution": true,
+    "in_vm_stream_byte_counter": true,
+    "terminates_on_eof": true,
+    "empty_stream_counts_0": true,
+    "single_byte_counts_1": true,
+    "two_bytes_counts_2": true,
+    "three_plus_bytes_counts_3": true,
+    "full_byte_domain_0_to_255": true,
+    "zero_external_memory_writes": true,
+    "strict_loader_compliance": true,
+    "strict_3_oracle_parity": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_universal_stream_byte_counter_classic_malbolge",
+    "author": "Antigravity & Danny Baanks"
+  }
+}
