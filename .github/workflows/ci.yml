@@ -28,12 +28,7 @@ jobs:
 
       - name: Ejecutar Suite de Tests Nativos en Zig (15/15 PASS)
         run: |
-          zig test test_suite.zig --summary all
-
-      - name: Ejecutar zig build test
-        run: |
-          # Si la versión de Zig soporta el build runner
-          zig build test --summary all || zig test test_suite.zig --summary all
+          zig test test_suite.zig
 
   python-oracles:
     name: Python Oracles & Parity Smoke
