@@ -1,0 +1,540 @@
+{
+  "title": "Boss 4 v3: Motor de Aut\u00f3mata Celular Wolfram Regla 90 In-VM en Malbolge Cl\u00e1sico",
+  "kind": "IN_VM_CELLULAR_AUTOMATON_RULE90",
+  "mode": "normal",
+  "generations": 8,
+  "grid_width": 5,
+  "length_bytes": 59049,
+  "sha256": "d1d44e90ccae320c4d48123d0ccfcfdb9c7e79bf1817ffbd91b15dd8b8e3e5d9",
+  "memory_cells": {
+    "K0": 80,
+    "K2": 41,
+    "S": 77,
+    "G0": [
+      84,
+      55,
+      76,
+      78,
+      45
+    ],
+    "G1": [
+      57,
+      40,
+      62,
+      71,
+      64
+    ],
+    "portals": {
+      "hash": 36,
+      "space": 37,
+      "newline": 43,
+      "star": 56,
+      "track1": 52,
+      "track2": 34,
+      "track3": 68
+    }
+  },
+  "trajectories": {
+    "state_1": {
+      "name": "Single Center Pulse (Sierpinski Fractal)",
+      "input_ascii": "1",
+      "input_byte_hex": "31",
+      "entry_pc": 6567,
+      "initial_bits": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "expected_output_hex": "20202a20200a202a202a200a2a2020202a0a2a2a202a2a0a202a202a200a2a2020202a0a2a2a202a2a0a202a202a200a",
+      "expected_text": "  *  \n * * \n*   *\n** **\n * * \n*   *\n** **\n * * \n"
+    },
+    "state_2": {
+      "name": "Symmetrical Double Pulse (Wave Interference)",
+      "input_ascii": "2",
+      "input_byte_hex": "32",
+      "entry_pc": 32819,
+      "initial_bits": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "expected_output_hex": "202a2a20200a2a2a2a2a200a2a20202a200a202a2a20200a2a2a2a2a200a2a20202a200a202a2a20200a2a2a2a2a200a",
+      "expected_text": " **  \n**** \n*  * \n **  \n**** \n*  * \n **  \n**** \n"
+    },
+    "state_3": {
+      "name": "Alternating Cluster Pulse (Complex CA Dynamics)",
+      "input_ascii": "3",
+      "input_byte_hex": "33",
+      "entry_pc": 45937,
+      "initial_bits": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "expected_output_hex": "202a202a200a2a2020202a0a2a2a202a2a0a202a202a200a2a2020202a0a2a2a202a2a0a202a202a200a2a2020202a0a",
+      "expected_text": " * * \n*   *\n** **\n * * \n*   *\n** **\n * * \n*   *\n"
+    }
+  },
+  "breakpoints": {
+    "track1_sierpinski": [
+      {
+        "generation": 0,
+        "pc": 6995,
+        "expected_bits": [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 1,
+        "pc": 8714,
+        "expected_bits": [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 2,
+        "pc": 10236,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 3,
+        "pc": 11784,
+        "expected_bits": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 4,
+        "pc": 13201,
+        "expected_bits": [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 5,
+        "pc": 14734,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 6,
+        "pc": 16271,
+        "expected_bits": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 7,
+        "pc": 17699,
+        "expected_bits": [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      }
+    ],
+    "track2_double_pulse": [
+      {
+        "generation": 0,
+        "pc": 33194,
+        "expected_bits": [
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 1,
+        "pc": 34736,
+        "expected_bits": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 2,
+        "pc": 36153,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 3,
+        "pc": 37692,
+        "expected_bits": [
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 4,
+        "pc": 39223,
+        "expected_bits": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 5,
+        "pc": 40651,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 6,
+        "pc": 42179,
+        "expected_bits": [
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 7,
+        "pc": 43721,
+        "expected_bits": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      }
+    ],
+    "track3_triplet": [
+      {
+        "generation": 0,
+        "pc": 46316,
+        "expected_bits": [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 1,
+        "pc": 47849,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 2,
+        "pc": 49386,
+        "expected_bits": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 3,
+        "pc": 50814,
+        "expected_bits": [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 4,
+        "pc": 52336,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 5,
+        "pc": 53884,
+        "expected_bits": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      },
+      {
+        "generation": 6,
+        "pc": 55301,
+        "expected_bits": [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        "grid_cells": [
+          84,
+          55,
+          76,
+          78,
+          45
+        ]
+      },
+      {
+        "generation": 7,
+        "pc": 56834,
+        "expected_bits": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "grid_cells": [
+          57,
+          40,
+          62,
+          71,
+          64
+        ]
+      }
+    ]
+  },
+  "claims": {
+    "autonomous_in_vm_cellular_evolution": true,
+    "computes_rule90_trajectory_in_vm_runtime": true,
+    "evolves_arbitrary_input_state": true,
+    "in_vm_memory_trace_verified": true,
+    "zero_external_memory_writes": true,
+    "strict_3_oracle_parity": true,
+    "strict_loader_compliance": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_wolfram_rule90_cellular_automaton_engine",
+    "algebra": "closed_ternary_boolean_algebra_over_fullwords_29524_59048",
+    "xor_primitive": "6_step_crazy_arithmetic_sequence_L_S_K0_R_S_T",
+    "double_buffering": "G0_G1_memory_grid_alternation"
+  }
+}

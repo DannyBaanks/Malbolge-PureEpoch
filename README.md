@@ -70,6 +70,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **Boss 3 · Bucle Real** | `candidates/boss3_real_loop.mal` | **Bucle autónomo `while x > 0`** con PC repetida $N$ veces y rearme in-VM | Dominio $x \in \{0..9\}$; loader estricto y paridad 3 oráculos (G1–G8 PASS) |
 | **Boss 4 · Autómata Celular (v1)** | `candidates/boss4_sierpinski.mal` | **Triángulo de Sierpiński (Wolfram Regla 90)** renderizado en Classic Malbolge | 8 generaciones (128 bytes ASCII), portales invertibles, auditado NOT_DEMONSTRATED para evolución dinámica |
 | **Boss 4 Real · Despacho Dinámico** | `candidates/boss4_real_ca.mal` | **Despacho Dinámico In-VM mediante CRAZY y Saltos Indirectos** en Malbolge | Mismo binario, despacho in-VM por entrada ('1', '2', '3'), 3 salidas celulares distintas; evolución in-situ NOT_DEMONSTRATED |
+| **Boss 4 v3 · Motor Celular In-VM** | `candidates/boss4_v3_ca.mal` | **Motor de Autómata Celular In-VM (Regla 90)** con Álgebra Booleana Cerrada | Álgebra ternaria cerrada in-VM (S0=29524, S1=59048), XOR de 6 pasos entre vecinos, doble buffer G0/G1 en memoria, 8 generaciones verificadas in-VM cell-by-cell, paridad 3 oráculos (DEMONSTRATED) |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -448,6 +449,48 @@ Resolución completa del bucle autónomo `while x > 0` con PC repetida bajo Ruta
    $$\text{XOR}(L, R) = \text{crazy}(59048, \text{crazy}(L, R)) \quad \text{con } 0=\text{trit } 2, 1=\text{trit } 1$$
 3. Que la generación resultante quede representada en celdas de la VM y se utilice como entrada para computar la siguiente generación.
 4. Que una traza de memoria permita auditar las transiciones celulares internas, no solamente los caracteres emitidos.
+
+---
+
+### Boss 4 v3: Motor de Autómata Celular Wolfram Regla 90 In-VM (`boss4_v3_ca.mal`) [DEMONSTRATED]
+
+**Cierre formal de la frontera celular en Classic Malbolge (2026-11-07):**
+
+El artefacto canónico `candidates/boss4_v3_ca.mal` (59,049 bytes, SHA-256 `d1d44e90ccae320c4d48123d0ccfcfdb9c7e79bf1817ffbd91b15dd8b8e3e5d9`) resuelve de forma definitiva y verificada la evolución celular en runtime:
+
+| Criterio de Auditoría | Estado | Demostración en Código y Runtime |
+|---|---|---|
+| **Consumo Dinámico de Entrada** | **DEMONSTRATED** | La instrucción `/` lee un byte desde `stdin` (`'1'`, `'2'`, `'3'`) fijando la condición inicial en memoria. |
+| **Álgebra Booleana Cerrada In-VM** | **DEMONSTRATED** | Palabras completas ternarias: Bit 0 ($S_0=29524$, trits `1111111111_3`), Bit 1 ($S_1=59048$, trits `2222222222_3`), Cero ($K_0=0$). |
+| **Cálculo de XOR entre Vecinos en Runtime** | **DEMONSTRATED** | Secuencia de 6 pasos $\text{crazy}$ sobre vecinos: `[L, S, K0, R, S, T]`. Lectura no destructiva de $L$ y $R$ y escritura exacta de $L \oplus R$ en $T$. |
+| **Doble Buffer In-VM y Actualización Generacional** | **DEMONSTRATED** | Rejillas celulares $G_0$ (`[84, 55, 76, 78, 45]`) y $G_1$ (`[57, 40, 62, 71, 64]`) alternan como fuente y destino en las 8 generaciones ($g=0..7$). |
+| **Traza de Memoria In-VM Verificada** | **DEMONSTRATED** | Auditoría paso a paso (`test_09..test_11` y CLI `--trace-memory`): cada generación se inspecciona directamente en `m.mem[G0]` y `m.mem[G1]`, coincidiendo bit a bit con Wolfram Regla 90. |
+| **Cero Escrituras de Host** | **DEMONSTRATED** | 100% autónomo dentro de la VM Malbolge (`vm.mem[...] = ...` estrictamente cero). |
+| **Paridad Estricta de 3 Oráculos** | **DEMONSTRATED** | Idéntico estado final, memoria y salida en Python `Machine` (M0), C `mb_ref` y C Olmstead (1998) en todas las trayectorias. |
+| **Cargador Estricto** | **DEMONSTRATED** | 59,049 celdas estrictamente imprimibles ASCII ($33 \le v \le 126$) y compatibles con el cargador canónico (`strict_byte`). |
+
+#### Álgebra Booleana Ternaria In-VM y Secuencia de Transición
+
+1. **Constantes canónicas:**
+   - $S_0 = 29524$ (todos 1s en ternario): elemento identidad con $A=0$, pues $\text{crazy}(0, 29524) = 29524$.
+   - $S_1 = 59048$ (todos 2s en ternario): elemento invertido, producido en runtime mediante lectura de EOF ($\text{EOF} \to A=59048$).
+   - $K_0 = 0$ (todos 0s en ternario): elemento absorbente / reset de registro $A$, pues $\text{crazy}(x, 0) = 0$ para todo $x \in \{29524, 59048\}$.
+   - $K_2 = 59048$: constante ternaria 2.
+
+2. **XOR de 6 Pasos entre Vecinos:**
+   Dadas las celdas de vecinos izquierdo ($L$) y derecho ($R$), acumulador $S$ preconfigurado a $59048$, y destino $T$ reseteado a $59048$:
+   $$\text{crazy}(A, L) \to \text{crazy}(A, S) \to \text{crazy}(A, K_0) \to \text{crazy}(A, R) \to \text{crazy}(A, S) \to \text{crazy}(A, T)$$
+   - Si $L = R \implies T = 29524$ (Bit 0).
+   - Si $L \neq R \implies T = 59048$ (Bit 1).
+   - $L, R, K_0$ quedan 100% inalterados. $A$ finaliza en el valor de $T$.
+
+3. **Herramientas y Suites de Prueba:**
+   - Builder: `tools/boss4_v3_ca.py`
+   - CLI interactivo con telemetría y traza de memoria: `tools/boss4_v3_ca_cli.py`
+     * Ejemplo: `python3 tools/boss4_v3_ca_cli.py --state 1 --trace-memory --oracles`
+   - Suite formal de 14 pruebas: `tests/test_boss4_v3_ca.py` (14/14 PASS)
+   - Artefactos canónicos: `candidates/boss4_v3_ca.mal` (59,049 bytes) y `candidates/boss4_v3_ca.json`.
+
 
 
 
