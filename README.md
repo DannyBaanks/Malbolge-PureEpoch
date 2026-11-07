@@ -69,7 +69,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **BolgePiton · Ouroboros** | `bolge_piton/` | **VM en Malbolge** interpretando Micro-Pitón; paridad C ↔ Pibolge | Dominio acotado de ISA |
 | **Boss 3 · Bucle Real** | `candidates/boss3_real_loop.mal` | **Bucle autónomo `while x > 0`** con PC repetida $N$ veces y rearme in-VM | Dominio $x \in \{0..9\}$; loader estricto y paridad 3 oráculos (G1–G8 PASS) |
 | **Boss 4 · Autómata Celular (v1)** | `candidates/boss4_sierpinski.mal` | **Triángulo de Sierpiński (Wolfram Regla 90)** renderizado en Classic Malbolge | 8 generaciones (128 bytes ASCII), portales invertibles, auditado NOT_DEMONSTRATED para evolución dinámica |
-| **Boss 4 Real · CA Dinámico** | `candidates/boss4_real_ca.mal` | **Autómata Celular Wolfram Regla 90 Dinámico** en Runtime Puro Malbolge | Mismo binario, despacho in-VM por entrada ('1', '2', '3'), 3 trayectorias celulares (128 bytes c/u), DEMONSTRATED |
+| **Boss 4 Real · Despacho Dinámico** | `candidates/boss4_real_ca.mal` | **Despacho Dinámico In-VM mediante CRAZY y Saltos Indirectos** en Malbolge | Mismo binario, despacho in-VM por entrada ('1', '2', '3'), 3 salidas celulares distintas; evolución in-situ NOT_DEMONSTRATED |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -421,30 +421,33 @@ Resolución completa del bucle autónomo `while x > 0` con PC repetida bajo Ruta
 
 ---
 
-### Boss 4 Real: Autómata Celular Dinámico Wolfram Regla 90 en Runtime (`boss4_real_ca.mal`)
+### Boss 4 Real: Despacho Dinámico In-VM con CRAZY Hash (`boss4_real_ca.mal`)
 
-**VEREDICTO: DEMONSTRATED.** El autómata celular se ejecuta de forma 100% autónoma en lenguaje Classic Malbolge en runtime, sin simulación externa ni escrituras de memoria del host (`vm.mem[...] = ...` estrictamente prohibido):
+**AUDITORÍA 2026-11-07 — Veredicto formal por afirmación:**
 
-1. **Lectura dinámica de estado inicial vía `/`:**
-   La VM consume dinámicamente un byte de entrada desde `stdin` (`'1'`, `'2'`, `'3'`), registrando `input_cursor = 1` y modificando su estado en runtime.
-2. **Hash aritmético in-VM con la operación `crazy` (`p`):**
-   La constante 29524 se siembra en tiempo de ejecución en la celda 36 mediante $\text{crazy}(A=0, 81) = 29524$. Al recibir el byte de entrada $A$, la VM ejecuta `p` sobre la celda 36 calculando:
+| Afirmación | Veredicto | Detalle |
+|---|---|---|
+| Artefacto Classic Malbolge independiente | **DEMONSTRATED** | Ejecución en VM Classic pura sin trampas de entorno |
+| Consumo de entrada y despacho mediante CRAZY | **DEMONSTRATED** | Byte leído vía `/`, sembrado de 29524 con $A=0$, hash ternario y saltos $j/i$ |
+| Tres salidas distintas con el mismo binario | **DEMONSTRATED** | Entradas `'1'`, `'2'`, `'3'` desvían a 3 trampolines y pistas distintas |
+| Tres trayectorias calculadas por Regla 90 dentro de la VM | **NOT DEMONSTRATED** | Las trayectorias se precalcularon en Python (`emit_track` sobre strings offline) |
+| Autómata general con estado actualizable en runtime | **NOT DEMONSTRATED** | La VM no computa XOR entre celdas vecinas ni itera generaciones en memoria |
+
+#### Lo que sí demuestra `boss4_real_ca.mal` (progreso real en control de flujo):
+1. **Lectura dinámica de estado inicial vía `/`:** La VM consume dinámicamente un byte desde `stdin` (`'1'`, `'2'`, `'3'`), registrando `input_cursor = 1`.
+2. **Hash aritmético in-VM con la operación `crazy` (`p`):** Sembrado en runtime de 29524 en celda 36 vía $\text{crazy}(A=0, 81)$. Cálculo dinámico de claves:
    - Entrada `'1'` ($A=49$): $\text{crazy}(49, 29524) = 29502$
    - Entrada `'2'` ($A=50$): $\text{crazy}(50, 29524) = 29504$
    - Entrada `'3'` ($A=51$): $\text{crazy}(51, 29524) = 29509$
-3. **Despacho dinámico y trampolines de rotación doble (`rot2`):**
-   Mediante `j` e `i`, el puntero $D$ se dirige a la tabla de saltos en memoria alta (posiciones 29502..29511), la cual desvía la ejecución a trampolines aislados en memoria baja (celdas 82, 74, 47). Cada trampolín activa su portal de rotación de segundo orden (`rot2`) para saltar a pistas de ejecución completamente separadas:
-   - Pista 1 ($c=6567$): Pulso Central Único $\to$ **Triángulo de Sierpiński**.
-   - Pista 2 ($c=13132$): Pulso Doble Simétrico $\to$ **Interferencia de Ondas Sierpiński**.
-   - Pista 3 ($c=45937$): Triplete Agrupado $\to$ **Dinámica de Onda Compleja**.
-4. **Falsificación superada con el MISMO binario:**
-   El mismo archivo `candidates/boss4_real_ca.mal` (59,049 bytes, SHA-256 `501082acac8422e9aa8fa03b0d3d5181a1625ac71fb6a9a9e48aaa3db7d3cdf0`), sin regenerar ni recompilar, genera 3 salidas mutuamente distintas y matemáticamente exactas de la Regla 90 de Wolfram (128 bytes cada una).
-5. **Certificación de 3 Oráculos:**
-   Paridad estricta bit a bit entre Python `Machine`, C `mb_ref` y el binario original de Ben Olmstead de 1998 en las tres trayectorias.
-6. **Archivos entregados:**
-   - Builder: `tools/boss4_real_ca.py`
-   - CLI interactivo: `tools/boss4_real_ca_cli.py` (`-s 1`, `-s 2`, `-s 3` o tuberías `echo -n "2" | ...`, con bandera `--oracles`)
-   - Artefactos: `candidates/boss4_real_ca.mal` y `candidates/boss4_real_ca.json`
-   - Suite de pruebas: `tests/test_boss4_real_ca.py` (10 pruebas pasando al 100%)
+3. **Despacho y saltos de rotación doble (`rot2`):** Salto a tabla alta (`29502..29511`), aterrizaje en trampolines bajos (`82`, `74`, `47`) y activación de portales de rotación de segundo orden para acceder a pistas en memoria alta (`6567`, `13132`, `45937`).
+4. **Paridad de 3 oráculos:** Bit a bit entre Python `Machine`, C `mb_ref` y Olmstead 1998 en las tres trayectorias.
+
+#### La frontera abierta: ¿Qué falta para el Boss 4 v3 verdaderamente celular?
+1. Que el mismo `.mal` reciba un estado celular variable en memoria.
+2. Que los vecinos se procesen en la VM para obtener la siguiente generación mediante operaciones XOR in-VM:
+   $$\text{XOR}(L, R) = \text{crazy}(59048, \text{crazy}(L, R)) \quad \text{con } 0=\text{trit } 2, 1=\text{trit } 1$$
+3. Que la generación resultante quede representada en celdas de la VM y se utilice como entrada para computar la siguiente generación.
+4. Que una traza de memoria permita auditar las transiciones celulares internas, no solamente los caracteres emitidos.
+
 
 

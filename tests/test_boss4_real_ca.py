@@ -125,6 +125,30 @@ class TestBoss4RealCA(unittest.TestCase):
         res_halt = run(img_broken_halt, b"1", max_steps=5000)
         self.assertNotEqual(res_halt["terminal"], "HALT", "Broken halt no debe terminar en HALT")
 
+    def test_11_audit_ca_evolution_remains_not_demonstrated(self):
+        """Auditoría 2026-11-07: fijar formalmente el veredicto para evolución de autómata celular.
+
+        Demostrado:
+        - Despacho dinámico in-VM por lectura de stdin ('1', '2', '3') vía '/'
+        - Hash aritmético crazy(input, 29524)
+        - Saltos dinámicos a tres pistas de emisión con paridad 3 oráculos
+
+        No demostrado (frontera abierta):
+        - Las tres pistas fueron precalculadas en Python (emit_track sobre strings offline).
+        - Malbolge no calcula la vecindad XOR ni actualiza el estado celular generación por generación.
+        """
+        self.assertFalse(self.meta["claims"]["computes_rule90_trajectory_in_vm_runtime"])
+        self.assertFalse(self.meta["claims"]["evolves_arbitrary_input_state"])
+        self.assertEqual(self.meta["audit_2026_11_07"]["verdict"], "PARTIALLY_DEMONSTRATED")
+        self.assertEqual(
+            self.meta["audit_2026_11_07"]["user_audit"]["trayectorias_calculadas_rule90_dentro_vm"],
+            "NOT_DEMONSTRATED",
+        )
+        self.assertEqual(
+            self.meta["audit_2026_11_07"]["user_audit"]["automata_general_con_estado_actualizable_runtime"],
+            "NOT_DEMONSTRATED",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
