@@ -1,0 +1,53 @@
+{
+  "title": "Boss 10: El Sort2 Real (Universal In-VM Conditional Sorter en Classic Malbolge)",
+  "kind": "IN_VM_UNIVERSAL_CONDITIONAL_SORTER",
+  "mode": "canonical",
+  "length_bytes": 2452,
+  "sha256": "d92a78c21ad4afa6302a5a77dae9cc2cebd053eeeb544c6f5d525aa77168a321",
+  "sorter_metrics": {
+    "w0_cell": 54,
+    "w1_cell": 41,
+    "k0a_cell": 71,
+    "k1_cell": 72,
+    "k0b_cell": 35,
+    "c50_cell": 48,
+    "c33_cell": 65,
+    "sort_k_cell": 59,
+    "kd1_cell": 90,
+    "read_pc_0": 99,
+    "read_pc_1": 378,
+    "sort_start_pc": 1132,
+    "halt_pc_drain0_eof": 27,
+    "halt_pc_drain1_eof": 79,
+    "drain_sorted_start": 2194,
+    "output_pc_drain_sorted_b0": 2253,
+    "output_pc_drain_sorted_b1": 2294,
+    "halt_pc_drain_sorted": 2295,
+    "drain_inverted_start": 2356,
+    "output_pc_drain_inverted_b1": 2397,
+    "output_pc_drain_inverted_b0": 2450,
+    "halt_pc_drain_inverted": 2451
+  },
+  "algebraic_invariants": {
+    "trit_storage_involution": "crazy(crazy(b, 121), 121) == b for all b in 0..255",
+    "order_discriminator": "r = crazy(33, crazy(crazy(50, d0), crazy(d1, d0))) -> sorted: 29500, inverted: 29501",
+    "jump_rotations": "crazy(rot6(29500), 97) + 1 = 2194; crazy(rot6(29501), 97) + 1 = 2356"
+  },
+  "claims": {
+    "autonomous_in_vm_execution": true,
+    "in_vm_conditional_order_evaluation": true,
+    "in_vm_fifo_sorted_drain": true,
+    "in_vm_lifo_inverted_drain": true,
+    "terminates_on_eof": true,
+    "empty_stream_immediate_halt": true,
+    "single_byte_stream_immediate_halt": true,
+    "zero_external_memory_writes": true,
+    "strict_loader_compliance": true,
+    "strict_3_oracle_parity": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_universal_conditional_sorter_classic_malbolge",
+    "author": "Antigravity & Danny Baanks"
+  }
+}
