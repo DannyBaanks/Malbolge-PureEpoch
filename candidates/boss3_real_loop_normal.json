@@ -1,0 +1,12 @@
+{
+  "kind": "BOSS3_REAL_LOOP",
+  "mode": "normal",
+  "sha256": "9f48a4162ea4b523b16f2f99b2d57311ba6263ad64eb88d58a8997924b18ae08",
+  "length_bytes": 50000,
+  "claims": {
+    "autonomous_loop": true,
+    "host_intervention_required": false,
+    "zero_external_memory_writes": true,
+    "status": "PASS"
+  }
+}

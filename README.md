@@ -64,6 +64,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **94 · Control reutilizable** | `evidence/quine-94-analysis.json` | Identidad de roundtrip y núcleo `0..93` reutilizable | **No** es una quine autónoma de 94 bytes |
 | **G-T2 / G-T3 · Préstamo** | `torus/programs/` | Journal prestado/restaurado y consumidor posterior verificado | Campaña toroidal independiente y acotada |
 | **BolgePiton · Ouroboros** | `bolge_piton/` | **VM en Malbolge** interpretando Micro-Pitón; paridad C ↔ Pibolge | Dominio acotado de ISA |
+| **Boss 3 · Bucle Real** | `candidates/boss3_real_loop.mal` | **Bucle autónomo `while x > 0`** con PC repetida $N$ veces y rearme in-VM | Dominio $x \in \{0..9\}$; loader estricto y paridad 3 oráculos (G1–G8 PASS) |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -210,11 +211,11 @@ Para someter a PureEpoch a las condiciones más adversariales concebibles —esc
 flowchart LR
   B1["<b>Boss 1: Falla Bizantina</b><br/>Rollback Anidado J1 → J2<br/><i>Safe-Mode Fallback (29.5 KB)</i>"]
   B2["<b>Boss 2: Compilador BF</b><br/>Brainfuck sin bucles → línea recta<br/><i>VM Turing: NOT_DEMONSTRATED (1.3 KB)</i>"]
-  B3["<b>Boss 3: El Santo Grial</b><br/>Bucle While x > 0 Autónomo<br/><i>[NOT_DEMONSTRATED] tabla de despacho (50.0 KB)</i>"]
+  B3["<b>Boss 3: El Santo Grial</b><br/>Bucle While x > 0 Autónomo<br/><i>Superado ✅ (Ruta A, 50.0 KB)</i>"]
 
   B1 -->|Superado ✅| B2
   B2 -->|Parcial ⚠️| B3
-  B3 -.->|Frontera Abierta 🔬| OBJETIVO["<b>Bucle autónomo con PC repetida</b>"]
+  B3 -->|Demostrado ✅ (G1–G8 PASS)| RESUELTO["<b>Bucle autónomo real (PC repetida N veces)</b>"]
 ```
 
 > [!WARNING]
@@ -242,28 +243,40 @@ flowchart LR
 * **Artefacto:** [`candidates/boss2_brainfuck.mal`](candidates/boss2_brainfuck.mal) (1,303 bytes) · [`tools/boss2_brainfuck.py`](tools/boss2_brainfuck.py)
 * **Validación:** 7/7 pruebas con paridad estricta y controles de comandos no soportados en [`tests/test_boss2_brainfuck.py`](tests/test_boss2_brainfuck.py).
 
-### Boss 3: El Santo Grial (El Bucle `while x > 0` con $N$ Dinámico Autónomo) — `[NOT_DEMONSTRATED]`
-* **Veredicto de auditoría (2026-10-27):** el artefacto es una **tabla de despacho**, no un bucle. Ninguna PC se ejecuta dos veces; N=1/2/3/7 aterrizan en bloques con 1/2/3/7 instrucciones `<` escritas a mano. Con entradas fuera de la tabla: `4`→`\xeb`, `5`→`\xeb\xeb`, `6`/`9`→vacío, `8`→`\xe1\xe1`. Lo que sí se sostiene: cero escrituras del host y paridad de 3 oráculos para los 6 casos de la tabla. El texto de abajo describe el intento original y se conserva como registro.
-* **El Desafío:** En Classic Malbolge todo bucle repetido colapsa porque `XLAT2` automuta destructivamente cada celda ejecutada. La auditoría formal identificó que intentos preliminares basados en Truth Machine recurrían a modificaciones de memoria desde el host (`vm.mem[47] = 99`). El reto definitivo de Boss 3 exigió un único artefacto `.mal` inmutable que reciba $N$ por `stdin`, decida internamente su número de repeticiones y salte a `v` (HALT) sin intervención externa.
-* **Afirmación original (retirada, ver veredicto arriba):**
-  - **Despacho Ternario Universal:** Fórmula $\text{rot}(\text{crazy}(\text{input}, 67))$ que particiona limpiamente los casos $\{0, 1, 2, 3, 7, \text{EOF}\}$ con separación $\ge 2$ y aterriza en sus destinos respectivos.
-  - **Generador In-Band de Constantes Ternarias:** Doble rotación de celda 49 ($113 \to 39403 \to 32817$) que sintetiza el carácter `'1'` ($32817 \pmod{256} = 49$) sin depender de bytes externos.
-  - **Paridad Bit-Exacta 3/3 Oráculos:** Verificado exhaustivamente en `tools.observe` (Python), `vendor/mb_ref.c` (C de referencia) y `vendor/olmstead_original.c` (C histórico 1998) con retorno 0 y estado terminal `HALT` para todos los casos probados.
-  - **Cero Modificación de Memoria desde el Host:** `vm.mem[...] = ...` estrictamente erradicado. Todo el control reside exclusivamente en las instrucciones nativas de Malbolge.
-* **Artefacto (tabla de despacho):** [`candidates/boss3_autonomous_loop.mal`](candidates/boss3_autonomous_loop.mal) (50,000 bytes, SHA-256: `d2d6b91d5f4df1f64890174cbe22599e71b37041aeb3677d2845f95ae01263bc`) · [`tools/boss3_autonomous_loop.py`](tools/boss3_autonomous_loop.py) · [`tools/boss3_dynamic_loop_cli.py`](tools/boss3_dynamic_loop_cli.py)
-* **Validación de la Suite:** 10 pruebas en [`tests/test_boss3_dynamic_loop.py`](tests/test_boss3_dynamic_loop.py): test_01..08 fijan la tabla y la paridad; test_09/test_10 son la falsación del bucle.
+### Boss 3 (Histórico): Tabla de Despacho sin bucle — `[FALSADO / NOT_DEMONSTRATED]`
+* **Veredicto de auditoría (2026-10-27):** el artefacto preliminar `boss3_autonomous_loop.mal` era una **tabla de despacho**, no un bucle. Ninguna PC se ejecutaba dos veces; N=1/2/3/7 aterrizaban en bloques con 1/2/3/7 instrucciones `<` escritas a mano. Con entradas fuera de la tabla: `4`→`\xeb`, `5`→`\xeb\xeb`, `6`/`9`→vacío, `8`→`\xe1\xe1`. El veredicto formal se rebajó a `NOT_DEMONSTRATED` en [VERDICT.md](VERDICT.md) y se fijó en [`tests/test_boss3_dynamic_loop.py`](tests/test_boss3_dynamic_loop.py).
+
+### Boss 3 Real: Bucle Autónomo `while x > 0` con PC Repetida — Superado ✅ (Ruta A, 2026-11-07)
+* **El Logro Definitivo:** Implementación completa y validación formal de un bucle autónomo `while x > 0` con PC repetida exactamente $N$ veces para todo $N \in \{1..9\}$ bajo el **loader estricto** (`strict_byte(v, pos)` en las 50,000 celdas), con **cero escrituras del host** y **paridad bit-exacta entre 3 oráculos** (`Machine` en Python, `./build/mb_ref` en C y Olmstead original 1998).
+* **La Solución Algebraica e Invariantes (Ruta A):**
+  1. **Subrutina de Salida Compartida y Rearme Dinámico in-VM:** Una única instrucción `<` en la celda `OUT = 29588` emite cada carácter `'1'`. Tras ejecutarse, `XLAT2` la automuta destructivamente a 35. Los bloques `REARM[j]` reconstruyen la celda `OUT` en runtime mediante operaciones `p` dirigidas a `HP = 60`, restableciendo la instrucción `<` antes del siguiente salto sin intervención externa.
+  2. **Invariante de Sincronización Paso 1 / REARM:** La entrada a cada bloque `START[j]` tiene el mismo estado invariante de registros ya sea que provenga del despacho inicial o del bloque de decremento previo: $c = START[j]$, $d = T[48 + j] + 1$, $mem[HP] = T[48 + j] - 1$.
+  3. **Palabra de Sincronización de 28 Pasos (`MERGE_PATH`):** Para $j \in (3, 6)$, el puntero $d$ colisiona con celdas de salto cuyo contenido depende de si los bloques anteriores fueron visitados (58 vs 37). Asignando `pos % 94 == 76` a `START[5]` y `START[8]`, la secuencia estática `oooooooooooooooooooojooooooj` fusiona algebraicamente ambos estados a la celda 34 y memoria baja sin divergencias.
+* **Contratos G1–G8 y 4 Mutantes Negativos:**
+  - **G1 (Iteración real):** La PC 29588 se ejecuta exactamente $N$ veces en la traza para cada $N \in \{1..9\}$.
+  - **G2 (Sin tablas por N):** El conjunto de PCs de salida distintas es constante e igual a 1 (`{29588}`).
+  - **G3 (Salida exacta):** Para los 10 dígitos `'0'..'9'`, salida exacta `b'1' * N` con estado terminal `HALT`.
+  - **G4 (Fuera de dominio):** Comportamiento definido y cese dentro de presupuesto para `b''` (EOF), `b'/'`, `b':'`, `b'A'` y `b'\x00'`.
+  - **G5 (Cero escrituras del host):** 0 escrituras externas durante runtime.
+  - **G6 (Paridad 3 oráculos):** Salida y código de retorno idénticos en Python `Machine`, C `mb_ref` y Olmstead 1998.
+  - **G7 (Inmutable y reproducible):** SHA-256 verificado y reconstrucción byte-a-byte idéntica.
+  - **G8 (Loader estricto):** Las 50,000 celdas del archivo `.mal` son caracteres imprimibles y válidos bajo `XLAT1`.
+  - **4 Mutantes Específicos:** `broken_decrement` (rompe G3), `broken_exit` (rompe G3/G4), `broken_rearm` (rompe G1/G3), `off_by_one` (rompe G3).
+* **Artefacto Principal:** [`candidates/boss3_real_loop.mal`](candidates/boss3_real_loop.mal) (50,000 bytes, SHA-256: `9f48a4162ea4b523b16f2f99b2d57311ba6263ad64eb88d58a8997924b18ae08`) · [`tools/boss3_real_loop.py`](tools/boss3_real_loop.py) · [`BOSS3_FINAL_STATUS.md`](BOSS3_FINAL_STATUS.md).
+* **Validación de la Suite:** 12/12 pruebas PASAN en [`tests/test_boss3_real_loop.py`](tests/test_boss3_real_loop.py).
 
 ```bash
 # Compilar Brainfuck sin bucles a Malbolge en línea recta
 python3 tools/boss2_brainfuck_cli.py "++>+>++<<-.>.>.>+.<.!" --oracles
 
-# Ejecutar la tabla de despacho de Boss 3 (no es un bucle; ver veredicto)
-python3 tools/boss3_dynamic_loop_cli.py -n 3 --oracles
+# Generar y validar Boss 3 Real Loop (Ruta A)
+python3 tools/boss3_real_loop.py
 
-# Ejecutar la suite completa de Boss Battles (23/23 PASS)
+# Ejecutar la suite completa de Boss Battles (35/35 PASS)
 python3 -B -m unittest tests/test_boss1_byzantine.py -v
 python3 -B -m unittest tests/test_boss2_brainfuck.py -v
 python3 -B -m unittest tests/test_boss3_dynamic_loop.py -v
+python3 -B -m unittest tests/test_boss3_real_loop.py -v
 ```
 
 ## 08 / Reproducirlo sin red
@@ -368,10 +381,6 @@ Los commits de upstream inspeccionados, las diferencias de EOF entre motores, la
 
 </div>
 
-[**Explorar la evidencia**](evidence/) · [**Leer la investigación**](RESULTS.md) · [**Abrir MalbolgArt**](https://github.com/DannyBaanks/MalbolgArt)
-
-</div>
-
 
 ## Archivos añadidos al repositorio (2026-10-31)
 
@@ -383,3 +392,14 @@ control de versiones:
 - `evidence/boss3_real/30/` y `evidence/boss3_real/31/` — 9 archivos por corrida:
   `parity.json`, `instrumented-summary.json`, `python-trace.jsonl`, `trace.jsonl`,
   `state.bin`, `stdout.bin` y los stderr de referencia e instrumentado.
+
+## Boss 3 Real Loop — Demostración y Cierre (2026-11-07)
+
+Resolución completa del bucle autónomo `while x > 0` con PC repetida bajo Ruta A:
+
+- `tools/boss3_real_loop.py` — builder autónomo para modo normal y 4 mutantes negativos.
+- `candidates/boss3_real_loop.{mal,json}` — artefacto principal (SHA-256 `9f48a4162ea4b523b16f2f99b2d57311ba6263ad64eb88d58a8997924b18ae08`).
+- `candidates/boss3_real_loop_{broken_decrement,broken_exit,broken_rearm,off_by_one}.{mal,json}` — mutantes negativos.
+- `tests/test_boss3_real_loop.py` — suite de 12 pruebas formales (G1–G8 + 4 mutantes, 12/12 PASS).
+- `BOSS3_FINAL_STATUS.md` — reporte formal actualizado a estado `PASS`.
+- `evidence/manifest.json` y `evidence/boss3-real-campaign.json` — hashes y veredicto actualizados.

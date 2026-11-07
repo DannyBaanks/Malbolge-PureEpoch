@@ -8,18 +8,18 @@
   "original_returncode": 0,
   "original_run": "completed",
   "instrumented_returncode": 0,
-  "source_sha256": "f59cf283414251ee23d35f98beffaf634f7b69ef9f8cb23e259fdb7c5329d1d2",
+  "source_sha256": "9f48a4162ea4b523b16f2f99b2d57311ba6263ad64eb88d58a8997924b18ae08",
   "payload_hex": "30",
   "terminal": "HALT",
-  "steps_excluding_halt": 38,
-  "fetched_instructions": 39,
+  "steps_excluding_halt": 19130,
+  "fetched_instructions": 19131,
   "registers": [
-    72,
-    73,
-    62,
+    29503,
+    23531,
+    29505,
     1
   ],
-  "output_hex": "30",
-  "memory_sha256": "4f831e310855cb913e640dca75df19b9f3780514566bdc6a0940e615ea92aef2",
-  "trace_sha256": "412cfd0d8dd0989be367023e952418e56b245eed066f059861b485ffb8225a3c"
+  "output_hex": "",
+  "memory_sha256": "d5751167c0972f84cf90f9b4083c68c29391550dcb291865a5803465c04a7c0b",
+  "trace_sha256": "e1f8d5346fbcfd1035e24953b4a0041687b6e49f652199fda3c1ac1875f4f7a8"
 }

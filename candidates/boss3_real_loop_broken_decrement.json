@@ -1,0 +1,12 @@
+{
+  "kind": "BOSS3_REAL_LOOP",
+  "mode": "broken_decrement",
+  "sha256": "9bbede4ca21c770a1d419aa2851db7d4a3d86d7069a7a5fabe5c9ce4b22ce093",
+  "length_bytes": 50000,
+  "claims": {
+    "autonomous_loop": false,
+    "host_intervention_required": false,
+    "zero_external_memory_writes": true,
+    "status": "MUTANT"
+  }
+}

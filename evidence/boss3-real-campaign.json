@@ -1,15 +1,49 @@
 {
   "schema": "boss3-real-campaign/v1",
-  "candidates_tried": 1,
+  "candidates_tried": 2,
   "budget": 128,
+  "checked_existing_artifacts": [
+    "boss3_autonomous_loop.mal",
+    "boss3_dynamic_loop.mal",
+    "boss1_byzantine.mal",
+    "boss2_brainfuck.mal"
+  ],
   "results": [
     {
       "candidate_index": 0,
       "sha256": "065db44fc09e793d51fca8ee8076358e09b368b6c91e121b511f4f525d0009cb",
       "gate_failed": "G3",
       "reason": "Artefacto placeholder HALT inmediato sin salida. No hay iteración ni conteo."
+    },
+    {
+      "candidate_index": 1,
+      "candidate_name": "boss3_real_loop.mal",
+      "sha256": "9f48a4162ea4b523b16f2f99b2d57311ba6263ad64eb88d58a8997924b18ae08",
+      "gates_passed": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8"
+      ],
+      "mutant_controls_passed": [
+        "broken_decrement",
+        "broken_exit",
+        "broken_rearm",
+        "off_by_one"
+      ],
+      "oracle_parity": {
+        "machine_python": true,
+        "c_ref_mb_ref": true,
+        "olmstead": true,
+        "domain_returncodes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      "verdict": "PASS"
     }
   ],
-  "verdict": "NOT_DEMONSTRATED",
-  "frontier": "G1 no comprobable, G3 falla para N>=1, G2/G6/G7/G8 pasan sintácticamente pero sin bucle real."
+  "verdict": "PASS",
+  "frontier": "Boss 3 resuelto via Ruta A: bucle autónomo while x > 0 con subrutina compartida en PC 29588 rearmada dinámicamente mediante operaciones p en VM; cero intervenciones del host; cumplimiento estricto del loader (G8) y paridad de 3 oráculos (G6)."
 }
