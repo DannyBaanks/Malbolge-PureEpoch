@@ -1,4 +1,13 @@
-"""Boss 3: El Santo Grial - Bucle while x > 0 Autónomo con N Dinámico (Sin Asistencia de Host).
+"""Boss 3: tabla de despacho por entrada con salidas desenrolladas (NO es un bucle).
+
+AUDITORÍA 2026-10-27 — veredicto NOT_DEMONSTRATED para "bucle while x > 0 autónomo":
+- Ninguna dirección de instrucción se ejecuta dos veces en ningún caso: no hay iteración.
+- Cada N soportado salta a un bloque propio con N instrucciones '<' escritas a mano
+  (1 en 9853.., 2 en 49219.., 3 en 29538.., 7 en 112..118). No hay contador ni decremento.
+- Entradas fuera de la tabla: '4' -> b'\\xeb', '5' -> b'\\xeb\\xeb', '6'/'9' -> b'',
+  '8' -> b'\\xe1\\xe1'. Los controles viven en tests/test_boss3_dynamic_loop.py.
+Lo que sí es cierto: cero escrituras del host y paridad de 3 oráculos para la tabla.
+Se conserva el artefacto como evidencia del intento; el texto de abajo es el diseño original.
 
 Implementa la solución legítima a Boss 3:
 Un único artefacto en Malbolge clásico (.mal) con hash SHA-256 inmutable que:
@@ -174,10 +183,16 @@ def build_boss3_autonomous_loop(mode: str = 'normal') -> Tuple[bytes, dict]:
             "7": 9842
         },
         "claims": {
-            "autonomous_loop": True,
+            "autonomous_loop": False,
             "host_intervention_required": False,
             "zero_external_memory_writes": True,
             "strict_3_oracle_parity": True
+        },
+        "audit_2026_10_27": {
+            "verdict": "NOT_DEMONSTRATED",
+            "classification": "input_dispatch_table_with_unrolled_outputs",
+            "repeated_pcs": 0,
+            "out_of_table_outputs": {"4": "eb", "5": "ebeb", "6": "", "8": "e1e1", "9": ""}
         }
     }
 

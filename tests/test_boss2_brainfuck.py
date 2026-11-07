@@ -99,6 +99,21 @@ class TestBoss2Brainfuck(unittest.TestCase):
         py_res = run(img, b'')
         self.assertEqual(list(py_res['output']), meta['output_expected'])
 
+    def test_06_unsupported_commands_fail_closed(self):
+        """Auditoría 2026-10-27: ',' y corchetes antes compilaban mal sin avisar."""
+        for code in [",.", ",+.", "+[-].", "[", "]"]:
+            with self.subTest(code=code):
+                with self.assertRaises(NotImplementedError):
+                    build_boss2_brainfuck(code)
+
+    def test_07_tape_is_resolved_at_compile_time(self):
+        """El puntero y la cinta los lleva Python; Malbolge no ejecuta ninguna PC dos veces."""
+        img, meta = build_boss2_brainfuck("++>+>++<<-.>.>.>+.<.!")
+        self.assertEqual(meta['virtual_tape_final'], [1, 1, 2, 1, 0])
+        res = run(img, b'')
+        pcs = [step['pre'][1] for step in res['trace']]
+        self.assertEqual(len(pcs), len(set(pcs)))
+
 
 if __name__ == '__main__':
     unittest.main()

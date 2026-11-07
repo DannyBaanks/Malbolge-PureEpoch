@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""CLI para ejecutar el bucle dinámico autónomo de Malbolge (Boss 3: El Santo Grial).
+"""CLI para ejecutar la tabla de despacho de Boss 3 (NO es un bucle; auditoría 2026-10-27).
 
-Demuestra la ejecución de bucles while x > 0 con N dinámico sin intervención de host:
-- Recibe N dinámicamente desde stdin ('0', '1', '2', '3', '7', EOF)
-- Control interno de repetición y despacho ternario
+Ninguna PC se repite: cada N de la tabla salta a un bloque con N salidas escritas a mano.
+- Recibe N desde stdin; solo la tabla ('0', '1', '2', '3', '7', EOF) da N unos
+- Despacho por entrada sin escrituras del host
 - Salida limpia a HALT
 - Telemetría de cronómetro de alta resolución
 - Verificación de paridad estricta entre 3 oráculos (Python, C mb_ref, Olmstead 1998)
@@ -23,9 +23,9 @@ from tools.oracles import verify, validate_parity
 
 
 def main():
-    parser = argparse.ArgumentParser(description="CLI de Bucle Autónomo while x > 0 en Malbolge (Boss 3)")
+    parser = argparse.ArgumentParser(description="Tabla de despacho de Boss 3 en Malbolge (bucle NOT_DEMONSTRATED)")
     parser.add_argument("-n", "--iterations", type=int, default=3, choices=[0, 1, 2, 3, 7],
-                        help="Número de iteraciones dinámicas del bucle (0, 1, 2, 3, 7)")
+                        help="Entrada de la tabla de despacho (0, 1, 2, 3, 7)")
     parser.add_argument("--mode", default="normal", choices=["normal", "broken_rearm", "broken_exit"],
                         help="Modo de ejecución ('normal', 'broken_rearm', 'broken_exit')")
     parser.add_argument("--oracles", action="store_true",
@@ -35,7 +35,7 @@ def main():
     payload = str(args.iterations).encode() if args.iterations > 0 else b'0'
 
     print("=" * 75)
-    print(" 🏆 MALBOLGE PURE-EPOCH: BOSS 3 (EL SANTO GRIAL - BUCLE WHILE AUTÓNOMO) ")
+    print(" MALBOLGE PURE-EPOCH: BOSS 3 (TABLA DE DESPACHO - bucle NOT_DEMONSTRATED) ")
     print("=" * 75)
     print(f" Modo de ejecución:            {args.mode.upper()}")
     print(f" Entrada solicitada (N):       {args.iterations} (payload: {payload!r})")
@@ -50,7 +50,7 @@ def main():
     print(f" ⏱️  Tiempo de síntesis:         {t_synth:.2f} ms ({t_synth*1000:.1f} µs)")
     print("-" * 75)
 
-    # Ejecución puramente autónoma
+    # Ejecución sin escrituras del host (despacho, no iteración)
     t_exec_start = time.perf_counter()
     res = run_boss3_autonomous_execution(src, payload)
     t_exec = (time.perf_counter() - t_exec_start) * 1000

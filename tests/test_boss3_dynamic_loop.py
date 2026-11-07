@@ -134,6 +134,27 @@ class TestBoss3DynamicLoop(unittest.TestCase):
             self.assertEqual(report['reference_returncode'], 0, f"mb_ref.c retorno distinto de 0 para {label}")
             self.assertEqual(report['original_returncode'], 0, f"olmstead_original.c retorno distinto de 0 para {label}")
 
+    # --- Falsación (auditoría 2026-10-27): fijan por qué Boss 3 es NOT_DEMONSTRATED ---
+
+    def test_09_falsification_no_pc_repeats(self):
+        """Un bucle repite instrucciones; este artefacto no ejecuta ninguna PC dos veces."""
+        img = (PURE_EPOCH_ROOT / "candidates" / "boss3_autonomous_loop.mal").read_bytes()
+        for payload in [b'', b'0', b'1', b'2', b'3', b'7']:
+            res = run(img, payload, max_steps=5000)
+            pcs = [step['pre'][1] for step in res['trace']]
+            self.assertEqual(len(pcs), len(set(pcs)), f"PC repetida con {payload!r}: revisar veredicto")
+
+    def test_10_falsification_out_of_table_inputs(self):
+        """Fuera de la tabla {EOF,0,1,2,3,7} la salida no es N unos: no hay contador."""
+        img = (PURE_EPOCH_ROOT / "candidates" / "boss3_autonomous_loop.mal").read_bytes()
+        observed = {
+            b'4': b'\xeb', b'5': b'\xeb\xeb', b'6': b'', b'8': b'\xe1\xe1', b'9': b'',
+        }
+        for payload, expected in observed.items():
+            res = run(img, payload, max_steps=5000)
+            self.assertEqual(res['output'], expected)
+            self.assertNotEqual(res['output'], b'1' * int(payload))
+
 
 if __name__ == '__main__':
     unittest.main()

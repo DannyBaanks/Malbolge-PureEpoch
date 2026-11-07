@@ -39,7 +39,12 @@ flowchart TD
 
 ## 3. Ejecución de la Suite Completa de Pruebas
 
-### Pruebas de las Utilidades Unix In-VM (84/84 PASS)
+### Suite Global Completa del Repositorio (226/226 PASS)
+```bash
+python3 -m pytest tests/
+```
+
+### Suite de las 9 Utilidades Unix y Cronometría In-VM (123/123 PASS)
 ```bash
 python3 -m unittest \
   tests/test_cat_real.py \
@@ -47,10 +52,13 @@ python3 -m unittest \
   tests/test_wc_real.py \
   tests/test_cmp_real.py \
   tests/test_add_real.py \
-  tests/test_sort2_real.py
+  tests/test_sort2_real.py \
+  tests/test_reloj_real.py \
+  tests/test_reloj_infinito.py \
+  tests/test_reloj_carry.py
 ```
 
-### Pruebas de Boss Battles 1 a 4 (35/35 PASS)
+### Pruebas de Boss Battles 1 a 4 (41/41 PASS)
 ```bash
 python3 -m unittest \
   tests/test_boss1_byzantine.py \
@@ -71,21 +79,33 @@ python3 -m unittest tests/test_ouroboros.py
 Cada utilidad cuenta con un CLI interactivo y compatible con tuberías Unix estándar mediante la bandera silenciosa `-q` (`--quiet`):
 
 ```bash
-# Invertir cadena con Rev Real
+# Invertir cadena con Rev Real (Boss 6)
 echo -n "HOLA" | python3 tools/rev_real_cli.py -q
 # Salida: ALOH
 
-# Sumar dos dígitos con Add Real
+# Sumar dos dígitos con Add Real (Boss 9)
 echo -n "11" | python3 tools/add_real_cli.py -q
 # Salida: 2
 
-# Evaluar igualdad con Cmp Real
+# Evaluar igualdad con Cmp Real (Boss 8)
 echo -n "==" | python3 tools/cmp_real_cli.py -q
 # Salida: =
 
-# Ordenar dos elementos con Sort2 Real
+# Ordenar dos elementos con Sort2 Real (Boss 10)
 echo -n "10" | python3 tools/sort2_real_cli.py -q
 # Salida: 01
+
+# Cronómetro 4 ticks con Reloj Real (Boss 11)
+echo -n "PPP" | python3 tools/reloj_real_cli.py -q
+
+# Cronómetro 60 segundos con Reloj Infinito (Boss 12)
+python3 tools/reloj_infinito_cli.py -q -n 4
+
+# Acarreo temporal BCD in-VM 00:59 -> 01:00 con Reloj Carry (Boss 13)
+python3 tools/reloj_carry_cli.py -q
+
+# Inspección de telemetría de registros in-VM en vivo (Boss 13)
+python3 tools/reloj_carry_cli.py --telemetry
 
 # Composición en tubería Unix:
 echo -n "21" | python3 tools/sort2_real_cli.py -q | python3 tools/rev_real_cli.py -q

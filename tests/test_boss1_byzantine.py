@@ -67,6 +67,33 @@ class TestBoss1Byzantine(unittest.TestCase):
                 self.assertEqual(report["reference_returncode"], 0)
                 self.assertEqual(report["original_returncode"], 0)
 
+    def test_06_tier2_restore_depends_on_j2(self):
+        """Control de auditoría (2026-10-27): corromper J2 al entrar a 6566 cambia el restore.
+
+        La escritura en mem[42] la hace el test, no el protocolo: es un control negativo,
+        no parte del camino demostrado.
+        """
+        from baseline.epoch_probe import Machine, load
+
+        def run_with_j2(payload, j2_value):
+            m = Machine(load(self.source), payload)
+            poked = False
+            for _ in range(20000):
+                if not poked and m.c == self.meta["labels"]["recovery_tier_2_entry"]:
+                    m.mem[42] = j2_value
+                    poked = True
+                m.tick()
+                if m.terminal != "RUNNING":
+                    break
+            self.assertTrue(poked)
+            return m.terminal, m.output, m.mem[36]
+
+        # J2 de initial=3 dentro de una corrida initial=1 restaura 3, y viceversa
+        self.assertEqual(run_with_j2(b"\x01\x03\x03", 29521), ("HALT", b"\x03", 3))
+        self.assertEqual(run_with_j2(b"\x03\x03\x03", 29523), ("HALT", b"\x01", 1))
+        # Basura en J2 -> basura restaurada
+        self.assertEqual(run_with_j2(b"\x01\x03\x03", 12345), ("HALT", b"\x91", 24721))
+
 
 if __name__ == "__main__":
     unittest.main()

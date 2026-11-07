@@ -16,6 +16,10 @@ from tools.build_candidates import Layout, encode, _emit_helpers
 def build_boss1_byzantine(mode="normal", encoder=encode):
     """Constructor del artefacto Malbolge Boss 1: Falla Bizantina en Cascada.
     
+    Salidas observadas (auditoría 2026-10-27, 8/8 combinaciones {1,3}^3): commit -> 'V'
+    (initial 1) o 'R' (initial 3); doble falla -> byte crudo restaurado desde J2
+    (b'\\x01' o b'\\x03'), NO 'F'. Las líneas de abajo son el diseño original.
+
     stdin = [initial 1|3, candidate_1 1|3, candidate_2 1|3]
     - cand_1 == 1: Éxito en intento 1 -> salida 'S'
     - cand_1 == 3, cand_2 == 1: Falla 1 recuperada vía J1 -> salida 'S'

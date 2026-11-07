@@ -1,14 +1,13 @@
-"""Boss 2: La Cinta Bidireccional de Turing (Motor Brainfuck en Malbolge Puro).
+"""Boss 2: Compilador de Brainfuck sin bucles a Malbolge Classic en línea recta.
 
-Implementa una máquina virtual con cinta de Turing bidireccional en Malbolge puro.
-Soporta las operaciones canónicas de Brainfuck:
-  '>' : Avanza el puntero de datos de la cinta (ptr += 1)
-  '<' : Retrocede el puntero de datos de la cinta (ptr -= 1)
-  '+' : Incrementa el valor en la celda activa (tape[ptr] += 1)
-  '-' : Decrementa el valor en la celda activa (tape[ptr] -= 1)
-  '.' : Emite el valor de la celda activa a stdout
-  ',' : Lee un byte desde stdin hacia la celda activa
-  '!' : Detiene la ejecución (HALT)
+NO es una máquina virtual ni una cinta de Turing (auditoría 2026-10-27): el puntero
+y los valores de la cinta se resuelven en Python en tiempo de compilación; Malbolge
+ejecuta código en línea recta sobre celdas fijas [65..69]. Subconjunto soportado:
+  '>' / '<' : mueve el puntero de compilación (5 celdas)
+  '+' / '-' : valores 0..3
+  '.'       : emite la celda activa
+  '!'       : HALT
+',', '[' y ']' se rechazan con NotImplementedError.
 
 Supera el límite de presupuesto de direccionamiento en memoria baja mediante
 el operador de salto 'j' estricto y la preservación de celdas mutables en
@@ -205,11 +204,10 @@ class BrainfuckMalbolgeCompiler:
             self.b.emit('<', f'bf_step_{step_idx}_emit')
 
         elif op == ',':
-            # Leer un byte de stdin en A y transferir a la celda activa
-            self.b.emit('/', f'bf_step_{step_idx}_read')
-            # Resetear celda a 29524 y crazy(byte, 29524)
-            # Para valores limpios de prueba:
-            self.celda(cur_cell, 'p', f'bf_step_{step_idx}_store_in')
+            # Auditoría 2026-10-27: la ruta anterior ('/' + 'p') guardaba crazy(byte, celda),
+            # no el byte, y la cinta de compilación seguía asumiendo 0 (',.' con 2 -> 'S';
+            # ',+.' -> 0x01 con cualquier entrada). Falla cerrada hasta que exista lectura real.
+            raise NotImplementedError("',' no soportado: la cinta se resuelve en tiempo de compilación")
 
         elif op == '!':
             self.b.emit('v', f'bf_step_{step_idx}_halt')
@@ -218,7 +216,11 @@ class BrainfuckMalbolgeCompiler:
         """Compila una cadena de código Brainfuck y retorna la imagen Malbolge y sus metadatos."""
         self.inicializar_motor()
 
-        cleaned_code = [ch for ch in bf_code if ch in ('>', '<', '+', '-', '.', ',', '!')]
+        # '[' y ']' antes se descartaban en silencio ('+[-].' compilaba como '+-.').
+        unsupported = sorted({ch for ch in bf_code if ch in '[],'})
+        if unsupported:
+            raise NotImplementedError(f"Comandos Brainfuck no soportados: {''.join(unsupported)}")
+        cleaned_code = [ch for ch in bf_code if ch in ('>', '<', '+', '-', '.', '!')]
         for idx, ch in enumerate(cleaned_code):
             self.emit_bf_step(ch, idx)
 

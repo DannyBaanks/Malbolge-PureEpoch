@@ -4,7 +4,7 @@
 
 **Recuperación Multi-Época, Control de Flujo y Computación 100% Autónoma en Classic Malbolge**
 
-[![Tests](https://img.shields.io/badge/Unit%20Tests-123%2F123%20PASS-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Unit%20Tests-226%2F226%20PASS%20(100%25)-brightgreen.svg)]()
 [![Oracles](https://img.shields.io/badge/3--Oracle%20Parity-100%25%20Bit--Identical-blue.svg)]()
 [![Loader](https://img.shields.io/badge/Olmstead%201998-Strict%20Compliant-success.svg)]()
 [![Autonomy](https://img.shields.io/badge/Host%20Memory%20Writes-ZERO%20(100%25%20In--VM)-orange.svg)]()
@@ -111,7 +111,10 @@ Todo el laboratorio se ejecuta de forma determinista y offline utilizando única
 git clone https://github.com/DannyBaanks/Malbolge-PureEpoch.git
 cd Malbolge-PureEpoch
 
-# Ejecutar la suite completa de las 9 utilidades Unix y Cronómetros (123/123 PASS)
+# Ejecutar la suite completa global de pruebas (226/226 PASS en ~3 min)
+python3 -m pytest tests/
+
+# O ejecutar la suite de las 9 utilidades Unix y Cronometría (123/123 PASS en ~45s)
 python3 -m unittest \
   tests/test_cat_real.py \
   tests/test_rev_real.py \
@@ -123,7 +126,7 @@ python3 -m unittest \
   tests/test_reloj_infinito.py \
   tests/test_reloj_carry.py
 
-# Ejecutar las Boss Battles 1 a 4 (35/35 PASS)
+# O ejecutar las Boss Battles 1 a 4 (41/41 PASS en ~20s)
 python3 -m unittest \
   tests/test_boss1_byzantine.py \
   tests/test_boss2_brainfuck.py \
