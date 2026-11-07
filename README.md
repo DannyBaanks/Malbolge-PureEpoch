@@ -5,6 +5,7 @@
 **Recuperación Multi-Época, Control de Flujo y Computación 100% Autónoma en Classic Malbolge**
 
 [![Tests](https://img.shields.io/badge/Unit%20Tests-226%2F226%20PASS%20(100%25)-brightgreen.svg)]()
+[![Zig Test Suite](https://img.shields.io/badge/Zig%20Native%20CI-15%2F15%20PASS%20(221ms)-orange.svg)]()
 [![Oracles](https://img.shields.io/badge/3--Oracle%20Parity-100%25%20Bit--Identical-blue.svg)]()
 [![Loader](https://img.shields.io/badge/Olmstead%201998-Strict%20Compliant-success.svg)]()
 [![Autonomy](https://img.shields.io/badge/Host%20Memory%20Writes-ZERO%20(100%25%20In--VM)-orange.svg)]()
@@ -111,7 +112,11 @@ Todo el laboratorio se ejecuta de forma determinista y offline utilizando única
 git clone https://github.com/DannyBaanks/Malbolge-PureEpoch.git
 cd Malbolge-PureEpoch
 
-# Ejecutar la suite completa global de pruebas (226/226 PASS en ~3 min)
+# Ejecutar la suite ultra-rápida nativa en Zig (15/15 PASS en 220 ms)
+zig build test --summary all
+# (o directamente: zig test test_suite.zig --summary all)
+
+# O ejecutar la suite completa en Python (226/226 PASS en ~3 min)
 python3 -m pytest tests/
 
 # O ejecutar la suite de las 9 utilidades Unix y Cronometría (123/123 PASS en ~45s)

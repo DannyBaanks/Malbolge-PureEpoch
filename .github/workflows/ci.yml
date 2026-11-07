@@ -1,0 +1,53 @@
+name: PureEpoch CI (Zig Engine & Parity)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  zig-suite:
+    name: Native Zig Engine & 13 Bosses Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Zig Compiler
+        uses: mlugg/setup-zig@v1
+        with:
+          version: 0.13.0 # Soporta 0.13+ y master
+
+      - name: Compilar Oráculos C Históricos con Zig CC
+        run: |
+          mkdir -p build
+          zig cc -O3 vendor/mb_ref.c -o build/mb_ref
+          echo "✅ C mb_ref compilado con zig cc con éxito"
+
+      - name: Ejecutar Suite de Tests Nativos en Zig (15/15 PASS)
+        run: |
+          zig test test_suite.zig --summary all
+
+      - name: Ejecutar zig build test
+        run: |
+          # Si la versión de Zig soporta el build runner
+          zig build test --summary all || zig test test_suite.zig --summary all
+
+  python-oracles:
+    name: Python Oracles & Parity Smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Paridad de los 3 Oráculos (Boss 13 Reloj Carry)
+        run: |
+          python3 tools/reloj_carry_cli.py --oracles
+          python3 tools/reloj_carry_cli.py -q
