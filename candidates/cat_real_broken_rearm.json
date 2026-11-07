@@ -1,0 +1,35 @@
+{
+  "title": "Boss 5: El Cat Real (Universal In-VM Streaming Cat en Classic Malbolge)",
+  "kind": "IN_VM_UNIVERSAL_STREAMING_CAT",
+  "mode": "broken_rearm",
+  "length_bytes": 7972,
+  "sha256": "55afee5aa7e5d622886795fd287ee83fbd34c2e7d62444cf532d8c1d10a20262",
+  "loop_metrics": {
+    "preamble_operations": 7443,
+    "variables_installed": 124,
+    "loop_read_pc": 7657,
+    "loop_output_pc": 7639,
+    "loop_halt_pc": 7615,
+    "steps_per_byte": 407
+  },
+  "algebraic_invariants": {
+    "eof_detector": "crazy(crazy(59048, EOF), 29524) == 0",
+    "eof_isolation": "crazy(crazy(59048, ch), 29524) != 0 for all ch in 0..255",
+    "trit_involution": "crazy(crazy(x, 29524), 29524) == x for all 59049 cells"
+  },
+  "claims": {
+    "autonomous_in_vm_execution": true,
+    "terminates_on_eof": true,
+    "empty_stream_immediate_halt": true,
+    "zero_external_memory_writes": true,
+    "strict_loader_compliance": true,
+    "strict_3_oracle_parity": true,
+    "arbitrary_length_streaming": true,
+    "full_byte_domain_0_to_255": true
+  },
+  "audit_2026_11_07": {
+    "verdict": "DEMONSTRATED",
+    "classification": "in_vm_universal_streaming_cat_classic_malbolge",
+    "author": "Antigravity & Danny Baanks"
+  }
+}

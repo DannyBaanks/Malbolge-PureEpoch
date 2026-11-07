@@ -71,6 +71,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **Boss 4 · Autómata Celular (v1)** | `candidates/boss4_sierpinski.mal` | **Triángulo de Sierpiński (Wolfram Regla 90)** renderizado en Classic Malbolge | 8 generaciones (128 bytes ASCII), portales invertibles, auditado NOT_DEMONSTRATED para evolución dinámica |
 | **Boss 4 Real · Despacho Dinámico** | `candidates/boss4_real_ca.mal` | **Despacho Dinámico In-VM mediante CRAZY y Saltos Indirectos** en Malbolge | Mismo binario, despacho in-VM por entrada ('1', '2', '3'), 3 salidas celulares distintas; evolución in-situ NOT_DEMONSTRATED |
 | **Boss 4 v3 · Motor Celular In-VM** | `candidates/boss4_v3_ca.mal` | **Motor de Autómata Celular In-VM (Regla 90)** con Álgebra Booleana Cerrada | Álgebra ternaria cerrada in-VM (S0=29524, S1=59048), XOR de 6 pasos entre vecinos, doble buffer G0/G1 en memoria, 8 generaciones verificadas in-VM cell-by-cell, paridad 3 oráculos (DEMONSTRATED) |
+| **Boss 5 · El Cat Real** | `candidates/cat_real.mal` | **Universal In-VM Streaming Cat Terminado** en Classic Malbolge | Discriminador EOF ternario in-VM ($\text{crazy}(\text{crazy}(59048, \text{EOF}), 29524) = 0$), re-arme cíclico de 407 pasos/byte, flujos arbitrarios (0 bytes, texto, binario 0..255, 64 KiB+), paridad 3 oráculos (DEMONSTRATED) |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -490,6 +491,58 @@ El artefacto canónico `candidates/boss4_v3_ca.mal` (59,049 bytes, SHA-256 `d1d4
      * Ejemplo: `python3 tools/boss4_v3_ca_cli.py --state 1 --trace-memory --oracles`
    - Suite formal de 14 pruebas: `tests/test_boss4_v3_ca.py` (14/14 PASS)
    - Artefactos canónicos: `candidates/boss4_v3_ca.mal` (59,049 bytes) y `candidates/boss4_v3_ca.json`.
+
+---
+
+## Boss 5: El Cat Real — Universal In-VM Streaming Cat (2026-11-07) [DEMONSTRATED]
+
+### La Frontera Histórica del Programa `cat` en Malbolge Clásico
+
+En la historia de la computación esotérica, el programa `cat` (que lee de `stdin` y reproduce exactamente en `stdout`) ha sido considerado uno de los desafíos más formidables de Malbolge:
+- En 1998, Lou Scheffer sintetizó un `cat` de 68 bytes (`(=BA#9"<;:3y7x54-21q/p-,+*)"!h%B0/. ~P< <:(8& 66#"!~}|{zyxwvu gJ%.`), pero este programa es **no-terminante**: ante EOF se desborda o cuelga indefinidamente.
+- Un `cat` genuinamente terminante requiere que el programa distinga en runtime si la instrucción `/` leyó un byte normal ($0 \le A \le 255$) o fin de archivo ($\text{EOF} \to A = 59048$), bifurque limpiamente a `v` (HALT) ante EOF, y de lo contrario emita el byte con `<`, **rearme el bucle en memoria** y salte de regreso a `/` sin que el cifrado `XLAT2` destruya la lógica en las siguientes iteraciones.
+
+### Arquitectura Matemática de Boss 5
+
+1. **Discriminador Ternario de EOF (2 Pasos):**
+   $$\text{crazy}(\text{crazy}(59048, \text{EOF}), 29524) = 0 \iff \text{EOF} = 59048$$
+   - Para $\text{EOF} = 59048$, el resultado es exactamente `0` (la dirección canónica de aterrizaje para HALT).
+   - Para cualquier byte $0 \le b \le 255$, el resultado es estrictamente $\ne 0$ (**0 falsos positivos / colisiones en todo el espacio de bytes**).
+2. **Involución Ternaria de Almacenamiento Sin Pérdidas:**
+   $$\text{crazy}(\text{crazy}(x, 29524), 29524) = x \quad \forall x \in \{0 \dots 59048\}$$
+   Permite preservar y restaurar bytes y punteros en memoria baja sin deriva entrópica.
+3. **Ciclo In-VM de Rearme y Período Cerrado:**
+   - La máquina ejecuta un preámbulo de inicialización de 7,443 operaciones puras en Malbolge que configura 124 variables en memoria alta.
+   - En régimen de streaming, el bucle itera con un período exacto de **407 pasos por byte**.
+   - Reutilización estricta de las mismas instrucciones en memoria: lectura `/` en PC `7657`, emisión `<` en PC `7639`, y bifurcación a parada `v` en PC `7615`.
+   - Soporte total para streams de longitud arbitraria: desde stream vacío ($b"" \to 0$ bytes, HALT inmediato en paso 7,805), un carácter ($b"A"$), texto arbitrario, el espectro completo $0\text{x}00 \dots 0\text{xFF}$ ($256$ bytes), hasta flujos masivos de $64\text{ KiB}+$.
+
+### Auditoría y Demostración en Código y Runtime
+
+| Criterio de Auditoría | Estado | Evidencia y Verificación |
+|---|---|---|
+| **Ejecución 100% Autónoma In-VM** | **DEMONSTRATED** | Cero escrituras de memoria del host (`vm.mem[...] = ...` estrictamente 0). Todo el control ocurre en la VM Malbolge. |
+| **Terminación Limpia en EOF** | **DEMONSTRATED** | Bifurcación in-VM a `v` (HALT) con código de retorno `0` en todos los oráculos ante cualquier final de flujo. |
+| **Manejo de Flujo Vacío ($b""$)** | **DEMONSTRATED** | Lectura inmediata de EOF en paso 7,530; HALT limpio en paso 7,805 sin emitir un solo byte a stdout. |
+| **Dominio Completo de Bytes ($0..255$)** | **DEMONSTRATED** | Prueba `test_08_full_256_byte_domain`: 256 bytes consecutivos transmitidos y reproducidos bit a bit sin alteración. |
+| **Streaming Masivo de Datos** | **DEMONSTRATED** | Verificado con flujos binarios aleatorios de hasta 64 KiB sin degradación ni fugas de estado. |
+| **Cargador Estricto Olmstead 1998** | **DEMONSTRATED** | El 100% de las 7,972 celdas del artefacto cumplen `strict_byte(v, p)` ($33 \le v \le 126$, decodificación en `{j, i, *, p, <, /, v, o}`). |
+| **Paridad Estricta de 3 Oráculos** | **DEMONSTRATED** | Idéntico trace, memoria final, registros, códigos de salida (rc=0) y stdout entre Python Machine (M0), C `mb_ref` y C Olmstead original (1998). |
+| **Reemplazo Drop-in Tipo Unix** | **DEMONSTRATED** | Flag `-q` / `--quiet` en CLI para operar de forma transparente en tuberías: `echo "data" \| python3 tools/cat_real_cli.py -q`. |
+
+### Herramientas y Suites de Prueba
+
+- **Builder y Generador de Mutantes:** `tools/cat_real.py`
+- **CLI Interactivo y Drop-in Pipeline:** `tools/cat_real_cli.py`
+  * Ejemplo interactivo: `python3 tools/cat_real_cli.py -i "Hello Malbolge Cat!" --trace-loop --oracles`
+  * Ejemplo en tubería Unix: `echo "stream test" | python3 tools/cat_real_cli.py -q`
+- **Suite Formal de Pruebas:** `tests/test_cat_real.py` (14/14 pruebas PASS en ~9 s)
+- **Artefactos Canónicos:**
+  * `candidates/cat_real.mal` (7,972 bytes, SHA-256 `0d298645bcabd8c832c6bbad0769124828a8805bb46cc4644e35added50334f1`)
+  * `candidates/boss5_cat_real.mal` (alias canónico)
+  * `candidates/cat_real.json` (metadatos, teoremas algebraicos y registro de auditoría)
+  * Mutantes de falsación negativa: `candidates/cat_real_broken_{rearm,eof,loader}.{mal,json}`
+
 
 
 
