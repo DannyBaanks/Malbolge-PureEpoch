@@ -1,0 +1,30 @@
+{
+  "title": "Boss 8: El Cmp Real (Universal In-VM Stream Equality Predicate en Classic Malbolge)",
+  "kind": "IN_VM_UNIVERSAL_STREAM_EQUALITY_PREDICATE",
+  "mode": "broken_drain",
+  "length_bytes": 29667,
+  "sha256": "5d5acf3e4a8d016134cc835eaaaf12f5f702c0c8d17cc04364aa9a05616cae1a",
+  "algebraic_invariants": {
+    "eof0_discriminator_isolation": true,
+    "eof1_discriminator_isolation": true,
+    "bijective_121_byte_inversion": true,
+    "cmp_equal_token_equal_evaluates_29587": true,
+    "cmp_equal_token_excl_evaluates_29587": true,
+    "cmp_unequal_token_pair_evaluates_29425_a": true,
+    "cmp_unequal_token_pair_evaluates_29425_b": true,
+    "drain_equal_10rot_identity": true,
+    "drain_unequal_10rot_identity": true,
+    "all_fixed_cells_strict_loader_compliant": true
+  },
+  "key_pcs": {
+    "read_pc_0": 99,
+    "read_pc_1": 378,
+    "cmp_start_pc": 1132,
+    "halt_pc_drain0": 27,
+    "halt_pc_drain1": 79,
+    "output_pc_drain_neq": 29477,
+    "halt_pc_drain_neq": 29478,
+    "output_pc_drain_eq": 29665,
+    "halt_pc_drain_eq": 29666
+  }
+}
