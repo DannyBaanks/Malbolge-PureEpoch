@@ -65,6 +65,7 @@ La respuesta demostrada en este laboratorio es **sí, para protocolos y estados 
 | **G-T2 / G-T3 · Préstamo** | `torus/programs/` | Journal prestado/restaurado y consumidor posterior verificado | Campaña toroidal independiente y acotada |
 | **BolgePiton · Ouroboros** | `bolge_piton/` | **VM en Malbolge** interpretando Micro-Pitón; paridad C ↔ Pibolge | Dominio acotado de ISA |
 | **Boss 3 · Bucle Real** | `candidates/boss3_real_loop.mal` | **Bucle autónomo `while x > 0`** con PC repetida $N$ veces y rearme in-VM | Dominio $x \in \{0..9\}$; loader estricto y paridad 3 oráculos (G1–G8 PASS) |
+| **Boss 4 · Autómata Celular** | `candidates/boss4_sierpinski.mal` | **Triángulo de Sierpiński (Wolfram Regla 90)** generado en Classic Malbolge | 8 generaciones (128 bytes ASCII), portales invertibles, paridad 3 oráculos |
 
 El veredicto formal por afirmación, incluidos los controles falsados y sus límites, está en **[VERDICT.md](VERDICT.md)**.
 
@@ -403,3 +404,20 @@ Resolución completa del bucle autónomo `while x > 0` con PC repetida bajo Ruta
 - `tests/test_boss3_real_loop.py` — suite de 12 pruebas formales (G1–G8 + 4 mutantes, 12/12 PASS).
 - `BOSS3_FINAL_STATUS.md` — reporte formal actualizado a estado `PASS`.
 - `evidence/manifest.json` y `evidence/boss3-real-campaign.json` — hashes y veredicto actualizados.
+
+## Boss 4: Autómata Celular Wolfram Regla 90 — El Triángulo de Sierpiński (2026-11-07)
+
+Demostración de un autómata celular 1D autónomo que sintetiza y genera el Triángulo Fractal de Sierpiński en Classic Malbolge:
+
+- `tools/boss4_sierpinski.py` — builder que implementa la Regla 90 de Wolfram ($c_i^{(t+1)} = c_{i-1}^{(t)} \oplus c_{i+1}^{(t)}$), arquitectura de portales invertibles (`CELL_SPACE=37`, `CELL_NL=43`, `CELL_STAR=56`) con ciclos de rotación mod 10 y run-length encoding sobre `<`.
+- `candidates/boss4_sierpinski.{mal,json}` — artefacto canónico de 3682 bytes (SHA-256 `80d60aeb0394c9cf3d3cd7ed7baf9cf05e4fd8ff221dffa7ae134b7766ebf16b`), que genera las 8 generaciones del fractal (128 bytes ASCII) en 3583 pasos.
+- `tools/boss4_sierpinski_cli.py` — CLI interactivo con telemetría de cronómetro de alta resolución y verificación de oráculos.
+- `tests/test_boss4_sierpinski.py` — suite de 9 pruebas formales con 100% de éxito:
+  * Existencia e inmutabilidad SHA-256.
+  * Cumplimiento estricto del cargador de Olmstead 1998 para cada celda (`strict_byte(v, p)`).
+  * 0 escrituras externas del host (`vm.mem[...] = ...` estrictamente prohibido).
+  * Salida fractal exacta (128 bytes) bit a bit.
+  * Paridad estricta certificada entre los 3 oráculos (Python Machine, C `mb_ref`, Olmstead 1998).
+  * Generaciones paramétricas $G \in \{1, 2, 4\}$ verificadas.
+  * 3 mutantes negativos falsados (`broken_space`, `broken_star`, `broken_halt`).
+

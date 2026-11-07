@@ -1,0 +1,39 @@
+{
+  "title": "Boss 4: Aut\u00f3mata Celular Wolfram Regla 90 (El Tri\u00e1ngulo de Sierpi\u0144ski)",
+  "kind": "CELLULAR_AUTOMATON_RULE90",
+  "mode": "normal",
+  "generations": 8,
+  "grid_width": 15,
+  "length_bytes": 3682,
+  "sha256": "80d60aeb0394c9cf3d3cd7ed7baf9cf05e4fd8ff221dffa7ae134b7766ebf16b",
+  "output_chars": 128,
+  "expected_output_hex": "202020202020202a202020202020200a2020202020202a202a2020202020200a20202020202a2020202a20202020200a202020202a202a202a202a202020200a2020202a202020202020202a2020200a20202a202a20202020202a202a20200a202a2020202a2020202a2020202a200a2a202a202a202a202a202a202a202a0a",
+  "portal_cells": {
+    "space": {
+      "address": 37,
+      "initial": 96,
+      "rot_to_load": 1,
+      "rot_to_restore": 9
+    },
+    "newline": {
+      "address": 43,
+      "initial": 90,
+      "rot_to_load": 2,
+      "rot_to_restore": 8
+    },
+    "star": {
+      "address": 56,
+      "initial": 42,
+      "rot_to_load": 10,
+      "rot_to_restore": 0
+    }
+  },
+  "claims": {
+    "cellular_automaton_rule90": true,
+    "fractal_sierpinski_verified": true,
+    "host_intervention_required": false,
+    "zero_external_memory_writes": true,
+    "strict_loader_compliant": true,
+    "strict_3_oracle_parity": true
+  }
+}
